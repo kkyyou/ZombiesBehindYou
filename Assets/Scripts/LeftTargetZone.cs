@@ -17,7 +17,10 @@ public class LeftTargetZone : MonoBehaviour
             int ranTorque = Random.Range(-200, -400);
 
             Rigidbody2D zombieRigid = collision.gameObject.GetComponent<Rigidbody2D>();
-            
+
+            // 좀비 맞는 사운드 랜덤 재생.
+            AudioManager.instance.PlayRandomDamageSound();
+
             zombieRigid.AddForce(new Vector2(ranForceX, ranForceY));
             zombieRigid.AddTorque(ranTorque);
 

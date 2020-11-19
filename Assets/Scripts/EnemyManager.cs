@@ -47,6 +47,10 @@ public class EnemyManager : MonoBehaviour
             }
 
             GameObject zombieClone = Instantiate(prefab_zombie, vector, Quaternion.Euler(Vector3.zero));
+            
+            // 좌측 좀비면 Flip.
+            if (leftOrRight == 0)
+                zombieClone.GetComponent<Zombie>().Flip();
 
             zombies.Add(zombieClone);
         }
@@ -82,7 +86,6 @@ public class EnemyManager : MonoBehaviour
                 GameObject zombie_prefab = zombies[i];
                 Zombie zombie = zombie_prefab.GetComponent<Zombie>();
                 zombie.Move();
-                
             }
         }
     }

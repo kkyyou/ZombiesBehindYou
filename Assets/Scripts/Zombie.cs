@@ -13,16 +13,15 @@ public class Zombie : MonoBehaviour
     
     public Animator anim;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        float playerLocX = Player.instance.transform.position.x;
+        float zombieLocX = transform.position.x;
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        if (zombieLocX - playerLocX < 0)
+            moveDir = 1;
+        else
+            moveDir = -1;
     }
 
     public void Move()
@@ -32,14 +31,6 @@ public class Zombie : MonoBehaviour
 
     IEnumerator MoveCoroutine()
     {
-        float playerLocX = Player.instance.transform.position.x;
-        float zombieLocX = transform.position.x;
-
-        if (zombieLocX - playerLocX < 0)
-            moveDir = 1;
-        else
-            moveDir = -1;
-
         anim.SetBool("Walk", true);
 
         while (currentWalkCount < walkCount)
@@ -54,5 +45,12 @@ public class Zombie : MonoBehaviour
 
         currentWalkCount = 0;
         anim.SetBool("Walk", false);
+    }
+    
+    public void Flip()
+    {
+        Vector3 theScale = transform.localScale;
+        theScale = new Vector3(theScale.x * -1, theScale.y, theScale.z);
+        transform.localScale = theScale;
     }
 }

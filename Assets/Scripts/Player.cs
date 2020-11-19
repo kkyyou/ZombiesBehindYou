@@ -59,6 +59,9 @@ public class Player : MonoBehaviour
 
         animator.SetBool("Attack", true);
 
+        // Attack Sound 랜덤 재생.
+        AudioManager.instance.PlayRandomAttackSound();
+
         leftTargetZone.setBeAttackedLeft(true); // 플래그 변경하여 Zone에서 Zombie가 날아가게 한다.
 
         StartCoroutine(AttackCoroutine());
@@ -80,6 +83,9 @@ public class Player : MonoBehaviour
 
         animator.SetBool("Attack", true);
 
+        // Attack Sound 랜덤 재생.
+        AudioManager.instance.PlayRandomAttackSound();
+        
         rightTargetZone.setBeAttackedRight(true);
 
         StartCoroutine(AttackCoroutine());
