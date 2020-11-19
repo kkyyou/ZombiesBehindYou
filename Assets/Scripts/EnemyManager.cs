@@ -78,6 +78,12 @@ public class EnemyManager : MonoBehaviour
             }
 
             GameObject zombieClone = Instantiate(prefab_zombie, vector, Quaternion.Euler(Vector3.zero));
+
+            Zombie zb = zombieClone.GetComponent<Zombie>();
+
+            if (vector.x - playerVector.x < 0)
+                zb.Flip();
+
             zombies.Add(zombieClone);
 
             // 모든 좀비 히어로에게 한 칸 이동.

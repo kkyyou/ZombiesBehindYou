@@ -97,7 +97,7 @@ public class Player : MonoBehaviour
 
     IEnumerator AttackCoroutine()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
         animator.SetBool("Attack", false);
     }
 

@@ -53,4 +53,9 @@ public class Zombie : MonoBehaviour
         theScale = new Vector3(theScale.x * -1, theScale.y, theScale.z);
         transform.localScale = theScale;
     }
+
+    public int GetMoveDir()
+    {
+        return moveDir;
+    }
 }
