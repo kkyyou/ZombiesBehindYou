@@ -12,7 +12,7 @@ public class RightTargetZone : MonoBehaviour
         {
             collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
 
-            int ranForceX = Random.Range(700, 1000);
+            int ranForceX = Random.Range(1000, 1200);
             int ranForceY = Random.Range(600, 800);
             int ranTorque = Random.Range(200, 400);
 
