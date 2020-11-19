@@ -6,6 +6,13 @@ public class RightTargetZone : MonoBehaviour
 {
     private bool beAttackedRight = false;
 
+    ShakeCamera shakeCamera;
+
+    private void Start()
+    {
+        shakeCamera = GameObject.FindWithTag("MainCamera").GetComponent<ShakeCamera>();
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Zombie(Clone)" && beAttackedRight)
@@ -20,6 +27,8 @@ public class RightTargetZone : MonoBehaviour
 
             // 좀비 맞는 사운드 랜덤 재생.
             AudioManager.instance.PlayRandomDamageSound();
+
+            shakeCamera.VibrateForTime(0.1f);
 
             zombieRigid.AddForce(new Vector2(ranForceX, ranForceY));
             zombieRigid.AddTorque(ranTorque);
