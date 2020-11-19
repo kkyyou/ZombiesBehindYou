@@ -22,8 +22,8 @@ public class Player : MonoBehaviour
     {
         if (instance == null)
         {
-            DontDestroyOnLoad(this.gameObject);
             instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {

@@ -10,16 +10,13 @@ public class Zombie : MonoBehaviour
     private int currentWalkCount = 0; // 1.6 * 20
 
     private int moveDir;
-
-    private Animator anim;
-
-    private Player thePlayer;
+    
+    public Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
-        anim = GetComponent<Animator>();
-        thePlayer = Player.instance;
+
     }
 
     // Update is called once per frame
@@ -35,7 +32,7 @@ public class Zombie : MonoBehaviour
 
     IEnumerator MoveCoroutine()
     {
-        float playerLocX = thePlayer.transform.position.x;
+        float playerLocX = Player.instance.transform.position.x;
         float zombieLocX = transform.position.x;
 
         if (zombieLocX - playerLocX < 0)
