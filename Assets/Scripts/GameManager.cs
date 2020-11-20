@@ -5,6 +5,13 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public enum Map
+    {
+        GREEN,
+        DARK,
+        PINK
+    };
+
     public static GameManager instance;
 
     public Camera mainCamera;
@@ -19,6 +26,8 @@ public class GameManager : MonoBehaviour
 
     public RightTargetZone rightTargetZone;
     public LeftTargetZone leftTargetZone;
+
+    private Map currentMap; 
 
     private void Awake()
     {
@@ -36,38 +45,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int ran = Random.Range(0, 3);
-        if (ran == 0)
-        {
-            mainCamera.transform.position = new Vector3(0.5f, 0f, -10f);
-            Player.instance.transform.position = new Vector3(0.5f, -0.425f, 0f);
-        }
-        else if (ran == 1)
-        {
-            mainCamera.transform.position = new Vector3(0.5f, -14f, -10f);
-            Player.instance.transform.position = new Vector3(0.5f, -14.425f, 0f);
-
-            Vector3 rtp = rightTargetZone.transform.position;
-            rtp.y -= 14f;
-            rightTargetZone.transform.position = rtp;
-
-            Vector3 ltp = leftTargetZone.transform.position;
-            ltp.y -= 14f;
-            leftTargetZone.transform.position = ltp;
-        }
-        else if (ran == 2)
-        {
-            mainCamera.transform.position = new Vector3(0.5f, -28f, -10f);
-            Player.instance.transform.position = new Vector3(0.5f, -28.425f, 0f);
-
-            Vector3 rtp = rightTargetZone.transform.position;
-            rtp.y -= 28f;
-            rightTargetZone.transform.position = rtp;
-
-            Vector3 ltp = leftTargetZone.transform.position;
-            ltp.y -= 28f;
-            leftTargetZone.transform.position = ltp;
-        }
+        RandomMap();
     }
 
     // Update is called once per frame
@@ -125,5 +103,45 @@ public class GameManager : MonoBehaviour
     public void SetAttackZombie(bool attack)
     {
         attackZombie = attack;
+    }
+
+    public void RandomMap()
+    {
+        int ran = Random.Range(0, 3);
+        if (ran == (int)Map.GREEN)
+        {
+            mainCamera.transform.position = new Vector3(0.5f, 0f, -10f);
+            Player.instance.transform.position = new Vector3(0.5f, -0.425f, 0f);
+        }
+        else if (ran == (int)Map.DARK)
+        {
+            mainCamera.transform.position = new Vector3(0.5f, -14f, -10f);
+            Player.instance.transform.position = new Vector3(0.5f, -14.425f, 0f);
+
+            Vector3 rtp = rightTargetZone.transform.position;
+            rtp.y -= 14f;
+            rightTargetZone.transform.position = rtp;
+
+            Vector3 ltp = leftTargetZone.transform.position;
+            ltp.y -= 14f;
+            leftTargetZone.transform.position = ltp;
+        }
+        else if (ran == (int)Map.PINK)
+        {
+            mainCamera.transform.position = new Vector3(0.5f, -28f, -10f);
+            Player.instance.transform.position = new Vector3(0.5f, -28.425f, 0f);
+
+            Vector3 rtp = rightTargetZone.transform.position;
+            rtp.y -= 28f;
+            rightTargetZone.transform.position = rtp;
+
+            Vector3 ltp = leftTargetZone.transform.position;
+            ltp.y -= 28f;
+            leftTargetZone.transform.position = ltp;
+        }
+
+        currentMap = (Map)ran;
+
+        CloudManager.instance.SetCurrentCloud(currentMap);
     }
 }
