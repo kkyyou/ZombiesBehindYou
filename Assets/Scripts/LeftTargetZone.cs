@@ -33,6 +33,9 @@ public class LeftTargetZone : MonoBehaviour
             zombieRigid.AddForce(new Vector2(ranForceX, ranForceY));
             zombieRigid.AddTorque(ranTorque);
 
+            // 점수 획득.
+            GameManager.instance.AddScore(1);
+
             // 리스트에서 해당 좀비 프리팹 삭제.
             EnemyManager.instance.RemoveZombie(collision.gameObject);
             StartCoroutine(DeleteZombieCoroutine(collision.gameObject));
