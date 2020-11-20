@@ -79,10 +79,32 @@ public class Player : MonoBehaviour
         nextTurn = true;
     }
 
+    public void LeftRightAttackButton()
+    {
+        animator.SetBool("LeftRightAttack", true);
+
+        // Attack Sound 랜덤 재생.
+        AudioManager.instance.PlayRandomAttackSound();
+
+        // 플래그 변경하여 Zone에서 Zombie가 날아가게 한다.
+        rightTargetZone.setBeAttackedRight(true);
+        leftTargetZone.setBeAttackedLeft(true);
+
+        StartCoroutine(LeftRightAttackCoroutine());
+
+        nextTurn = true;
+    }
+
     IEnumerator AttackCoroutine()
     {
         yield return new WaitForSeconds(0.05f);
         animator.SetBool("Attack", false);
+    }
+
+    IEnumerator LeftRightAttackCoroutine()
+    {
+        yield return new WaitForSeconds(0.05f);
+        animator.SetBool("LeftRightAttack", false);
     }
 
     void Flip()

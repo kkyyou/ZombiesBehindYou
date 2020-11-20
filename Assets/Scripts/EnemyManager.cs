@@ -16,7 +16,7 @@ public class EnemyManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Destroy(this.gameObject);    
+            Destroy(this.gameObject);
         }
         else
         {
@@ -30,7 +30,7 @@ public class EnemyManager : MonoBehaviour
     {
         zombies = new List<GameObject>();
         playerVector = Player.instance.transform.position;
-        
+
         // 시작시 생성되는 좀비.
         for (int i = 1; i < 10; i++)
         {
@@ -47,7 +47,7 @@ public class EnemyManager : MonoBehaviour
             }
 
             GameObject zombieClone = Instantiate(prefab_zombie, vector, Quaternion.Euler(Vector3.zero));
-            
+
             // 좌측 좀비면 Flip.
             if (leftOrRight == 0)
                 zombieClone.GetComponent<Zombie>().Flip();
@@ -65,28 +65,23 @@ public class EnemyManager : MonoBehaviour
             Player.instance.SetNextTurn(false);
 
             // 화면 밖 대기 좀비 생성.
-            int leftOrRight = Random.Range(0, 2);
+            int leftOrRight = Random.Range(0, 100);
 
-            Vector3 vector = playerVector;
-            if (leftOrRight == 0)
+            if (leftOrRight < 45)
             {
-                vector.x = playerVector.x + -10;
+                CreateZombie(new Vector3(playerVector.x - 10, playerVector.y, playerVector.z));
             }
-            else
+            else if (leftOrRight >= 45 && leftOrRight < 90)
             {
-                vector.x = playerVector.x + 10;
+                CreateZombie(new Vector3(playerVector.x + 10, playerVector.y, playerVector.z));
+            }
+            else if (leftOrRight >= 90)
+            {
+                CreateZombie(new Vector3(playerVector.x - 10, playerVector.y, playerVector.z));
+                CreateZombie(new Vector3(playerVector.x + 10, playerVector.y, playerVector.z));
             }
 
-            GameObject zombieClone = Instantiate(prefab_zombie, vector, Quaternion.Euler(Vector3.zero));
-
-            Zombie zb = zombieClone.GetComponent<Zombie>();
-
-            if (vector.x - playerVector.x < 0)
-                zb.Flip();
-
-            zombies.Add(zombieClone);
-
-            // 모든 좀비 히어로에게 한 칸 이동.
+            // 모든 좀비 히어로방향으로 한 칸 이동.
             for (int i = 0; i < zombies.Count; i++)
             {
                 GameObject zombie_prefab = zombies[i];
@@ -99,5 +94,16 @@ public class EnemyManager : MonoBehaviour
     public void RemoveZombie(GameObject zombiePrefab)
     {
         zombies.Remove(zombiePrefab);
+    }
+
+    public void CreateZombie(Vector3 vector)
+    {
+        GameObject zombieClone = Instantiate(prefab_zombie, vector, Quaternion.Euler(Vector3.zero));
+        Zombie zb = zombieClone.GetComponent<Zombie>();
+
+        if (vector.x - playerVector.x < 0)
+            zb.Flip();
+
+        zombies.Add(zombieClone);
     }
 }
