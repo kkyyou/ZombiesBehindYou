@@ -46,6 +46,7 @@ public class CloudManager : MonoBehaviour
 
         if (currentCloud)
         {
+            // 5초 주기로 구름 좌우방향 변경.
             if (fiveSecCount >= 5)
             {
                 fiveSecCount = 0;

@@ -7,7 +7,7 @@ public class Zombie : MonoBehaviour
     private float speed = 0.05f;     // 0.05
     private int walkCount = 20;   // 20
 
-    private int currentWalkCount = 0; // 1.6 * 20
+    private int currentWalkCount = 0; // 0.05 * 20
 
     private int moveDir;
     
@@ -40,7 +40,7 @@ public class Zombie : MonoBehaviour
             currentWalkCount++;
 
             // 각 반복당 0.01초 대기함으로써 부드럽게 캐릭터 이동.
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.005f);
         }
 
         currentWalkCount = 0;

@@ -55,9 +55,6 @@ public class GameManager : MonoBehaviour
         {
             attackZombie = false;
 
-            // Hp 반짝임 효과.
-            StartCoroutine(ResetHpFillSprite());
-
             // 점수 획득.
             AddScore(1);
 
@@ -92,6 +89,11 @@ public class GameManager : MonoBehaviour
 
     public void RecoveryHP(int recoverHP)
     {
+        StopAllCoroutines();
+
+        // Hp 반짝임 효과.
+        StartCoroutine(ResetHpFillSprite());
+
         hpSlider.value += recoverHP;
     }
 

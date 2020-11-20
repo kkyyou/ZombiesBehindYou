@@ -52,9 +52,30 @@ public class Player : MonoBehaviour
 
         // 플래그 변경하여 Zone에서 Zombie가 날아가게 한다.
         if (isRight)
-            rightTargetZone.setBeAttackedRight(true);
+        {
+            Vector2 playerVector = transform.position;
+            playerVector = new Vector2(playerVector.x + 1, playerVector.y);
+            Collider2D collision = CheckCollision(playerVector);
+
+            if (collision)
+            {
+                rightTargetZone.ThrowZombie(collision);
+                GameManager.instance.SetAttackZombie(true);
+            }
+
+        }
         else
-            leftTargetZone.setBeAttackedLeft(true);
+        {
+            Vector2 playerVector = transform.position;
+            playerVector = new Vector2(playerVector.x - 1, playerVector.y);
+            Collider2D collision = CheckCollision(playerVector);
+
+            if (collision)
+            {
+                leftTargetZone.ThrowZombie(collision);
+                GameManager.instance.SetAttackZombie(true);
+            }
+        }
 
         StartCoroutine(AttackCoroutine());
 
@@ -68,11 +89,29 @@ public class Player : MonoBehaviour
         // Attack Sound 랜덤 재생.
         AudioManager.instance.PlayRandomAttackSound();
 
-        // 플래그 변경하여 Zone에서 Zombie가 날아가게 한다.
+        Collider2D collision;
+        Vector2 playerVector = transform.position;
+
         if (isRight)
-            rightTargetZone.setBeAttackedRight(true);
+        {
+            playerVector = new Vector2(playerVector.x + 1, playerVector.y);
+        }
         else
-            leftTargetZone.setBeAttackedLeft(true);
+        {
+            playerVector = new Vector2(playerVector.x - 1, playerVector.y);
+        }
+
+        collision = CheckCollision(playerVector);
+
+        if (collision)
+        {
+            if (isRight)
+                rightTargetZone.ThrowZombie(collision);
+            else
+                leftTargetZone.ThrowZombie(collision);
+
+            GameManager.instance.SetAttackZombie(true);
+        }
 
         StartCoroutine(AttackCoroutine());
 
@@ -86,9 +125,36 @@ public class Player : MonoBehaviour
         // Attack Sound 랜덤 재생.
         AudioManager.instance.PlayRandomAttackSound();
 
-        // 플래그 변경하여 Zone에서 Zombie가 날아가게 한다.
-        rightTargetZone.setBeAttackedRight(true);
-        leftTargetZone.setBeAttackedLeft(true, true); // 양쪽 좀비를 잡았어도 한쪽에서만 점수를 얻도록 2번째 인자값에 true줌.
+        // Right
+        Vector2 vector1 = transform.position;
+        vector1 = new Vector2(vector1.x + 1, vector1.y);
+        Collider2D collision1 = CheckCollision(vector1);
+
+        if (collision1)
+        {
+            rightTargetZone.ThrowZombie(collision1);
+        }
+
+        // Left
+        Vector2 vector2 = transform.position;
+        vector2 = new Vector2(vector2.x - 1, vector2.y);
+        Collider2D collision2 = CheckCollision(vector2);
+
+        if (collision2)
+        {
+            leftTargetZone.ThrowZombie(collision2);
+        }
+
+        // 점수 및 HP 업데이트.
+        if (collision1 && collision2)
+        {
+            GameManager.instance.SetAttackZombie(true);
+        }
+        else
+        {
+            // 한쪽만 존재하는데 양쪽 공격사용 시 HP 감소.
+            GameManager.instance.RecoveryHP(-10);
+        }
 
         StartCoroutine(LeftRightAttackCoroutine());
 
@@ -122,5 +188,17 @@ public class Player : MonoBehaviour
     public void SetNextTurn(bool nextTurn)
     {
         this.nextTurn = nextTurn;
+    }
+
+    public Collider2D CheckCollision(Vector2 end)
+    {
+        RaycastHit2D hit;
+
+        hit = Physics2D.Linecast(transform.position, end);
+
+        if (hit.transform != null)
+            return hit.collider;
+
+        return null;
     }
 }
