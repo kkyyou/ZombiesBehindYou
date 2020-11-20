@@ -33,12 +33,6 @@ public class RightTargetZone : MonoBehaviour
             zombieRigid.AddForce(new Vector2(ranForceX, ranForceY));
             zombieRigid.AddTorque(ranTorque);
 
-            // 점수 획득.
-            GameManager.instance.AddScore(1);
-
-            // Hp 회복.
-            GameManager.instance.RecoveryHP(10);
-
             // 리스트에서 해당 좀비 프리팹 삭제.
             EnemyManager.instance.RemoveZombie(collision.gameObject);
             StartCoroutine(DeleteZombieCoroutine(collision.gameObject));
@@ -53,9 +47,12 @@ public class RightTargetZone : MonoBehaviour
         Destroy(zombiePrefab);
     }
 
-    public void setBeAttackedRight(bool attack)
+    public void setBeAttackedRight(bool attack, bool onlyOneScore = false)
     {
         beAttackedRight = attack;
+
+        if (beAttackedRight && !onlyOneScore)
+            GameManager.instance.SetAttackZombie(true);
     }
 
     public bool getBeAttackedRight()

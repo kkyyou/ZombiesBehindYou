@@ -88,7 +88,7 @@ public class Player : MonoBehaviour
 
         // 플래그 변경하여 Zone에서 Zombie가 날아가게 한다.
         rightTargetZone.setBeAttackedRight(true);
-        leftTargetZone.setBeAttackedLeft(true);
+        leftTargetZone.setBeAttackedLeft(true, true); // 양쪽 좀비를 잡았어도 한쪽에서만 점수를 얻도록 2번째 인자값에 true줌.
 
         StartCoroutine(LeftRightAttackCoroutine());
 

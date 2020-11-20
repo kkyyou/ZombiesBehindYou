@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public Slider hpSlider;
     public float hpDecreaseSpeed;
 
+    private bool attackZombie = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -35,6 +37,16 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (attackZombie)
+        {
+            attackZombie = false;
+
+            // 점수 획득.
+            AddScore(1);
+
+            // Hp 회복.
+            RecoveryHP(10);
+        }
 
         hpSlider.value -= Time.deltaTime * hpDecreaseSpeed;
     }
@@ -56,5 +68,10 @@ public class GameManager : MonoBehaviour
     public void FasterDecreaseHP(float faster)
     {
         hpDecreaseSpeed += faster;
+    }
+
+    public void SetAttackZombie(bool attack)
+    {
+        attackZombie = attack;
     }
 }
