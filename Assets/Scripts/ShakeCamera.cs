@@ -8,13 +8,12 @@ public class ShakeCamera : MonoBehaviour
     public float shakeAmount;
 
     // public Canvas canvas;
-    float shakeTime;
-    Vector3 initialPosition;
+    private float shakeTime;
+    private Vector3 initialPosition;
 
     // Start is called before the first frame update
     void Start()
     {
-        initialPosition = transform.position;  
     }
 
     // Update is called once per frame
@@ -39,5 +38,10 @@ public class ShakeCamera : MonoBehaviour
 
         // canvas.renderMode = RenderMode.ScreenSpaceCamera;
         // canvas.renderMode = RenderMode.WorldSpace;
+    }
+
+    public void SetInitialPosition(Vector3 init)
+    {
+        initialPosition = init;
     }
 }

@@ -45,7 +45,14 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 랜덤 맵 지정.
         RandomMap();
+
+        // 카메라 위치 변경.
+        mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(mainCamera.transform.position);
+
+        // 처음 시작 시 좀비 생성.
+        EnemyManager.instance.CreateStartZombies();
     }
 
     // Update is called once per frame

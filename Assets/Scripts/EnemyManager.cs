@@ -28,32 +28,7 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        zombies = new List<GameObject>();
-        playerVector = Player.instance.transform.position;
-
-        // 시작시 생성되는 좀비.
-        for (int i = 1; i < 10; i++)
-        {
-            int leftOrRight = Random.Range(0, 2);
-
-            Vector3 vector = playerVector;
-            if (leftOrRight == 0)
-            {
-                vector.x = playerVector.x + (-1 * i);
-            }
-            else
-            {
-                vector.x = playerVector.x + i;
-            }
-
-            GameObject zombieClone = Instantiate(prefab_zombie, vector, Quaternion.Euler(Vector3.zero));
-
-            // 좌측 좀비면 Flip.
-            if (leftOrRight == 0)
-                zombieClone.GetComponent<Zombie>().Flip();
-
-            zombies.Add(zombieClone);
-        }
+        
 
     }
 
@@ -105,5 +80,35 @@ public class EnemyManager : MonoBehaviour
             zb.Flip();
 
         zombies.Add(zombieClone);
+    }
+
+    public void CreateStartZombies()
+    {
+        zombies = new List<GameObject>();
+        playerVector = Player.instance.transform.position;
+
+        // 시작시 생성되는 좀비.
+        for (int i = 1; i < 10; i++)
+        {
+            int leftOrRight = Random.Range(0, 2);
+
+            Vector3 vector = playerVector;
+            if (leftOrRight == 0)
+            {
+                vector.x = playerVector.x + (-1 * i);
+            }
+            else
+            {
+                vector.x = playerVector.x + i;
+            }
+
+            GameObject zombieClone = Instantiate(prefab_zombie, vector, Quaternion.Euler(Vector3.zero));
+
+            // 좌측 좀비면 Flip.
+            if (leftOrRight == 0)
+                zombieClone.GetComponent<Zombie>().Flip();
+
+            zombies.Add(zombieClone);
+        }
     }
 }
