@@ -14,7 +14,7 @@ public class ShakeCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        initialPosition = new Vector3(0.5f, 0f, -10f);    
+        initialPosition = transform.position;  
     }
 
     // Update is called once per frame
