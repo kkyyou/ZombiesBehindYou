@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
         rightTargetZone = FindObjectOfType<RightTargetZone>();
         leftTargetZone = FindObjectOfType<LeftTargetZone>();
 
-        animator = GetComponent<Animator>();
+        animator = transform.Find("Character").GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -219,13 +219,37 @@ public class Player : MonoBehaviour
 
     public void RightCharacter()
     {
-        Debug.Log(characterNo);
-        CharSelectManager.instance.SelectCharacter(1);
-        //characterNo++;
+        characterNo++;
+
+        if (characterNo > CharSelectManager.instance.CharPrefabCount() - 1)
+            characterNo = 0;
+
+        CharSelectManager.instance.SelectCharacter(characterNo);
+    }
+
+    public void LeftCharacter()
+    {
+        characterNo--;
+
+        if (characterNo < 0)
+            characterNo = CharSelectManager.instance.CharPrefabCount() - 1;
+
+        CharSelectManager.instance.SelectCharacter(characterNo);
+    }
+
+    public void ShowSelectCharacterView()
+    {
+        GameManager.instance.ShowSelectCharcter();
     }
 
     public void SelectCharacter()
     {
-        GameManager.instance.ShowSelectCharcter();
+        GameManager.instance.ShowTitleView();
+    }
+
+    public Animator GetAnimator()
+    {
+        animator = transform.Find("Character").GetComponent<Animator>();
+        return animator;
     }
 }

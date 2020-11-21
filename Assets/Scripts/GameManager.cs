@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
         scoreCanvas.SetActive(false);
         controlCanvas.SetActive(false);
         TitleCanvas.SetActive(true);
+        shopCanvas.SetActive(false);
 
         // 랜덤 맵 지정.
         RandomMap();
@@ -198,11 +199,12 @@ public class GameManager : MonoBehaviour
         hpDecreaseSpeed = 4;
         hpSlider.value = 15f;
 
-        Player.instance.GetComponent<Animator>().SetBool("Die", false);
+        Player.instance.GetAnimator().SetBool("Die", false);
 
         scoreCanvas.SetActive(true);
         controlCanvas.SetActive(true);
         TitleCanvas.SetActive(false);
+        shopCanvas.SetActive(false);
         gameOverZone.SetGameOverCheck(true);
 
         // 랜덤 맵 지정.
@@ -234,7 +236,7 @@ public class GameManager : MonoBehaviour
         TitleCanvas.SetActive(true);
 
         // Die Animation.
-        Player.instance.GetComponent<Animator>().SetBool("Die", true);
+        Player.instance.GetAnimator().SetBool("Die", true);
 
         // 좀비 리셋.
         //EnemyManager.instance.ResetEnemy();
@@ -257,5 +259,13 @@ public class GameManager : MonoBehaviour
         controlCanvas.SetActive(false);
         TitleCanvas.SetActive(false);
         shopCanvas.SetActive(true);
+    }
+
+    public void ShowTitleView()
+    {
+        scoreCanvas.SetActive(false);
+        controlCanvas.SetActive(false);
+        TitleCanvas.SetActive(true);
+        shopCanvas.SetActive(false);
     }
 }

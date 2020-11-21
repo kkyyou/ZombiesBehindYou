@@ -6,6 +6,15 @@ public class GameOverZone : MonoBehaviour
 {
     private bool gameOverCheck = true;
 
+    private void Update()
+    {
+        if (GameManager.instance.hpSlider.value <= 0 && gameOverCheck)
+        {
+            GameManager.instance.GameOver();
+            gameOverCheck = false;
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Zombie(Clone)" && gameOverCheck)

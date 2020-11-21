@@ -32,14 +32,16 @@ public class CharSelectManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = Instantiate(charPrefabs[(int)Characters.Fire]);
-        player.transform.position = transform.position;
+        //player = Instantiate(charPrefabs[(int)Characters.Fire]);
+        //player.transform.position = transform.position;
     }
 
     public void SelectCharacter(int number)
     {
-        Destroy(Player.instance.gameObject);
+        Destroy(Player.instance.transform.Find("Character").gameObject);
         player = Instantiate(charPrefabs[(number)]);
+        player.gameObject.name = "Character";
+        player.transform.parent = FindObjectOfType<Player>().gameObject.transform;
         player.transform.position = Player.instance.transform.position;
     }
     
