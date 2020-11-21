@@ -17,7 +17,7 @@ TagManager:
   - Background
   - TileMap
   - Characters
-  - 
+  - Zombie
   - 
   - 
   - 
@@ -51,6 +51,9 @@ TagManager:
   - name: Characters
     uniqueID: 2397324957
     locked: 0
-  - name: UI
+  - name: Zombie
     uniqueID: 3961559481
+    locked: 0
+  - name: UI
+    uniqueID: 1955191835
     locked: 0

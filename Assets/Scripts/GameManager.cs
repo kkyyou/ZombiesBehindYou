@@ -26,6 +26,11 @@ public class GameManager : MonoBehaviour
 
     public RightTargetZone rightTargetZone;
     public LeftTargetZone leftTargetZone;
+    public GameOverZone gameOverZone;
+
+    public GameObject scoreCanvas;
+    public GameObject controlCanvas;
+    public GameObject TitleCanvas;
 
     private Map currentMap; 
 
@@ -134,6 +139,10 @@ public class GameManager : MonoBehaviour
             Vector3 ltp = leftTargetZone.transform.position;
             ltp.y -= 14f;
             leftTargetZone.transform.position = ltp;
+
+            Vector3 gop = gameOverZone.transform.position;
+            gop.y -= 14f;
+            gameOverZone.transform.position = gop;
         }
         else if (ran == (int)Map.PINK)
         {
@@ -147,10 +156,29 @@ public class GameManager : MonoBehaviour
             Vector3 ltp = leftTargetZone.transform.position;
             ltp.y -= 28f;
             leftTargetZone.transform.position = ltp;
+
+            Vector3 gop = gameOverZone.transform.position;
+            gop.y -= 28f;
+            gameOverZone.transform.position = gop;
         }
 
         currentMap = (Map)ran;
 
         CloudManager.instance.SetCurrentCloud(currentMap);
+    }
+
+    public void GameStart()
+    {
+        scoreCanvas.SetActive(true);
+        controlCanvas.SetActive(true);
+        TitleCanvas.SetActive(false);
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("Game Over");
+        scoreCanvas.SetActive(false);
+        controlCanvas.SetActive(false);
+        TitleCanvas.SetActive(true);
     }
 }

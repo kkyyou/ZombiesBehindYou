@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public RightTargetZone rightTargetZone; // 히어로 오른쪽 공격 범위.
     public LeftTargetZone leftTargetZone;   // 히어로 왼쪽 공격 범위.
 
+    public LayerMask zombieLayerMask;
 
     private void Awake()
     {
@@ -194,7 +195,7 @@ public class Player : MonoBehaviour
     {
         RaycastHit2D hit;
 
-        hit = Physics2D.Linecast(transform.position, end);
+        hit = Physics2D.Linecast(transform.position, end, zombieLayerMask);
 
         if (hit.transform != null)
             return hit.collider;
