@@ -42,6 +42,9 @@ public class GameManager : MonoBehaviour
     private bool firstGame = true;
     private bool playing = false;
 
+    public Text gameOverScoreText;
+    public Text gameOverBestScoreText;
+
     private void Awake()
     {
         if (instance == null)
@@ -88,7 +91,7 @@ public class GameManager : MonoBehaviour
             AddScore(1);
 
             // Hp 회복.
-            RecoveryHP(10);
+            RecoveryHP(5);
         }
 
         if (shopCanvas.activeSelf && Player.instance.GetAnimator().GetBool("Die"))
@@ -254,6 +257,9 @@ public class GameManager : MonoBehaviour
 
         TitleCanvas.transform.Find("Panel").transform.Find("Title Panel").gameObject.SetActive(false);
         TitleCanvas.transform.Find("Panel").transform.Find("GameOver Panel").gameObject.SetActive(true);
+
+        // 게임 오버 시 현재 스코어 보여주기.
+        gameOverScoreText.text = score.ToString();
     }
 
     public void SetPlaying(bool isPlay)
@@ -285,7 +291,8 @@ public class GameManager : MonoBehaviour
         TitleCanvas.transform.Find("Panel").transform.Find("GameOver Panel").gameObject.SetActive(false);
 
         // 좀비 생성.
-        EnemyManager.instance.CreateStartZombies();
+        if (!firstGame)
+            EnemyManager.instance.CreateStartZombies();
 
         firstGame = true;
     }
