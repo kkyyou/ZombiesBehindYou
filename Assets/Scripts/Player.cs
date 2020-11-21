@@ -11,10 +11,12 @@ public class Player : MonoBehaviour
 
     private bool nextTurn = false; // 히어로 공격시 좀비들 한 스텝씩 이동.
 
-    public RightTargetZone rightTargetZone; // 히어로 오른쪽 공격 범위.
-    public LeftTargetZone leftTargetZone;   // 히어로 왼쪽 공격 범위.
+    private RightTargetZone rightTargetZone; // 히어로 오른쪽 공격 범위.
+    private LeftTargetZone leftTargetZone;   // 히어로 왼쪽 공격 범위.
 
     public LayerMask zombieLayerMask;
+
+    private int characterNo = 0;
 
     private void Awake()
     {
@@ -32,7 +34,10 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();    
+        rightTargetZone = FindObjectOfType<RightTargetZone>();
+        leftTargetZone = FindObjectOfType<LeftTargetZone>();
+
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -163,7 +168,7 @@ public class Player : MonoBehaviour
         else
         {
             // 한쪽만 존재하는데 양쪽 공격사용 시 HP 감소.
-            GameManager.instance.RecoveryHP(-10);
+            GameManager.instance.RecoveryHP(-15);
         }
 
         StartCoroutine(LeftRightAttackCoroutine());
@@ -192,7 +197,7 @@ public class Player : MonoBehaviour
 
     public bool GetNextTurn()
     {
-        return nextTurn; 
+        return nextTurn;
     }
 
     public void SetNextTurn(bool nextTurn)
@@ -210,5 +215,17 @@ public class Player : MonoBehaviour
             return hit.collider;
 
         return null;
+    }
+
+    public void RightCharacter()
+    {
+        Debug.Log(characterNo);
+        CharSelectManager.instance.SelectCharacter(1);
+        //characterNo++;
+    }
+
+    public void SelectCharacter()
+    {
+        GameManager.instance.ShowSelectCharcter();
     }
 }

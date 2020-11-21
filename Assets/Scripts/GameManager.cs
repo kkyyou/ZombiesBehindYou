@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     public GameObject scoreCanvas;
     public GameObject controlCanvas;
     public GameObject TitleCanvas;
+    public GameObject shopCanvas;
 
     private Map currentMap;
 
@@ -248,5 +249,13 @@ public class GameManager : MonoBehaviour
     public bool GetPlaying()
     {
         return playing;
+    }
+
+    public void ShowSelectCharcter()
+    {
+        scoreCanvas.SetActive(false);
+        controlCanvas.SetActive(false);
+        TitleCanvas.SetActive(false);
+        shopCanvas.SetActive(true);
     }
 }
