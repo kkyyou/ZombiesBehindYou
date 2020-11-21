@@ -188,7 +188,7 @@ public class Player : MonoBehaviour
         animator.SetBool("LeftRightAttack", false);
     }
 
-    void Flip()
+    public void Flip()
     {
         Vector3 theScale = transform.localScale;
         theScale = new Vector3(theScale.x * -1, theScale.y, theScale.z);
@@ -251,5 +251,15 @@ public class Player : MonoBehaviour
     {
         animator = transform.Find("Character").GetComponent<Animator>();
         return animator;
+    }
+
+    public bool GetIsRight()
+    {
+        return isRight;
+    }
+    
+    public void SetIsRight(bool _isRight)
+    {
+        isRight = _isRight;
     }
 }

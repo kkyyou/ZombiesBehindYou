@@ -91,6 +91,20 @@ public class GameManager : MonoBehaviour
             RecoveryHP(10);
         }
 
+        if (shopCanvas.activeSelf && Player.instance.GetAnimator().GetBool("Die"))
+        {
+            Player.instance.GetAnimator().SetBool("Die", false);
+
+            if (!Player.instance.GetIsRight())
+            {
+                Player.instance.Flip();
+                Player.instance.SetIsRight(true);
+            }
+
+            // 좀비 리셋.
+            EnemyManager.instance.ResetEnemy();
+        }
+
         if (playing)
             hpSlider.value -= Time.deltaTime * hpDecreaseSpeed;
     }
@@ -238,9 +252,8 @@ public class GameManager : MonoBehaviour
         // Die Animation.
         Player.instance.GetAnimator().SetBool("Die", true);
 
-        // 좀비 리셋.
-        //EnemyManager.instance.ResetEnemy();
-
+        TitleCanvas.transform.Find("Panel").transform.Find("Title Panel").gameObject.SetActive(false);
+        TitleCanvas.transform.Find("Panel").transform.Find("GameOver Panel").gameObject.SetActive(true);
     }
 
     public void SetPlaying(bool isPlay)
@@ -267,5 +280,13 @@ public class GameManager : MonoBehaviour
         controlCanvas.SetActive(false);
         TitleCanvas.SetActive(true);
         shopCanvas.SetActive(false);
+
+        TitleCanvas.transform.Find("Panel").transform.Find("Title Panel").gameObject.SetActive(true);
+        TitleCanvas.transform.Find("Panel").transform.Find("GameOver Panel").gameObject.SetActive(false);
+
+        // 좀비 생성.
+        EnemyManager.instance.CreateStartZombies();
+
+        firstGame = true;
     }
 }
