@@ -28,8 +28,8 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-
+        zombies = new List<GameObject>();
+        playerVector = Player.instance.transform.position;
     }
 
     // Update is called once per frame
@@ -84,7 +84,6 @@ public class EnemyManager : MonoBehaviour
 
     public void CreateStartZombies()
     {
-        zombies = new List<GameObject>();
         playerVector = Player.instance.transform.position;
 
         // 시작시 생성되는 좀비.
@@ -110,5 +109,16 @@ public class EnemyManager : MonoBehaviour
 
             zombies.Add(zombieClone);
         }
+    }
+
+    public void ResetEnemy()
+    {
+        for (int i = 0; i < zombies.Count; i++)
+        {
+            GameObject zombie = zombies[i];
+            Destroy(zombie);
+        }
+
+        zombies.Clear();
     }
 }

@@ -48,10 +48,10 @@ TagManager:
   - name: TileMap
     uniqueID: 195701093
     locked: 0
-  - name: Characters
+  - name: Zombie
     uniqueID: 2397324957
     locked: 0
-  - name: Zombie
+  - name: Characters
     uniqueID: 3961559481
     locked: 0
   - name: UI

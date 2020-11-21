@@ -28,11 +28,18 @@ public class GameManager : MonoBehaviour
     public LeftTargetZone leftTargetZone;
     public GameOverZone gameOverZone;
 
+    private Vector3 rightTargetZoneInitPos;
+    private Vector3 leftTargetZoneInitPos;
+    private Vector3 gameOverZoneInitPos;
+
     public GameObject scoreCanvas;
     public GameObject controlCanvas;
     public GameObject TitleCanvas;
 
-    private Map currentMap; 
+    private Map currentMap;
+
+    private bool firstGame = true;
+    private bool playing = false;
 
     private void Awake()
     {
@@ -50,6 +57,14 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rightTargetZoneInitPos = rightTargetZone.transform.position;
+        leftTargetZoneInitPos = leftTargetZone.transform.position;
+        gameOverZoneInitPos = gameOverZone.transform.position;
+
+        scoreCanvas.SetActive(false);
+        controlCanvas.SetActive(false);
+        TitleCanvas.SetActive(true);
+
         // 랜덤 맵 지정.
         RandomMap();
 
@@ -74,7 +89,8 @@ public class GameManager : MonoBehaviour
             RecoveryHP(10);
         }
 
-        hpSlider.value -= Time.deltaTime * hpDecreaseSpeed;
+        if (playing)
+            hpSlider.value -= Time.deltaTime * hpDecreaseSpeed;
     }
 
     IEnumerator ResetHpFillSprite()
@@ -121,26 +137,32 @@ public class GameManager : MonoBehaviour
 
     public void RandomMap()
     {
+        // 맵에 따른 플레이어, 박스컬라이더 위치 이동.
+
         int ran = Random.Range(0, 3);
         if (ran == (int)Map.GREEN)
         {
             mainCamera.transform.position = new Vector3(0.5f, 0f, -10f);
             Player.instance.transform.position = new Vector3(0.5f, -0.425f, 0f);
+
+            rightTargetZone.transform.position = rightTargetZoneInitPos;
+            leftTargetZone.transform.position = leftTargetZoneInitPos;
+            gameOverZone.transform.position = gameOverZoneInitPos;
         }
         else if (ran == (int)Map.DARK)
         {
             mainCamera.transform.position = new Vector3(0.5f, -14f, -10f);
             Player.instance.transform.position = new Vector3(0.5f, -14.425f, 0f);
 
-            Vector3 rtp = rightTargetZone.transform.position;
+            Vector3 rtp = rightTargetZoneInitPos;
             rtp.y -= 14f;
             rightTargetZone.transform.position = rtp;
 
-            Vector3 ltp = leftTargetZone.transform.position;
+            Vector3 ltp = leftTargetZoneInitPos;
             ltp.y -= 14f;
             leftTargetZone.transform.position = ltp;
 
-            Vector3 gop = gameOverZone.transform.position;
+            Vector3 gop = gameOverZoneInitPos;
             gop.y -= 14f;
             gameOverZone.transform.position = gop;
         }
@@ -149,15 +171,15 @@ public class GameManager : MonoBehaviour
             mainCamera.transform.position = new Vector3(0.5f, -28f, -10f);
             Player.instance.transform.position = new Vector3(0.5f, -28.425f, 0f);
 
-            Vector3 rtp = rightTargetZone.transform.position;
+            Vector3 rtp = rightTargetZoneInitPos;
             rtp.y -= 28f;
             rightTargetZone.transform.position = rtp;
 
-            Vector3 ltp = leftTargetZone.transform.position;
+            Vector3 ltp = leftTargetZoneInitPos;
             ltp.y -= 28f;
             leftTargetZone.transform.position = ltp;
 
-            Vector3 gop = gameOverZone.transform.position;
+            Vector3 gop = gameOverZoneInitPos;
             gop.y -= 28f;
             gameOverZone.transform.position = gop;
         }
@@ -169,16 +191,62 @@ public class GameManager : MonoBehaviour
 
     public void GameStart()
     {
+        // 초기화
+        score = 0;
+        scoreText.text = "0";
+        hpDecreaseSpeed = 4;
+        hpSlider.value = 15f;
+
+        Player.instance.GetComponent<Animator>().SetBool("Die", false);
+
         scoreCanvas.SetActive(true);
         controlCanvas.SetActive(true);
         TitleCanvas.SetActive(false);
+        gameOverZone.SetGameOverCheck(true);
+
+        // 랜덤 맵 지정.
+        if (!firstGame)
+        {
+            // 좀비 리셋.
+            EnemyManager.instance.ResetEnemy();
+
+            // 랜덤 맵.
+            RandomMap();
+
+            // 좀비 생성.
+            EnemyManager.instance.CreateStartZombies();
+        }
+
+        firstGame = false;
+
+        // 카메라 위치 변경.
+        mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(mainCamera.transform.position);
+
     }
 
     public void GameOver()
     {
-        Debug.Log("Game Over");
+        playing = false;
+
         scoreCanvas.SetActive(false);
         controlCanvas.SetActive(false);
         TitleCanvas.SetActive(true);
+
+        // Die Animation.
+        Player.instance.GetComponent<Animator>().SetBool("Die", true);
+
+        // 좀비 리셋.
+        //EnemyManager.instance.ResetEnemy();
+
+    }
+
+    public void SetPlaying(bool isPlay)
+    {
+        playing = isPlay;
+    }
+
+    public bool GetPlaying()
+    {
+        return playing;
     }
 }

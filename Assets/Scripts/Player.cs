@@ -43,6 +43,9 @@ public class Player : MonoBehaviour
 
     public void TurnButton()
     {
+        if (!GameManager.instance.GetPlaying())
+            GameManager.instance.SetPlaying(true);
+
         isRight = !isRight;
         Flip();
 
@@ -85,6 +88,9 @@ public class Player : MonoBehaviour
 
     public void AttackButton()
     {
+        if (!GameManager.instance.GetPlaying())
+            GameManager.instance.SetPlaying(true);
+
         animator.SetBool("Attack", true);
 
         // Attack Sound 랜덤 재생.
@@ -121,6 +127,9 @@ public class Player : MonoBehaviour
 
     public void LeftRightAttackButton()
     {
+        if (!GameManager.instance.GetPlaying())
+            GameManager.instance.SetPlaying(true);
+
         animator.SetBool("LeftRightAttack", true);
 
         // Attack Sound 랜덤 재생.
