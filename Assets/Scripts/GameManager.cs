@@ -17,8 +17,9 @@ public class GameManager : MonoBehaviour
     public Camera mainCamera;
     
     private int score;
+    private int bestScore;
     public Text scoreText;
-
+    
     public Slider hpSlider;
     public float hpDecreaseSpeed;
 
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
 
     public Text gameOverScoreText;
     public Text gameOverBestScoreText;
+    public Text newRecordText;
 
     private void Awake()
     {
@@ -61,6 +63,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 게임 시작 시 정보 로드.
+        DBManager.instance.CallLoad();
+
         rightTargetZoneInitPos = rightTargetZone.transform.position;
         leftTargetZoneInitPos = leftTargetZone.transform.position;
         gameOverZoneInitPos = gameOverZone.transform.position;
@@ -131,7 +136,7 @@ public class GameManager : MonoBehaviour
         scoreText.text = score.ToString();
 
         if (hpDecreaseSpeed < 30)
-            hpDecreaseSpeed += 0.05f; 
+            hpDecreaseSpeed += 0.08f; 
     }
 
     public void RecoveryHP(int recoverHP)
@@ -251,6 +256,15 @@ public class GameManager : MonoBehaviour
         scoreCanvas.SetActive(false);
         controlCanvas.SetActive(false);
         TitleCanvas.SetActive(true);
+        newRecordText.gameObject.SetActive(false);
+
+        // 최대 스코어 저장.
+        if (bestScore < score)
+        {
+            bestScore = score;
+            newRecordText.gameObject.SetActive(true);
+            StartCoroutine(NewRecordHighlightCoroutine());
+        }
 
         // Die Animation.
         Player.instance.GetAnimator().SetBool("Die", true);
@@ -260,6 +274,25 @@ public class GameManager : MonoBehaviour
 
         // 게임 오버 시 현재 스코어 보여주기.
         gameOverScoreText.text = score.ToString();
+
+        gameOverBestScoreText.text = bestScore.ToString();
+
+        // 게임 오버 시 정보 저장.
+        DBManager.instance.CallSave();
+
+    }
+
+    IEnumerator NewRecordHighlightCoroutine()
+    {
+        Color origColor = newRecordText.color;
+
+        while (newRecordText.gameObject.activeSelf)
+        {
+            newRecordText.color = Color.white;
+            yield return new WaitForSeconds(0.2f);
+            newRecordText.color = origColor;
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     public void SetPlaying(bool isPlay)
@@ -278,6 +311,7 @@ public class GameManager : MonoBehaviour
         controlCanvas.SetActive(false);
         TitleCanvas.SetActive(false);
         shopCanvas.SetActive(true);
+        newRecordText.gameObject.SetActive(false);
     }
 
     public void ShowTitleView()
@@ -295,5 +329,15 @@ public class GameManager : MonoBehaviour
             EnemyManager.instance.CreateStartZombies();
 
         firstGame = true;
+    }
+
+    public int GetBestScore()
+    {
+        return bestScore;
+    }
+
+    public void SetBestScore(int bs)
+    {
+        bestScore = bs;
     }
 }
