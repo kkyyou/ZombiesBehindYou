@@ -10,6 +10,7 @@ public class DBManager : MonoBehaviour
     public class Data
     {
         public int bestScore;
+        public int totalScore;
     }
 
     public Data data;
@@ -35,12 +36,14 @@ public class DBManager : MonoBehaviour
         if (data.bestScore < GameManager.instance.GetBestScore())
         {
             data.bestScore = GameManager.instance.GetBestScore();
-            Debug.Log("세이브 BestScore : " + data.bestScore);
+            Debug.Log("Save BestScore : " + data.bestScore);
         }
+
+        data.totalScore += GameManager.instance.GetScore();
+        Debug.Log("Save TotalScore : " + data.totalScore);
 
         BinaryFormatter bf = new BinaryFormatter(); // 2진 파일로 변환.
         FileStream file = File.Create(Application.dataPath + "/SaveFile.dat");
-
 
         bf.Serialize(file, data);
         file.Close();
@@ -58,8 +61,14 @@ public class DBManager : MonoBehaviour
             {
                 data = (Data)bf.Deserialize(file);
 
+                // 최고 점수 로드.
                 GameManager.instance.SetBestScore(data.bestScore);
-                Debug.Log("로드 BestScore : " + GameManager.instance.GetBestScore());
+                Debug.Log("Load BestScore : " + GameManager.instance.GetBestScore());
+
+                // 총합 점수 로드.
+                GameManager.instance.SetTotalScore(data.totalScore);
+                Debug.Log("Load TotalScore : " + GameManager.instance.GetTotalScore());
+
                 file.Close();
             }
         }

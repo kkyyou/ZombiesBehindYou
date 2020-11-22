@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     
     private int score;
     private int bestScore;
+    private int totalScore;
     public Text scoreText;
     
     public Slider hpSlider;
@@ -46,6 +47,8 @@ public class GameManager : MonoBehaviour
     public Text gameOverScoreText;
     public Text gameOverBestScoreText;
     public Text newRecordText;
+    public Text shopBestScoreText;
+    public Text shopTotalScoreText;
 
     private void Awake()
     {
@@ -266,6 +269,9 @@ public class GameManager : MonoBehaviour
             StartCoroutine(NewRecordHighlightCoroutine());
         }
 
+        // 총합 스코어 업데이트.
+        totalScore += score;
+
         // Die Animation.
         Player.instance.GetAnimator().SetBool("Die", true);
 
@@ -312,6 +318,9 @@ public class GameManager : MonoBehaviour
         TitleCanvas.SetActive(false);
         shopCanvas.SetActive(true);
         newRecordText.gameObject.SetActive(false);
+
+        shopBestScoreText.text = bestScore.ToString();
+        shopTotalScoreText.text = totalScore.ToString();
     }
 
     public void ShowTitleView()
@@ -339,5 +348,25 @@ public class GameManager : MonoBehaviour
     public void SetBestScore(int bs)
     {
         bestScore = bs;
+    }
+
+    public int GetTotalScore()
+    {
+        return totalScore;
+    }
+
+    public void SetTotalScore(int ts)
+    {
+        totalScore = ts;
+    }
+
+    public int GetScore()
+    {
+        return score;
+    }
+
+    public void SetScore(int s)
+    {
+        score = s;
     }
 }
