@@ -50,6 +50,8 @@ public class GameManager : MonoBehaviour
     public Text shopBestScoreText;
     public Text shopTotalScoreText;
 
+    public Button shopSelectButton;
+
     private void Awake()
     {
         if (instance == null)
@@ -68,6 +70,9 @@ public class GameManager : MonoBehaviour
     {
         // 게임 시작 시 정보 로드.
         DBManager.instance.CallLoad();
+
+        // 게임 시작 시 캐릭터 이전에 선택했었던 캐릭터로 변경.
+        CharSelectManager.instance.ChangeCharacter(Player.instance.GetSelectedCharacterNumber());
 
         rightTargetZoneInitPos = rightTargetZone.transform.position;
         leftTargetZoneInitPos = leftTargetZone.transform.position;
@@ -285,7 +290,6 @@ public class GameManager : MonoBehaviour
 
         // 게임 오버 시 정보 저장.
         DBManager.instance.CallSave();
-
     }
 
     IEnumerator NewRecordHighlightCoroutine()
@@ -321,6 +325,14 @@ public class GameManager : MonoBehaviour
 
         shopBestScoreText.text = bestScore.ToString();
         shopTotalScoreText.text = totalScore.ToString();
+
+        if (!Player.instance.GetIsRight())
+        {
+            Player.instance.Flip();
+            Player.instance.SetIsRight(true);
+        } 
+
+        CharSelectManager.instance.CharacterInfo(Player.instance.GetSelectedCharacterNumber());
     }
 
     public void ShowTitleView()

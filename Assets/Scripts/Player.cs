@@ -40,10 +40,21 @@ public class Player : MonoBehaviour
         animator = transform.Find("Character").GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    // 추후에 캐릭터 방향 랜덤이 필요할 까?
+    public void RandomCharacterDir()
     {
+        int dirRan = Random.Range(0, 2);
 
+        // 0 : Right , 1 : Left.
+        if (dirRan == 0)
+        {
+            isRight = true;
+        }
+        else
+        {
+            Flip();
+            isRight = false;
+        }
     }
 
     public void TurnButton()
@@ -224,7 +235,7 @@ public class Player : MonoBehaviour
         if (characterNo > CharSelectManager.instance.CharPrefabCount() - 1)
             characterNo = 0;
 
-        CharSelectManager.instance.SelectCharacter(characterNo);
+        CharSelectManager.instance.CharacterInfo(characterNo);
     }
 
     public void LeftCharacter()
@@ -234,7 +245,7 @@ public class Player : MonoBehaviour
         if (characterNo < 0)
             characterNo = CharSelectManager.instance.CharPrefabCount() - 1;
 
-        CharSelectManager.instance.SelectCharacter(characterNo);
+        CharSelectManager.instance.CharacterInfo(characterNo);
     }
 
     public void ShowSelectCharacterView()
@@ -244,6 +255,8 @@ public class Player : MonoBehaviour
 
     public void SelectCharacter()
     {
+        CharSelectManager.instance.SelectCharacter(characterNo);
+
         GameManager.instance.ShowTitleView();
     }
 
@@ -261,5 +274,15 @@ public class Player : MonoBehaviour
     public void SetIsRight(bool _isRight)
     {
         isRight = _isRight;
+    }
+
+    public int GetSelectedCharacterNumber()
+    {
+        return characterNo;
+    }
+
+    public void SetSelectedCharacterNumber(int charNo)
+    {
+        characterNo = charNo;
     }
 }

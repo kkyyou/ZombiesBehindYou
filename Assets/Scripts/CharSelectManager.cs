@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharSelectManager : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class CharSelectManager : MonoBehaviour
 
     public GameObject[] charPrefabs;
     public GameObject player;
+
+    public Text RequireText;
+    public Text RequireInfoText;
 
     private void Awake()
     {
@@ -36,7 +40,7 @@ public class CharSelectManager : MonoBehaviour
         //player.transform.position = transform.position;
     }
 
-    public void SelectCharacter(int number)
+    public void ChangeCharacter(int number)
     {
         Destroy(Player.instance.transform.Find("Character").gameObject);
         player = Instantiate(charPrefabs[(number)]);
@@ -44,9 +48,73 @@ public class CharSelectManager : MonoBehaviour
         player.transform.parent = FindObjectOfType<Player>().gameObject.transform;
         player.transform.position = Player.instance.transform.position;
     }
-    
+
+    public void CharacterInfo(int number)
+    {
+        ChangeCharacter(number);
+
+        if (number == (int)Characters.Fire)
+        {
+            SelectButtonEnableTrue();
+
+            RequireText.text = "Default";
+            RequireText.color = Color.green;
+
+            RequireInfoText.text = "";
+        }
+        else if (number == (int)Characters.PunchGirl)
+        {
+            RequireText.text = "Total 100";
+            RequireText.color = Color.white;
+
+            if (IsPunchGirlConditionFulfill())
+            {
+                SelectButtonEnableTrue();
+
+                RequireInfoText.text = "100/100";
+                RequireInfoText.color = Color.green;
+            }
+            else
+            {
+                SelectButtonEnableFalse();
+
+                RequireInfoText.text = GameManager.instance.GetTotalScore() + "/100";
+                RequireInfoText.color = Color.red;
+            }
+        }
+    }
+
+    public void SelectCharacter(int number)
+    {
+        // 선택되었던 캐릭터 넘버 세이브.
+        DBManager.instance.data.selectedCharacterNumber = number;
+        Debug.Log("Save Selected Character Number : " + number);
+
+        DBManager.instance.SaveCurrentData();
+    }
+
     public int CharPrefabCount()
     {
         return charPrefabs.Length;
+    }
+
+    public bool IsPunchGirlConditionFulfill()
+    {
+        if (GameManager.instance.GetTotalScore() >= 100)
+            return true;
+
+        return false;
+    }
+
+    public void SelectButtonEnableTrue()
+    {
+        GameManager.instance.shopSelectButton.enabled = true;
+        GameManager.instance.shopSelectButton.gameObject.transform.Find("SelectNo").gameObject.SetActive(false);
+    }
+
+    public void SelectButtonEnableFalse()
+    {
+        GameManager.instance.shopSelectButton.enabled = false;
+        GameManager.instance.shopSelectButton.gameObject.transform.Find("SelectNo").gameObject.SetActive(true);
     }
 }
