@@ -285,4 +285,26 @@ public class Player : MonoBehaviour
     {
         characterNo = charNo;
     }
+
+    public void ClickPauseBtn()
+    {
+        if (!GameManager.instance.GetPlaying())
+            return;
+
+        GameManager.instance.SetPlaying(false);
+        GameManager.instance.SetControlButtonEnabled(false);
+
+        GameManager.instance.pauseCanvas.SetActive(true);
+    }
+
+    public void ClickReplay()
+    {
+        if (GameManager.instance.GetPlaying())
+            return;
+
+        GameManager.instance.SetPlaying(true);
+        GameManager.instance.SetControlButtonEnabled(true);
+
+        GameManager.instance.pauseCanvas.SetActive(false);
+    }
 }

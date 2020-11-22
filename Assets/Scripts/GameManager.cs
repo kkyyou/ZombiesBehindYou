@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     public GameObject controlCanvas;
     public GameObject TitleCanvas;
     public GameObject shopCanvas;
+    public GameObject pauseCanvas;
 
     private Map currentMap;
 
@@ -51,6 +52,9 @@ public class GameManager : MonoBehaviour
     public Text shopTotalScoreText;
 
     public Button shopSelectButton;
+    public Button turnBtn;
+    public Button attackLRBtn;
+    public Button attackBtn;
 
     private void Awake()
     {
@@ -68,6 +72,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        TitleCanvas.SetActive(true);
+        controlCanvas.SetActive(false);
+        scoreCanvas.SetActive(false);
+        shopCanvas.SetActive(false);
+        pauseCanvas.SetActive(false);
+
         // 게임 시작 시 정보 로드.
         DBManager.instance.CallLoad();
 
@@ -78,16 +88,8 @@ public class GameManager : MonoBehaviour
         leftTargetZoneInitPos = leftTargetZone.transform.position;
         gameOverZoneInitPos = gameOverZone.transform.position;
 
-        scoreCanvas.SetActive(false);
-        controlCanvas.SetActive(false);
-        TitleCanvas.SetActive(true);
-        shopCanvas.SetActive(false);
-
         // 랜덤 맵 지정.
         RandomMap();
-
-        // 카메라 위치 변경.
-        mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(mainCamera.transform.position);
 
         // 처음 시작 시 좀비 생성.
         EnemyManager.instance.CreateStartZombies();
@@ -174,6 +176,9 @@ public class GameManager : MonoBehaviour
         int ran = Random.Range(0, 3);
         if (ran == (int)Map.GREEN)
         {
+            // 카메라 흔들기 위치 초기화.
+            mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(new Vector3(0.5f, 0f, -10f));
+
             mainCamera.transform.position = new Vector3(0.5f, 0f, -10f);
             Player.instance.transform.position = new Vector3(0.5f, -0.425f, 0f);
 
@@ -183,6 +188,9 @@ public class GameManager : MonoBehaviour
         }
         else if (ran == (int)Map.DARK)
         {
+            // 카메라 흔들기 위치 초기화.
+            mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(new Vector3(0.5f, -14f, -10f));
+            
             mainCamera.transform.position = new Vector3(0.5f, -14f, -10f);
             Player.instance.transform.position = new Vector3(0.5f, -14.425f, 0f);
 
@@ -200,6 +208,9 @@ public class GameManager : MonoBehaviour
         }
         else if (ran == (int)Map.PINK)
         {
+            // 카메라 흔들기 위치 초기화.
+            mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(new Vector3(0.5f, -28f, -10f));
+
             mainCamera.transform.position = new Vector3(0.5f, -28f, -10f);
             Player.instance.transform.position = new Vector3(0.5f, -28.425f, 0f);
 
@@ -380,5 +391,12 @@ public class GameManager : MonoBehaviour
     public void SetScore(int s)
     {
         score = s;
+    }
+
+    public void SetControlButtonEnabled(bool enabled)
+    {
+        turnBtn.enabled = enabled;
+        attackBtn.enabled = enabled;
+        attackLRBtn.enabled = enabled;
     }
 }

@@ -23,7 +23,7 @@ public class RightTargetZone : MonoBehaviour
         AudioManager.instance.PlayRandomDamageSound();
 
         // 카메라 흔들기.
-        shakeCamera.VibrateForTime(0.1f);
+        StartCoroutine(shakeCamera.Shake(0.05f, 0.15f));
 
         Rigidbody2D zombieRigid = collision.gameObject.GetComponent<Rigidbody2D>();
         zombieRigid.AddForce(new Vector2(ranForceX, ranForceY));
