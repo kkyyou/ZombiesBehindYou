@@ -5,28 +5,11 @@ using UnityEngine;
 public class ShakeCamera : MonoBehaviour
 {
     // 카메라 흔들기.
-
     private Vector3 initialPosition;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //if (shakeTime > 0)
-        //{
-        //    transform.position = Random.insideUnitSphere * shakeAmount + initialPosition;
-        //    shakeTime -= Time.deltaTime;
-        //}
-        //else
-        //{
-        //    shakeTime = 0.0f;
-        //    transform.position = initialPosition;
-        //    // canvas.renderMode = RenderMode.ScreenSpaceCamera;
-        //}
+        //transform.position = new Vector3(0.5f, -14f, -10f);
     }
 
     public IEnumerator Shake(float _amount, float _duration)

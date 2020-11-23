@@ -399,4 +399,9 @@ public class GameManager : MonoBehaviour
         attackBtn.enabled = enabled;
         attackLRBtn.enabled = enabled;
     }
+
+    public Map GetCurrentMap()
+    {
+        return currentMap;
+    }
 }

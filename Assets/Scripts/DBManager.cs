@@ -46,7 +46,7 @@ public class DBManager : MonoBehaviour
         Debug.Log("Save TotalScore : " + data.totalScore);
 
         BinaryFormatter bf = new BinaryFormatter(); // 2진 파일로 변환.
-        FileStream file = File.Create(Application.dataPath + "/SaveFile.dat");
+        FileStream file = File.Create(Application.persistentDataPath + "/SaveFile.dat");
 
         bf.Serialize(file, data);
         file.Close();
@@ -55,7 +55,7 @@ public class DBManager : MonoBehaviour
     public void SaveCurrentData()
     {
         BinaryFormatter bf = new BinaryFormatter(); // 2진 파일로 변환.
-        FileStream file = File.Create(Application.dataPath + "/SaveFile.dat");
+        FileStream file = File.Create(Application.persistentDataPath + "/SaveFile.dat");
 
         bf.Serialize(file, data);
         file.Close();
@@ -64,10 +64,10 @@ public class DBManager : MonoBehaviour
     // 게임 시작 시 정보 로드.
     public void CallLoad()
     {
-        if (File.Exists(Application.dataPath + "/SaveFile.dat"))
+        if (File.Exists(Application.persistentDataPath + "/SaveFile.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter(); // 2진 파일로 변환.
-            FileStream file = File.Open(Application.dataPath + "/SaveFile.dat", FileMode.Open);
+            FileStream file = File.Open(Application.persistentDataPath + "/SaveFile.dat", FileMode.Open);
 
             if (file != null && file.Length > 0)
             {
@@ -91,7 +91,7 @@ public class DBManager : MonoBehaviour
         else
         {
             Debug.Log("Create");
-            FileStream file = File.Create(Application.dataPath + "/SaveFile.dat");
+            FileStream file = File.Create(Application.persistentDataPath + "/SaveFile.dat");
             file.Close();
         }
     }

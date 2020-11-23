@@ -40,7 +40,7 @@ public class Zombie : MonoBehaviour
             currentWalkCount++;
 
             // 각 반복당 0.01초 대기함으로써 부드럽게 캐릭터 이동.
-            yield return new WaitForSeconds(0.005f);
+            yield return new WaitForSeconds(0.001f);
         }
 
         currentWalkCount = 0;
