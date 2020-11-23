@@ -22,14 +22,15 @@ public class LeftTargetZone : MonoBehaviour
         collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
 
         int ranForceX = Random.Range(-1000, -1200);
-        int ranForceY = Random.Range(600, 800);
+        int ranForceY = Random.Range(600, 1200);
         int ranTorque = Random.Range(-200, -400);
 
         // 좀비 맞는 사운드 랜덤 재생.
-        AudioManager.instance.PlayRandomDamageSound();
+        if (GameManager.instance.GetListenSfx())
+            AudioManager.instance.PlayRandomDamageSound();
 
         // 카메라 흔들기.
-        StartCoroutine(shakeCamera.Shake(0.05f, 0.15f));
+        StartCoroutine(shakeCamera.Shake(0.05f, 0.12f));
 
         Rigidbody2D zombieRigid = collision.gameObject.GetComponent<Rigidbody2D>();
         zombieRigid.AddForce(new Vector2(ranForceX, ranForceY));

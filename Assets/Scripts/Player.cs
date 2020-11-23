@@ -68,7 +68,8 @@ public class Player : MonoBehaviour
         animator.SetBool("Attack", true);
 
         // Attack Sound 랜덤 재생.
-        AudioManager.instance.PlayRandomAttackSound();
+        if (GameManager.instance.GetListenSfx())
+            AudioManager.instance.PlayRandomAttackSound();
 
         // 플래그 변경하여 Zone에서 Zombie가 날아가게 한다.
         if (isRight)
@@ -110,7 +111,8 @@ public class Player : MonoBehaviour
         animator.SetBool("Attack", true);
 
         // Attack Sound 랜덤 재생.
-        AudioManager.instance.PlayRandomAttackSound();
+        if (GameManager.instance.GetListenSfx())
+            AudioManager.instance.PlayRandomAttackSound();
 
         Collider2D collision;
         Vector2 playerVector = transform.position;
@@ -135,6 +137,10 @@ public class Player : MonoBehaviour
 
             GameManager.instance.SetAttackZombie(true);
         }
+        else
+        {
+            Debug.Log("No Hit");
+        }
 
         StartCoroutine(AttackCoroutine());
 
@@ -149,7 +155,8 @@ public class Player : MonoBehaviour
         animator.SetBool("LeftRightAttack", true);
 
         // Attack Sound 랜덤 재생.
-        AudioManager.instance.PlayRandomAttackSound();
+        if (GameManager.instance.GetListenSfx())
+            AudioManager.instance.PlayRandomAttackSound();
 
         // Right
         Vector2 vector1 = transform.position;
@@ -286,25 +293,8 @@ public class Player : MonoBehaviour
         characterNo = charNo;
     }
 
-    public void ClickPauseBtn()
+    public void ClickSettingBtn()
     {
-        if (!GameManager.instance.GetPlaying())
-            return;
-
-        GameManager.instance.SetPlaying(false);
-        GameManager.instance.SetControlButtonEnabled(false);
-
-        GameManager.instance.pauseCanvas.SetActive(true);
-    }
-
-    public void ClickReplay()
-    {
-        if (GameManager.instance.GetPlaying())
-            return;
-
-        GameManager.instance.SetPlaying(true);
-        GameManager.instance.SetControlButtonEnabled(true);
-
-        GameManager.instance.pauseCanvas.SetActive(false);
+        GameManager.instance.ShowSettingView();
     }
 }

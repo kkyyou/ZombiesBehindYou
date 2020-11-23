@@ -9,6 +9,7 @@ public class EnemyManager : MonoBehaviour
     private Vector3 playerVector;
 
     public GameObject prefab_zombie;
+    public GameObject zombiePrefabs;  // 하이라키에 생성되는 좀비 프리팹을 얘의 자식으로 정리.
 
     private List<GameObject> zombies;
 
@@ -44,16 +45,16 @@ public class EnemyManager : MonoBehaviour
 
             if (leftOrRight < 45)
             {
-                CreateZombie(new Vector3(playerVector.x - 10, playerVector.y, playerVector.z));
+                CreateZombie(new Vector3(playerVector.x - 10, playerVector.y + 0.3f, playerVector.z));
             }
             else if (leftOrRight >= 45 && leftOrRight < 90)
             {
-                CreateZombie(new Vector3(playerVector.x + 10, playerVector.y, playerVector.z));
+                CreateZombie(new Vector3(playerVector.x + 10, playerVector.y + 0.3f, playerVector.z));
             }
             else if (leftOrRight >= 90)
             {
-                CreateZombie(new Vector3(playerVector.x - 10, playerVector.y, playerVector.z));
-                CreateZombie(new Vector3(playerVector.x + 10, playerVector.y, playerVector.z));
+                CreateZombie(new Vector3(playerVector.x - 10, playerVector.y + 0.3f, playerVector.z));
+                CreateZombie(new Vector3(playerVector.x + 10, playerVector.y + 0.3f, playerVector.z));
             }
 
             // 모든 좀비 히어로방향으로 한 칸 이동.
@@ -74,6 +75,7 @@ public class EnemyManager : MonoBehaviour
     public void CreateZombie(Vector3 vector)
     {
         GameObject zombieClone = Instantiate(prefab_zombie, vector, Quaternion.Euler(Vector3.zero));
+        zombieClone.transform.parent = zombiePrefabs.transform;
         Zombie zb = zombieClone.GetComponent<Zombie>();
 
         if (vector.x - playerVector.x < 0)
@@ -102,6 +104,7 @@ public class EnemyManager : MonoBehaviour
             }
 
             GameObject zombieClone = Instantiate(prefab_zombie, vector, Quaternion.Euler(Vector3.zero));
+            zombieClone.transform.parent = zombiePrefabs.transform;
 
             // 좌측 좀비면 Flip.
             if (leftOrRight == 0)

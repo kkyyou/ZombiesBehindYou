@@ -20,7 +20,9 @@ public class GameManager : MonoBehaviour
     private int bestScore;
     private int totalScore;
     public Text scoreText;
-    
+    private bool listenSfx = true;
+    private bool listenBgm = true;
+
     public Slider hpSlider;
     public float hpDecreaseSpeed;
 
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour
     public GameObject TitleCanvas;
     public GameObject shopCanvas;
     public GameObject pauseCanvas;
+    public GameObject settingCanvas;
 
     private Map currentMap;
 
@@ -55,6 +58,7 @@ public class GameManager : MonoBehaviour
     public Button turnBtn;
     public Button attackLRBtn;
     public Button attackBtn;
+
 
     private void Awake()
     {
@@ -77,6 +81,7 @@ public class GameManager : MonoBehaviour
         scoreCanvas.SetActive(false);
         shopCanvas.SetActive(false);
         pauseCanvas.SetActive(false);
+        settingCanvas.SetActive(false);
 
         // 게임 시작 시 정보 로드.
         DBManager.instance.CallLoad();
@@ -92,7 +97,7 @@ public class GameManager : MonoBehaviour
         RandomMap();
 
         // 처음 시작 시 좀비 생성.
-        EnemyManager.instance.CreateStartZombies();
+        //EnemyManager.instance.CreateStartZombies();
     }
 
     // Update is called once per frame
@@ -123,8 +128,8 @@ public class GameManager : MonoBehaviour
             EnemyManager.instance.ResetEnemy();
         }
 
-        if (playing)
-            hpSlider.value -= Time.deltaTime * hpDecreaseSpeed;
+        //if (playing)
+            //hpSlider.value -= Time.deltaTime * hpDecreaseSpeed;
     }
 
     IEnumerator ResetHpFillSprite()
@@ -177,10 +182,10 @@ public class GameManager : MonoBehaviour
         if (ran == (int)Map.GREEN)
         {
             // 카메라 흔들기 위치 초기화.
-            mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(new Vector3(0.5f, 0f, -10f));
+            mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(new Vector3(0f, 0f, -10f));
 
-            mainCamera.transform.position = new Vector3(0.5f, 0f, -10f);
-            Player.instance.transform.position = new Vector3(0.5f, -0.425f, 0f);
+            mainCamera.transform.position = new Vector3(0f, 0f, -10f);
+            Player.instance.transform.position = new Vector3(0f, -0.425f, 0f);
 
             rightTargetZone.transform.position = rightTargetZoneInitPos;
             leftTargetZone.transform.position = leftTargetZoneInitPos;
@@ -189,10 +194,10 @@ public class GameManager : MonoBehaviour
         else if (ran == (int)Map.DARK)
         {
             // 카메라 흔들기 위치 초기화.
-            mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(new Vector3(0.5f, -14f, -10f));
+            mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(new Vector3(0f, -14f, -10f));
             
-            mainCamera.transform.position = new Vector3(0.5f, -14f, -10f);
-            Player.instance.transform.position = new Vector3(0.5f, -14.425f, 0f);
+            mainCamera.transform.position = new Vector3(0f, -14f, -10f);
+            Player.instance.transform.position = new Vector3(0f, -14.425f, 0f);
 
             Vector3 rtp = rightTargetZoneInitPos;
             rtp.y -= 14f;
@@ -209,10 +214,10 @@ public class GameManager : MonoBehaviour
         else if (ran == (int)Map.PINK)
         {
             // 카메라 흔들기 위치 초기화.
-            mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(new Vector3(0.5f, -28f, -10f));
+            mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(new Vector3(0f, -28f, -10f));
 
-            mainCamera.transform.position = new Vector3(0.5f, -28f, -10f);
-            Player.instance.transform.position = new Vector3(0.5f, -28.425f, 0f);
+            mainCamera.transform.position = new Vector3(0f, -28f, -10f);
+            Player.instance.transform.position = new Vector3(0f, -28.425f, 0f);
 
             Vector3 rtp = rightTargetZoneInitPos;
             rtp.y -= 28f;
@@ -247,21 +252,22 @@ public class GameManager : MonoBehaviour
         TitleCanvas.SetActive(false);
         shopCanvas.SetActive(false);
         gameOverZone.SetGameOverCheck(true);
+        settingCanvas.SetActive(false);
 
         // 랜덤 맵 지정.
-        if (!firstGame)
-        {
-            // 좀비 리셋.
-            EnemyManager.instance.ResetEnemy();
+        //if (!firstGame)
+        //{
+        // 좀비 리셋.
+        EnemyManager.instance.ResetEnemy();
 
-            // 랜덤 맵.
-            RandomMap();
+        // 랜덤 맵.
+        RandomMap();
 
-            // 좀비 생성.
-            EnemyManager.instance.CreateStartZombies();
-        }
+        // 좀비 생성.
+        EnemyManager.instance.CreateStartZombies();
+        //}
 
-        firstGame = false;
+        //firstGame = false;
 
         // 카메라 위치 변경.
         mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(mainCamera.transform.position);
@@ -346,19 +352,35 @@ public class GameManager : MonoBehaviour
         CharSelectManager.instance.CharacterInfo(Player.instance.GetSelectedCharacterNumber());
     }
 
+    public void ShowSettingView()
+    {
+        scoreCanvas.SetActive(false);
+        controlCanvas.SetActive(false);
+        TitleCanvas.SetActive(false);
+        shopCanvas.SetActive(false);
+        pauseCanvas.SetActive(false);
+        settingCanvas.SetActive(true);
+    }
+
     public void ShowTitleView()
     {
         scoreCanvas.SetActive(false);
         controlCanvas.SetActive(false);
         TitleCanvas.SetActive(true);
         shopCanvas.SetActive(false);
+        pauseCanvas.SetActive(false);
+        settingCanvas.SetActive(false);
 
         TitleCanvas.transform.Find("Panel").transform.Find("Title Panel").gameObject.SetActive(true);
         TitleCanvas.transform.Find("Panel").transform.Find("GameOver Panel").gameObject.SetActive(false);
 
+        GameManager.instance.SetControlButtonEnabled(true);
+
         // 좀비 생성.
-        if (!firstGame)
-            EnemyManager.instance.CreateStartZombies();
+        //if (!firstGame)
+        //EnemyManager.instance.CreateStartZombies();
+
+        EnemyManager.instance.ResetEnemy();
 
         firstGame = true;
     }
@@ -403,5 +425,25 @@ public class GameManager : MonoBehaviour
     public Map GetCurrentMap()
     {
         return currentMap;
+    }
+
+    public void SetListenSfx(bool _listen)
+    {
+        listenSfx = _listen;
+    }
+
+    public bool GetListenSfx()
+    {
+        return listenSfx;
+    }
+
+    public void SetListenBgm(bool _listen)
+    {
+        listenBgm = _listen;
+    }
+
+    public bool GetListenBgm()
+    {
+        return listenBgm;
     }
 }

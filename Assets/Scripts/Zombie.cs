@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class Zombie : MonoBehaviour
 {
-    private float speed = 0.05f;     // 0.05
-    private int walkCount = 20;   // 20
-
-    private int currentWalkCount = 0; // 0.05 * 20
+    private float speed = 8f;     // 0.05
 
     private int moveDir;
     
     public Animator anim;
 
-    private void Start()
+    private void Awake()
     {
         float playerLocX = Player.instance.transform.position.x;
         float zombieLocX = transform.position.x;
@@ -33,17 +30,21 @@ public class Zombie : MonoBehaviour
     {
         anim.SetBool("Walk", true);
 
-        while (currentWalkCount < walkCount)
+        Vector3 zombieVector = this.transform.position;
+        Vector3 target = new Vector3(zombieVector.x + (moveDir * 1), zombieVector.y, zombieVector.z);
+        
+        // 현재 좀비 위치를 Target 위치로 이동 시킴. 
+        while (true)
         {
-            transform.Translate(moveDir * speed, 0, 0);
+            zombieVector = Vector3.MoveTowards(zombieVector, target, speed * Time.deltaTime);
+            this.transform.position = zombieVector;
 
-            currentWalkCount++;
+            if (this.transform.position == target)
+                break;
 
-            // 각 반복당 0.01초 대기함으로써 부드럽게 캐릭터 이동.
-            yield return new WaitForSeconds(0.001f);
+            yield return null;
         }
 
-        currentWalkCount = 0;
         anim.SetBool("Walk", false);
     }
     
@@ -57,5 +58,10 @@ public class Zombie : MonoBehaviour
     public int GetMoveDir()
     {
         return moveDir;
+    }
+
+    public void SetMoveDir(int _moveDir)
+    {
+        moveDir = _moveDir;
     }
 }

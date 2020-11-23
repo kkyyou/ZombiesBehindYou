@@ -77,7 +77,8 @@ public class AudioManager : MonoBehaviour
             soundObejct.transform.SetParent(this.transform);
         }
 
-        Play("background");
+        if (GameManager.instance.GetListenBgm())
+            Play("background");
     }
 
     public void Play(string name)
