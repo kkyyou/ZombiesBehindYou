@@ -4962,6 +4962,8 @@ MonoBehaviour:
     bestScore: 0
     totalScore: 0
     selectedCharacterNumber: 0
+    listenSfx: 0
+    listenBgm: 0
 --- !u!1 &1082027557
 GameObject:
   m_ObjectHideFlags: 0
@@ -5477,7 +5479,7 @@ MonoBehaviour:
     volume: 1
     loop: 0
   - name: background
-    clip: {fileID: 8300000, guid: 99b8ef42e03a052488cbf3eb7f253f93, type: 3}
+    clip: {fileID: 8300000, guid: 75bdf6f2176849f44b3e13d05de16817, type: 3}
     volume: 0.6
     loop: 1
   - name: gameover

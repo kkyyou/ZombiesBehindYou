@@ -8,6 +8,9 @@ public class Sound
     public string name;    
     public AudioClip clip;
 
+    private int fileID;
+    private int soundID;
+
     private AudioSource audioSource;
 
     public float volume;
@@ -50,6 +53,26 @@ public class Sound
     {
         return audioSource;
     }
+
+    public void SetFileID(int _fileID)
+    {
+        fileID = _fileID;
+    }
+
+    public int GetFileID()
+    {
+        return fileID;
+    }
+
+    public void SetSoundID(int _soundID)
+    {
+        soundID = _soundID;
+    }
+
+    public int GetSoundID()
+    {
+        return soundID;
+    }
 }
 
 public class AudioManager : MonoBehaviour
@@ -75,11 +98,34 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        AndroidNativeAudio.makePool();
+#endif
+
         for (int i = 0; i < sounds.Length; i++)
         {
+            Sound sound = sounds[i];
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (sound.name == "background")
+            {
+                sound.volume = 0.2f;
+
+                GameObject soundObejct = new GameObject("사운드 파일 이름 : " + i + " = " + sounds[i].name);
+                sounds[i].SetAudioSource(soundObejct.AddComponent<AudioSource>());
+                soundObejct.transform.SetParent(this.transform);
+
+            }
+            else
+            {
+                int fID = AndroidNativeAudio.load("GameSounds/" + sound.name + ".wav");
+                sound.SetFileID(fID);
+            }
+#else
             GameObject soundObejct = new GameObject("사운드 파일 이름 : " + i + " = " + sounds[i].name);
             sounds[i].SetAudioSource(soundObejct.AddComponent<AudioSource>());
             soundObejct.transform.SetParent(this.transform);
+#endif
         }
     }
 
@@ -91,8 +137,38 @@ public class AudioManager : MonoBehaviour
             if (sound.name != name)
                 continue;
 
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (sound.name == "background")
+            {
+                sound.Play();
+            }
+            else
+            {
+                sound.SetSoundID(AndroidNativeAudio.play(sound.GetFileID()));
+                
+                AndroidNativeAudio.setVolume(sound.GetSoundID(), 1f);
+            }
+#else
             sound.Play();
+#endif
+
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        for (int i = 0; i < sounds.Length; i++)
+        {
+            Sound sound = sounds[i];
+            if (sound.name == "background")
+                continue;
+            // Clean up when done
+            AndroidNativeAudio.unload(sound.GetFileID());
+        }
+
+        AndroidNativeAudio.releasePool();
+#endif
     }
 
     public void Stop(string name)
@@ -103,7 +179,17 @@ public class AudioManager : MonoBehaviour
             if (sound.name != name)
                 continue;
 
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (sound.name == "background")
+                sound.Stop();
+            else
+            {
+                AndroidNativeAudio.unload(sound.GetFileID());
+            }
+#else
             sound.Stop();
+#endif
         }
     }
 
@@ -115,8 +201,16 @@ public class AudioManager : MonoBehaviour
             if (sound.name != name)
                 continue;
 
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (sound.name == "background")
+            {
+                if (sound.GetAudioSource().isPlaying)
+                    return true;
+            }
+#else
             if (sound.GetAudioSource().isPlaying)
                 return true;
+#endif
         }
 
         return false;

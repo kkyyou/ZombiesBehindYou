@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     private Map currentMap;
 
-    private bool firstGame = true;
+    //private bool firstGame = true;
     private bool playing = false;
 
     public Text gameOverScoreText;
@@ -395,7 +395,7 @@ public class GameManager : MonoBehaviour
 
         EnemyManager.instance.ResetEnemy();
 
-        firstGame = true;
+        //firstGame = true;
     }
 
     public int GetBestScore()
