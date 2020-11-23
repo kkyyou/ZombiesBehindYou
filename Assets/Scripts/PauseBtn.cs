@@ -36,6 +36,16 @@ public class PauseBtn : MonoBehaviour
         GameManager.instance.SetControlButtonEnabled(false);
 
         GameManager.instance.pauseCanvas.SetActive(true);
+
+        if (GameManager.instance.GetListenSfx())
+            sfxBtn.image.sprite = sfxBtnSprite;
+        else
+            sfxBtn.image.sprite = sfxBtnNoSprite;
+
+        if (GameManager.instance.GetListenBgm())
+            bgmBtn.image.sprite = bgmBtnSprite;
+        else
+            bgmBtn.image.sprite = bgmBtnNoSprite;
     }
 
     public void ClickReplay()

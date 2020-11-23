@@ -283,8 +283,11 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         // 게임오버 사운드 출력.
-        AudioManager.instance.Stop("background");
-        AudioManager.instance.Play("gameover");
+        if (listenBgm)
+            AudioManager.instance.Stop("background");
+        
+        if (listenSfx)
+            AudioManager.instance.Play("gameover");
 
         playing = false;
 
