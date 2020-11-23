@@ -51,34 +51,55 @@ public class PauseBtn : MonoBehaviour
 
     public void ClickSfx()
     {
+        string str = "";
         if (GameManager.instance.GetListenSfx())
         {
             GameManager.instance.SetListenSfx(false);
             sfxBtn.image.sprite = sfxBtnNoSprite;
+
+            DBManager.instance.data.listenSfx = false;
+            str = "Sfx False";
         }
         else
         {
             GameManager.instance.SetListenSfx(true);
             sfxBtn.image.sprite = sfxBtnSprite;
+            DBManager.instance.data.listenSfx = true;
+            str = "Sfx True";
         }
+
+        Debug.Log("Save : " + str);
+        DBManager.instance.SaveCurrentData();
     }
 
     public void ClickBgm()
     {
+        string str = "";
         if (GameManager.instance.GetListenBgm())
         {
             GameManager.instance.SetListenBgm(false);
             bgmBtn.image.sprite = bgmBtnNoSprite;
 
+            DBManager.instance.data.listenBgm = false;
+
             AudioManager.instance.Stop("background");
+
+            str = "Bgm False";
         }
         else
         {
             GameManager.instance.SetListenBgm(true);
             bgmBtn.image.sprite = bgmBtnSprite;
 
+            DBManager.instance.data.listenBgm = true;
+
             AudioManager.instance.Play("background");
+
+            str = "Bgm True";
         }
+
+        Debug.Log("Save : " + str);
+        DBManager.instance.SaveCurrentData();
     }
 
     public void ClickHome()

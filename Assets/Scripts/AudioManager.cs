@@ -45,6 +45,11 @@ public class Sound
     {
         audioSource.loop = false;
     }
+
+    public AudioSource GetAudioSource()
+    {
+        return audioSource;
+    }
 }
 
 public class AudioManager : MonoBehaviour
@@ -76,9 +81,6 @@ public class AudioManager : MonoBehaviour
             sounds[i].SetAudioSource(soundObejct.AddComponent<AudioSource>());
             soundObejct.transform.SetParent(this.transform);
         }
-
-        if (GameManager.instance.GetListenBgm())
-            Play("background");
     }
 
     public void Play(string name)
@@ -103,6 +105,21 @@ public class AudioManager : MonoBehaviour
 
             sound.Stop();
         }
+    }
+
+    public bool IsPlaying(string name)
+    {
+        for (int i = 0; i < sounds.Length; i++)
+        {
+            Sound sound = sounds[i];
+            if (sound.name != name)
+                continue;
+
+            if (sound.GetAudioSource().isPlaying)
+                return true;
+        }
+
+        return false;
     }
 
     public void SetLoop(string name)

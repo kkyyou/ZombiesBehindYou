@@ -89,6 +89,9 @@ public class GameManager : MonoBehaviour
         // 게임 시작 시 캐릭터 이전에 선택했었던 캐릭터로 변경.
         CharSelectManager.instance.ChangeCharacter(Player.instance.GetSelectedCharacterNumber());
 
+        if (GetListenBgm())
+            AudioManager.instance.Play("background");
+
         rightTargetZoneInitPos = rightTargetZone.transform.position;
         leftTargetZoneInitPos = leftTargetZone.transform.position;
         gameOverZoneInitPos = gameOverZone.transform.position;
@@ -239,6 +242,9 @@ public class GameManager : MonoBehaviour
 
     public void GameStart()
     {
+        if (!AudioManager.instance.IsPlaying("background") && listenBgm)
+            AudioManager.instance.Play("background");
+
         // 초기화
         score = 0;
         scoreText.text = "0";
@@ -276,6 +282,10 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        // 게임오버 사운드 출력.
+        AudioManager.instance.Stop("background");
+        AudioManager.instance.Play("gameover");
+
         playing = false;
 
         scoreCanvas.SetActive(false);

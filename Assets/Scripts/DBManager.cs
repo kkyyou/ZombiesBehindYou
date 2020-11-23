@@ -12,6 +12,8 @@ public class DBManager : MonoBehaviour
         public int bestScore;
         public int totalScore;
         public int selectedCharacterNumber;
+        public bool listenSfx;
+        public bool listenBgm;
     }
 
     public Data data;
@@ -85,6 +87,10 @@ public class DBManager : MonoBehaviour
                 Player.instance.SetSelectedCharacterNumber(data.selectedCharacterNumber);
                 Debug.Log("Load Selected Character Number : " + Player.instance.GetSelectedCharacterNumber());
 
+                // 효과음, 배경음 듣기 로드.
+                GameManager.instance.SetListenSfx(data.listenSfx);
+                GameManager.instance.SetListenBgm(data.listenBgm);
+                
                 file.Close();
             }
         }
