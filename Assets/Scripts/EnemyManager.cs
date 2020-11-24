@@ -9,6 +9,7 @@ public class EnemyManager : MonoBehaviour
     private Vector3 playerVector;
 
     public GameObject prefab_zombie;
+    public GameObject prefab_zombie2;
     public GameObject zombiePrefabs;  // 하이라키에 생성되는 좀비 프리팹을 얘의 자식으로 정리.
 
     private List<GameObject> zombies;
@@ -74,16 +75,32 @@ public class EnemyManager : MonoBehaviour
 
     public void CreateZombie(Vector3 vector)
     {
-        GameObject zombieClone = Instantiate(prefab_zombie, vector, Quaternion.Euler(Vector3.zero));
-        zombieClone.transform.parent = zombiePrefabs.transform;
-        Zombie zb = zombieClone.GetComponent<Zombie>();
+        GameObject zombieClone = CreateRandomZombie(vector);
 
+        Zombie zb = zombieClone.GetComponent<Zombie>();
         if (vector.x - playerVector.x < 0)
             zb.Flip();
 
         zombies.Add(zombieClone);
     }
 
+    public GameObject CreateRandomZombie(Vector3 vector)
+    {
+        int ran = Random.Range(0, 2);
+        GameObject zombieClone = new GameObject();
+        if (ran == 0)
+        {
+            zombieClone = Instantiate(prefab_zombie, vector, Quaternion.Euler(Vector3.zero));
+        }
+        else if (ran == 1)
+        {
+            zombieClone = Instantiate(prefab_zombie2, vector, Quaternion.Euler(Vector3.zero));
+        }
+
+
+        zombieClone.transform.parent = zombiePrefabs.transform;
+        return zombieClone;
+    }
     public void CreateStartZombies()
     {
         playerVector = Player.instance.transform.position;
@@ -103,7 +120,9 @@ public class EnemyManager : MonoBehaviour
                 vector.x = playerVector.x + i;
             }
 
-            GameObject zombieClone = Instantiate(prefab_zombie, vector, Quaternion.Euler(Vector3.zero));
+            vector.y = playerVector.y - 0.015f;
+
+            GameObject zombieClone = CreateRandomZombie(vector);
             zombieClone.transform.parent = zombiePrefabs.transform;
 
             // 좌측 좀비면 Flip.

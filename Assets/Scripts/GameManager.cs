@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     private Map currentMap;
 
-    //private bool firstGame = true;
+    private bool firstGame = true;
     private bool playing = false;
 
     public Text gameOverScoreText;
@@ -188,7 +188,7 @@ public class GameManager : MonoBehaviour
             mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(new Vector3(0f, 0f, -10f));
 
             mainCamera.transform.position = new Vector3(0f, 0f, -10f);
-            Player.instance.transform.position = new Vector3(0f, -0.425f, 0f);
+            Player.instance.transform.position = new Vector3(0f, -0.44f, 0f);
 
             rightTargetZone.transform.position = rightTargetZoneInitPos;
             leftTargetZone.transform.position = leftTargetZoneInitPos;
@@ -200,7 +200,7 @@ public class GameManager : MonoBehaviour
             mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(new Vector3(0f, -14f, -10f));
             
             mainCamera.transform.position = new Vector3(0f, -14f, -10f);
-            Player.instance.transform.position = new Vector3(0f, -14.425f, 0f);
+            Player.instance.transform.position = new Vector3(0f, -14.44f, 0f);
 
             Vector3 rtp = rightTargetZoneInitPos;
             rtp.y -= 14f;
@@ -220,7 +220,7 @@ public class GameManager : MonoBehaviour
             mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(new Vector3(0f, -28f, -10f));
 
             mainCamera.transform.position = new Vector3(0f, -28f, -10f);
-            Player.instance.transform.position = new Vector3(0f, -28.425f, 0f);
+            Player.instance.transform.position = new Vector3(0f, -28.44f, 0f);
 
             Vector3 rtp = rightTargetZoneInitPos;
             rtp.y -= 28f;
@@ -267,13 +267,14 @@ public class GameManager : MonoBehaviour
         EnemyManager.instance.ResetEnemy();
 
         // 랜덤 맵.
-        RandomMap();
+        if (!firstGame)
+            RandomMap();
 
         // 좀비 생성.
         EnemyManager.instance.CreateStartZombies();
         //}
 
-        //firstGame = false;
+        firstGame = false;
 
         // 카메라 위치 변경.
         mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(mainCamera.transform.position);
