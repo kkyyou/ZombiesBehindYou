@@ -12,6 +12,9 @@ public class CloudManager : MonoBehaviour
     public GameObject greenCloud;
     public GameObject darkCloud;
     public GameObject pinkCloud;
+    public GameObject deepGreenCloud;
+    public GameObject iceMountainCloud;
+    public GameObject pinkIceMountainCloud;
 
     private GameObject currentCloud;
 
@@ -28,12 +31,6 @@ public class CloudManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -64,6 +61,7 @@ public class CloudManager : MonoBehaviour
         }
     }
 
+    // 현재 맵의 구름을 지정해줘야 움직임.
     public void SetCurrentCloud(GameManager.Map map)
     {
         if (map == GameManager.Map.GREEN)
@@ -78,5 +76,19 @@ public class CloudManager : MonoBehaviour
         {
             currentCloud = pinkCloud;
         }
+        else if (map == GameManager.Map.DEEP_GREEN)
+        {
+            currentCloud = deepGreenCloud;
+        }
+        else if (map == GameManager.Map.ICE_MOUNTAIN)
+        {
+            currentCloud = iceMountainCloud;
+        }
+        else if (map == GameManager.Map.PINK_ICE_MOUNTAIN)
+        {
+            currentCloud = pinkIceMountainCloud;
+        }
+
+        Debug.Log("Loc" + "X : " + GameManager.instance.gameOverZone.transform.position.x + "Y : " + GameManager.instance.gameOverZone.transform.position.y + "Z : " + GameManager.instance.gameOverZone.transform.position.z);
     }
 }

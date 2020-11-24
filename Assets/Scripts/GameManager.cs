@@ -9,7 +9,10 @@ public class GameManager : MonoBehaviour
     {
         GREEN,
         DARK,
-        PINK
+        PINK,
+        DEEP_GREEN,
+        ICE_MOUNTAIN,
+        PINK_ICE_MOUNTAIN
     };
 
     public static GameManager instance;
@@ -181,7 +184,10 @@ public class GameManager : MonoBehaviour
     {
         // 맵에 따른 플레이어, 박스컬라이더 위치 이동.
 
-        int ran = Random.Range(0, 3);
+        int ran = Random.Range(0, 6);
+
+        Debug.Log("랜덤맵 : " + ran);
+
         if (ran == (int)Map.GREEN)
         {
             // 카메라 흔들기 위치 초기화.
@@ -234,10 +240,81 @@ public class GameManager : MonoBehaviour
             gop.y -= 28f;
             gameOverZone.transform.position = gop;
         }
+        else if (ran == (int)Map.DEEP_GREEN)
+        {
+            // 카메라 흔들기 위치 초기화.
+            mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(new Vector3(23f, 0f, -10f));
+
+            mainCamera.transform.position = new Vector3(23f, 0f, -10f);
+            Player.instance.transform.position = new Vector3(23f, -0.44f, 0f);
+
+            Vector3 rtp = rightTargetZoneInitPos;
+            rtp.x += 23f;
+            rightTargetZone.transform.position = rtp;
+
+            Vector3 ltp = leftTargetZoneInitPos;
+            ltp.x += 23f;
+            leftTargetZone.transform.position = ltp;
+
+            Vector3 gop = gameOverZoneInitPos;
+            gop.x += 23f;
+            gameOverZone.transform.position = gop;
+        }
+        else if (ran == (int)Map.ICE_MOUNTAIN)
+        {
+            // 카메라 흔들기 위치 초기화.
+            mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(new Vector3(23f, -14f, -10f));
+
+            mainCamera.transform.position = new Vector3(23f, -14f, -10f);
+            Player.instance.transform.position = new Vector3(23f, -14.44f, 0f);
+
+            Vector3 rtp = rightTargetZoneInitPos;
+            rtp.x += 23f;
+            rtp.y -= 14f;
+            rightTargetZone.transform.position = rtp;
+
+            Vector3 ltp = leftTargetZoneInitPos;
+            ltp.x += 23f;
+            ltp.y -= 14f;
+            leftTargetZone.transform.position = ltp;
+
+            Vector3 gop = gameOverZoneInitPos;
+            gop.x += 23f;
+            gop.y -= 14f;
+            gameOverZone.transform.position = gop;
+
+            Debug.Log("Loc" + "X : " + gop.x + "Y : " + gop.y + "Z : " + gop.z);
+            Debug.Log("아이스 마운틴 !");
+        }
+        else if (ran == (int)Map.PINK_ICE_MOUNTAIN)
+        {
+            // 카메라 흔들기 위치 초기화.
+            mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(new Vector3(23f, -28f, -10f));
+
+            mainCamera.transform.position = new Vector3(23f, -28f, -10f);
+            Player.instance.transform.position = new Vector3(23f, -28.44f, 0f);
+
+            Vector3 rtp = rightTargetZoneInitPos;
+            rtp.x += 23f;
+            rtp.y -= 28f;
+            rightTargetZone.transform.position = rtp;
+
+            Vector3 ltp = leftTargetZoneInitPos;
+            ltp.x += 23f;
+            ltp.y -= 28f;
+            leftTargetZone.transform.position = ltp;
+
+            Vector3 gop = gameOverZoneInitPos;
+            gop.x += 23f;
+            gop.y -= 28f;
+            gameOverZone.transform.position = gop;            
+        }
 
         currentMap = (Map)ran;
 
         CloudManager.instance.SetCurrentCloud(currentMap);
+
+        Debug.Log("Loc" + "X : " + GameManager.instance.gameOverZone.transform.position.x + "Y : " + GameManager.instance.gameOverZone.transform.position.y + "Z : " + GameManager.instance.gameOverZone.transform.position.z);
     }
 
     public void GameStart()
@@ -277,7 +354,7 @@ public class GameManager : MonoBehaviour
         firstGame = false;
 
         // 카메라 위치 변경.
-        mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(mainCamera.transform.position);
+        //mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(mainCamera.transform.position);
 
     }
 

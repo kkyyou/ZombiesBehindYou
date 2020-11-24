@@ -257,7 +257,8 @@ public class Player : MonoBehaviour
 
     public void ShowSelectCharacterView()
     {
-        AudioManager.instance.Play("background");
+        if (GameManager.instance.GetListenBgm())
+            AudioManager.instance.Play("background");
 
         GameManager.instance.ShowSelectCharcter();
     }
