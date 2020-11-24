@@ -122,7 +122,7 @@ public class AudioManager : MonoBehaviour
                 sound.SetFileID(fID);
             }
 #else
-            GameObject soundObejct = new GameObject("사운드 파일 이름 : " + i + " = " + sounds[i].name);
+            GameObject soundObejct = new GameObject(sounds[i].name);
             sounds[i].SetAudioSource(soundObejct.AddComponent<AudioSource>());
             soundObejct.transform.SetParent(this.transform);
 #endif
