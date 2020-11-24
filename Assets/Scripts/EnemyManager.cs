@@ -87,7 +87,7 @@ public class EnemyManager : MonoBehaviour
     public GameObject CreateRandomZombie(Vector3 vector)
     {
         int ran = Random.Range(0, 2);
-        GameObject zombieClone = new GameObject();
+        GameObject zombieClone = null;
         if (ran == 0)
         {
             zombieClone = Instantiate(prefab_zombie, vector, Quaternion.Euler(Vector3.zero));

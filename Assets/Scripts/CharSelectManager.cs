@@ -8,7 +8,9 @@ public class CharSelectManager : MonoBehaviour
     enum Characters
     {
         Fire,
-        PunchGirl
+        PunchGirl,
+        DoubleBarrel,
+        ThunderMage
     }
 
     public static CharSelectManager instance;
@@ -64,10 +66,30 @@ public class CharSelectManager : MonoBehaviour
         }
         else if (number == (int)Characters.PunchGirl)
         {
-            RequireText.text = "Total 100";
+            RequireText.text = "Total 250";
             RequireText.color = Color.white;
 
             if (IsPunchGirlConditionFulfill())
+            {
+                SelectButtonEnableTrue();
+
+                RequireInfoText.text = "250/250";
+                RequireInfoText.color = Color.green;
+            }
+            else
+            {
+                SelectButtonEnableFalse();
+
+                RequireInfoText.text = GameManager.instance.GetTotalScore() + "/100";
+                RequireInfoText.color = Color.red;
+            }
+        }
+        else if (number == (int)Characters.DoubleBarrel)
+        {
+            RequireText.text = "Best 100";
+            RequireText.color = Color.white;
+
+            if (IsDoubleBarrelConditonFulfill())
             {
                 SelectButtonEnableTrue();
 
@@ -78,7 +100,27 @@ public class CharSelectManager : MonoBehaviour
             {
                 SelectButtonEnableFalse();
 
-                RequireInfoText.text = GameManager.instance.GetTotalScore() + "/100";
+                RequireInfoText.text = GameManager.instance.GetBestScore() + "/100";
+                RequireInfoText.color = Color.red;
+            }
+        }
+        else if (number == (int)Characters.ThunderMage)
+        {
+            RequireText.text = "Best 100";
+            RequireText.color = Color.white;
+
+            if (IsThunderMageConditonFulfill())
+            {
+                SelectButtonEnableTrue();
+
+                RequireInfoText.text = "100/100";
+                RequireInfoText.color = Color.green;
+            }
+            else
+            {
+                SelectButtonEnableFalse();
+
+                RequireInfoText.text = GameManager.instance.GetBestScore() + "/100";
                 RequireInfoText.color = Color.red;
             }
         }
@@ -100,7 +142,23 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsPunchGirlConditionFulfill()
     {
-        if (GameManager.instance.GetTotalScore() >= 100)
+        if (GameManager.instance.GetTotalScore() >= 250)
+            return true;
+
+        return false;
+    }
+
+    public bool IsDoubleBarrelConditonFulfill()
+    {
+        if (GameManager.instance.GetBestScore() >= 100)
+            return true;
+
+        return false;
+    }
+
+    public bool IsThunderMageConditonFulfill()
+    {
+        if (GameManager.instance.GetBestScore() >= 100)
             return true;
 
         return false;
