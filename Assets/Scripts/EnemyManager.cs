@@ -20,6 +20,8 @@ public class EnemyManager : MonoBehaviour
     private Queue<GameObject> zombies1 = new Queue<GameObject>();
     private Queue<GameObject> zombies2 = new Queue<GameObject>();
 
+    private bool restOneTurnCreateZombie = false;
+
     private void Awake()
     {
         if (instance != null)
@@ -57,7 +59,7 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Player.instance.GetNextTurn())
+        if (Player.instance.GetNextTurn() && !restOneTurnCreateZombie)
         {
             Player.instance.SetNextTurn(false);
 
@@ -79,12 +81,28 @@ public class EnemyManager : MonoBehaviour
             }
 
             // 모든 좀비 히어로방향으로 한 칸 이동.
-            for (int i = 0; i < existSceneZombies.Count; i++)
-            {
-                GameObject zombie_prefab = existSceneZombies[i];
-                Zombie zombie = zombie_prefab.GetComponent<Zombie>();
-                zombie.Move();
-            }
+            moveExistSceneZombies();
+        }
+        else if (Player.instance.GetNextTurn() && restOneTurnCreateZombie)  
+        {
+            // Revive시 생성된 좀비가 뒤로 한 칸 물러나는데 이때 좀비를 생성을 하게되면 겹치게 되는 문제 발생.
+            // 따라서 restOneTurnCreateZomie 플래그를 보고 한 턴 좀비 생성을 막는다.
+            Player.instance.SetNextTurn(false);
+            restOneTurnCreateZombie = false;
+
+            // 모든 좀비 히어로방향으로 한 칸 이동.
+            moveExistSceneZombies();
+        }
+    }
+
+    public void moveExistSceneZombies()
+    {
+        // 모든 좀비 히어로방향으로 한 칸 이동.
+        for (int i = 0; i < existSceneZombies.Count; i++)
+        {
+            GameObject zombie_prefab = existSceneZombies[i];
+            Zombie zombie = zombie_prefab.GetComponent<Zombie>();
+            zombie.Move();
         }
     }
 
@@ -94,7 +112,7 @@ public class EnemyManager : MonoBehaviour
         zombies1.Enqueue(obj);
         obj.SetActive(false);
         obj.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-        obj.transform.rotation = Quaternion.Euler(0,0,0);
+        obj.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     public void InsertQueueZombie2(GameObject obj)
@@ -251,4 +269,25 @@ public class EnemyManager : MonoBehaviour
         existSceneZombies.Clear();
     }
 
+    public void MoveReverseExistSceneZombies()
+    {
+        // 모든 좀비 히어로방향으로 한 칸 이동.
+        for (int i = existSceneZombies.Count - 1; i >= 0; i--)
+        {
+            GameObject zombie_prefab = existSceneZombies[i];
+            Zombie zombie = zombie_prefab.GetComponent<Zombie>();
+            zombie.MoveReverse();
+
+        }
+    }
+
+    public bool GetRestOneTurnCreateZombie()
+    {
+        return restOneTurnCreateZombie;
+    }
+
+    public void SetRestOneTurnCreateZombie(bool _restOneTurnCreateZombie)
+    {
+        restOneTurnCreateZombie = _restOneTurnCreateZombie;
+    }
 }

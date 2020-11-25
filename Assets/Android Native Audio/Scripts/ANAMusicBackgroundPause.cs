@@ -2,11 +2,11 @@
 
 namespace ChristopherCreates.AndroidNativeAudio
 {
-	public class ANAMusicBackgroundPause : MonoBehaviour
-	{
-		void OnApplicationPause(bool isPaused)
-		{
-			ANAMusic.OnApplicationPause(isPaused);
-		}
-	}
+    public class ANAMusicBackgroundPause : MonoBehaviour
+    {
+        void OnApplicationPause(bool isPaused)
+        {
+            ANAMusic.OnApplicationPause(isPaused);
+        }
+    }
 }

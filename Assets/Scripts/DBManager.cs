@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine;
 
 public class DBManager : MonoBehaviour
 {
@@ -90,7 +88,7 @@ public class DBManager : MonoBehaviour
                 // 효과음, 배경음 듣기 로드.
                 GameManager.instance.SetListenSfx(data.listenSfx);
                 GameManager.instance.SetListenBgm(data.listenBgm);
-                
+
                 file.Close();
             }
         }

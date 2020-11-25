@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using GoogleMobileAds.Api;
 using UnityEngine;
-using UnityEngine.UI;
-using GoogleMobileAds.Api;
 
 public class AdmobManager : MonoBehaviour
 {
@@ -15,7 +12,7 @@ public class AdmobManager : MonoBehaviour
 
     private bool successRewardAds = false;
     private bool adsSuccessOrClosed = false;
-    
+
     private void Awake()
     {
         if (instance == null)
@@ -118,6 +115,9 @@ public class AdmobManager : MonoBehaviour
         {
             // 사용자가 보상형 광고를 중간에 끔.
             adsSuccessOrClosed = true;
+
+            // 여기서 successRewardAds false 초기화하면 안됨.
+            // 광고 다 보고나서도 Close하면 호출되는 함수라서.
         };
     }
 

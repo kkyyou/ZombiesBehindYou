@@ -418,8 +418,14 @@ public class GameManager : MonoBehaviour
                     // 다시 살리기.
                     Player.instance.GetAnimator().SetBool("Die", false);
 
-                    // 좀비들 플레이어 반대방향으로 한 칸 씩 이동 다시 시키기.
-                    // To do.
+                    // 좀비들 플레이어 반대방향으로 한 칸씩 이동 시키기.
+                    EnemyManager.instance.MoveReverseExistSceneZombies();
+
+                    // Revive시 생성된 좀비가 뒤로 한 칸 물러나는데 이때 좀비를 생성을 하게되면 겹치게 되는 문제 발생.
+                    // 따라서 restOneTurnCreateZomie 플래그를 보고 한 턴 좀비 생성을 막게하기 위함.
+                    EnemyManager.instance.SetRestOneTurnCreateZombie(true);
+
+                    gameOverZone.SetGameOverCheck(true);
 
                     yield break;
                 }

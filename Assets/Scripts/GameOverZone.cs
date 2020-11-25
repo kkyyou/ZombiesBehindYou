@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameOverZone : MonoBehaviour
 {
@@ -28,5 +26,10 @@ public class GameOverZone : MonoBehaviour
     public void SetGameOverCheck(bool check)
     {
         gameOverCheck = check;
+    }
+
+    public bool GetGameOverCheck()
+    {
+        return gameOverCheck;
     }
 }

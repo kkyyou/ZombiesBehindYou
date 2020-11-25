@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UnityEditor
 {
     [CustomGridBrush(true, false, false, "Coordinate Brush")]
-    public class CoordinateBrush : UnityEditor.Tilemaps.GridBrush {
+    public class CoordinateBrush : UnityEditor.Tilemaps.GridBrush
+    {
         public int z = 0;
 
         public override void Paint(GridLayout grid, GameObject brushTarget, Vector3Int position)
@@ -13,13 +12,13 @@ namespace UnityEditor
             var zPosition = new Vector3Int(position.x, position.y, z);
             base.Paint(grid, brushTarget, zPosition);
         }
-        
+
         public override void Erase(GridLayout grid, GameObject brushTarget, Vector3Int position)
         {
             var zPosition = new Vector3Int(position.x, position.y, z);
             base.Erase(grid, brushTarget, zPosition);
         }
-        
+
         public override void FloodFill(GridLayout grid, GameObject brushTarget, Vector3Int position)
         {
             var zPosition = new Vector3Int(position.x, position.y, z);

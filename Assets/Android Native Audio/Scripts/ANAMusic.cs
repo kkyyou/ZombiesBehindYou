@@ -9,10 +9,7 @@
  */
 
 
-using ChristopherCreates.AndroidNativeAudio;
 using System;
-using System.IO;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -20,7 +17,7 @@ using UnityEngine;
 /// </summary>
 public static class ANAMusic
 {
-	const string _logPrefix = "ANA Music: ";
+    const string _logPrefix = "ANA Music: ";
 
 #if UNITY_ANDROID && !UNITY_EDITOR
 
@@ -295,172 +292,172 @@ public static class ANAMusic
 
 #else
 
-	/// <summary>
-	/// Gets the current playback position.
-	/// </summary>
-	/// <param name="musicID">The ID of the music to use.</param>
-	/// <returns>The current position in milliseconds.</returns>
-	public static int getCurrentPosition(int musicID)
-	{
-		Debug.Log(_logPrefix + "getCurrentPosition(" + musicID + ")");
-		return 1;
-	}
+    /// <summary>
+    /// Gets the current playback position.
+    /// </summary>
+    /// <param name="musicID">The ID of the music to use.</param>
+    /// <returns>The current position in milliseconds.</returns>
+    public static int getCurrentPosition(int musicID)
+    {
+        Debug.Log(_logPrefix + "getCurrentPosition(" + musicID + ")");
+        return 1;
+    }
 
 
-	/// <summary>
-	/// Gets the duration of the file.
-	/// </summary>
-	/// <param name="musicID">The ID of the music to use.</param>
-	/// <returns>The duration in milliseconds.</returns>
-	public static int getDuration(int musicID)
-	{
-		Debug.Log(_logPrefix + "getDuration(" + musicID + ")");
-		return 1;
-	}
+    /// <summary>
+    /// Gets the duration of the file.
+    /// </summary>
+    /// <param name="musicID">The ID of the music to use.</param>
+    /// <returns>The duration in milliseconds.</returns>
+    public static int getDuration(int musicID)
+    {
+        Debug.Log(_logPrefix + "getDuration(" + musicID + ")");
+        return 1;
+    }
 
 
-	/// <summary>
-	/// Checks whether the MediaPlayer is looping or non-looping.
-	/// </summary>
-	/// <param name="musicID">The ID of the music to use.</param>
-	/// <returns>True if the MediaPlayer is currently looping, false otherwise.</returns>
-	public static bool isLooping(int musicID)
-	{
-		Debug.Log(_logPrefix + "isLooping(" + musicID + ")");
-		return false;
-	}
+    /// <summary>
+    /// Checks whether the MediaPlayer is looping or non-looping.
+    /// </summary>
+    /// <param name="musicID">The ID of the music to use.</param>
+    /// <returns>True if the MediaPlayer is currently looping, false otherwise.</returns>
+    public static bool isLooping(int musicID)
+    {
+        Debug.Log(_logPrefix + "isLooping(" + musicID + ")");
+        return false;
+    }
 
 
-	/// <summary>
-	/// Checks whether the MediaPlayer is playing.
-	/// </summary>
-	/// <param name="musicID">The ID of the music to use.</param>
-	/// <returns>True if currently playing, false otherwise.</returns>
-	public static bool isPlaying(int musicID)
-	{
-		Debug.Log(_logPrefix + "isPlaying(" + musicID + ")");
-		return false;
-	}
+    /// <summary>
+    /// Checks whether the MediaPlayer is playing.
+    /// </summary>
+    /// <param name="musicID">The ID of the music to use.</param>
+    /// <returns>True if currently playing, false otherwise.</returns>
+    public static bool isPlaying(int musicID)
+    {
+        Debug.Log(_logPrefix + "isPlaying(" + musicID + ")");
+        return false;
+    }
 
 
-	/// <summary>
-	/// Loads a music file into a native Android media player.
-	/// </summary>
-	/// <param name="audioFile">The path to the music file, relative to Assets\StreamingAssets.</param>
-	/// <param name="usePersistentDataPath">If true, audioFile is relative to Application.persistentDataPath.  If false, it is relative to Assets\StreamingAssets.</param>
-	/// <param name="loadAsync">If true, the file is loaded asynchronously and the method immediately returns.  If false, the method will not return until the load has completed.</param>
-	/// <param name="loadedCallback">If given, the method to call when the load is complete.  Must take one int parameter which is the loaded music ID.</param>
-	/// <param name="playInBackground">If true, the music will continue playing when the game is not active.  If false, the music will be paused when the game is not active and resumed when it becomes active again.</param>
-	/// <returns>The ID of the loaded music.</returns>
-	public static int load(string audioFile, bool usePersistentDataPath = false, bool loadAsync = false, Action<int> loadedCallback = null, bool playInBackground = false)
-	{
-		Debug.Log(_logPrefix + "load(\"" + audioFile + "\", " + usePersistentDataPath + ", " + loadAsync + ", " + loadedCallback + ", " + playInBackground + ")");
-		return 1;
-	}
+    /// <summary>
+    /// Loads a music file into a native Android media player.
+    /// </summary>
+    /// <param name="audioFile">The path to the music file, relative to Assets\StreamingAssets.</param>
+    /// <param name="usePersistentDataPath">If true, audioFile is relative to Application.persistentDataPath.  If false, it is relative to Assets\StreamingAssets.</param>
+    /// <param name="loadAsync">If true, the file is loaded asynchronously and the method immediately returns.  If false, the method will not return until the load has completed.</param>
+    /// <param name="loadedCallback">If given, the method to call when the load is complete.  Must take one int parameter which is the loaded music ID.</param>
+    /// <param name="playInBackground">If true, the music will continue playing when the game is not active.  If false, the music will be paused when the game is not active and resumed when it becomes active again.</param>
+    /// <returns>The ID of the loaded music.</returns>
+    public static int load(string audioFile, bool usePersistentDataPath = false, bool loadAsync = false, Action<int> loadedCallback = null, bool playInBackground = false)
+    {
+        Debug.Log(_logPrefix + "load(\"" + audioFile + "\", " + usePersistentDataPath + ", " + loadAsync + ", " + loadedCallback + ", " + playInBackground + ")");
+        return 1;
+    }
 
 
-	/// <summary>
-	/// Used for automatically handling music when the game is paused or resumed.  You shouldn't need to use this manually.
-	/// </summary>
-	/// <param name="isPaused">Whether or not the application is currently paused.</param>
-	public static void OnApplicationPause(bool isPaused)
-	{
-		Debug.Log(_logPrefix + "OnApplicationPause(" + isPaused + ")");
-	}
+    /// <summary>
+    /// Used for automatically handling music when the game is paused or resumed.  You shouldn't need to use this manually.
+    /// </summary>
+    /// <param name="isPaused">Whether or not the application is currently paused.</param>
+    public static void OnApplicationPause(bool isPaused)
+    {
+        Debug.Log(_logPrefix + "OnApplicationPause(" + isPaused + ")");
+    }
 
 
-	/// <summary>
-	/// Pauses playback. Call play() to resume.
-	/// </summary>
-	/// <param name="musicID">The ID of the music to use.</param>
-	public static void pause(int musicID)
-	{
-		Debug.Log(_logPrefix + "pause(" + musicID + ")");
-	}
+    /// <summary>
+    /// Pauses playback. Call play() to resume.
+    /// </summary>
+    /// <param name="musicID">The ID of the music to use.</param>
+    public static void pause(int musicID)
+    {
+        Debug.Log(_logPrefix + "pause(" + musicID + ")");
+    }
 
 
-	/// <summary>
-	/// Pauses all currently playing music.  Use resumeAll() to resume only music that was paused with pauseAll().
-	/// </summary>
-	public static void pauseAll()
-	{
-		Debug.Log(_logPrefix + "pauseAll()");
-	}
+    /// <summary>
+    /// Pauses all currently playing music.  Use resumeAll() to resume only music that was paused with pauseAll().
+    /// </summary>
+    public static void pauseAll()
+    {
+        Debug.Log(_logPrefix + "pauseAll()");
+    }
 
 
-	/// <summary>
-	/// Starts or resumes playback.
-	/// </summary>
-	/// <param name="musicID">The ID of the music to use.</param>
-	/// <param name="completionCallback">If given, the method to call when playback is complete.</param>
-	public static void play(int musicID, Action<int> completionCallback = null)
-	{
-		Debug.Log(_logPrefix + "play(" + musicID + ", " + completionCallback + ")");
-	}
+    /// <summary>
+    /// Starts or resumes playback.
+    /// </summary>
+    /// <param name="musicID">The ID of the music to use.</param>
+    /// <param name="completionCallback">If given, the method to call when playback is complete.</param>
+    public static void play(int musicID, Action<int> completionCallback = null)
+    {
+        Debug.Log(_logPrefix + "play(" + musicID + ", " + completionCallback + ")");
+    }
 
 
-	/// <summary>
-	/// Releases resources associated with this MediaPlayer object.
-	/// </summary>
-	/// <param name="musicID">The ID of the music to use.</param>
-	public static void release(int musicID)
-	{
-		Debug.Log(_logPrefix + "release(" + musicID + ")");
-	}
+    /// <summary>
+    /// Releases resources associated with this MediaPlayer object.
+    /// </summary>
+    /// <param name="musicID">The ID of the music to use.</param>
+    public static void release(int musicID)
+    {
+        Debug.Log(_logPrefix + "release(" + musicID + ")");
+    }
 
 
-	/// <summary>
-	/// Resumes play of all music paused with pauseAll().
-	/// </summary>
-	public static void resumeAll()
-	{
-		Debug.Log(_logPrefix + "resumeAll()");
-	}
+    /// <summary>
+    /// Resumes play of all music paused with pauseAll().
+    /// </summary>
+    public static void resumeAll()
+    {
+        Debug.Log(_logPrefix + "resumeAll()");
+    }
 
 
-	/// <summary>
-	/// Seeks to specified time position.
-	/// </summary>
-	/// <param name="musicID">The ID of the music to use.</param>
-	/// <param name="msec">the offset in milliseconds from the start to seek to</param>
-	public static void seekTo(int musicID, int msec)
-	{
-		Debug.Log(_logPrefix + "seekTo(" + musicID + ", " + msec + ")");
-	}
+    /// <summary>
+    /// Seeks to specified time position.
+    /// </summary>
+    /// <param name="musicID">The ID of the music to use.</param>
+    /// <param name="msec">the offset in milliseconds from the start to seek to</param>
+    public static void seekTo(int musicID, int msec)
+    {
+        Debug.Log(_logPrefix + "seekTo(" + musicID + ", " + msec + ")");
+    }
 
 
-	/// <summary>
-	/// Sets the player to be looping or non-looping.
-	/// </summary>
-	/// <param name="musicID">The ID of the music to use.</param>
-	/// <param name="looping">whether to loop or not</param>
-	public static void setLooping(int musicID, bool looping)
-	{
-		Debug.Log(_logPrefix + "setLooping(" + musicID + ", " + looping + ")");
-	}
+    /// <summary>
+    /// Sets the player to be looping or non-looping.
+    /// </summary>
+    /// <param name="musicID">The ID of the music to use.</param>
+    /// <param name="looping">whether to loop or not</param>
+    public static void setLooping(int musicID, bool looping)
+    {
+        Debug.Log(_logPrefix + "setLooping(" + musicID + ", " + looping + ")");
+    }
 
 
-	/// <summary>
-	/// Sets whether or not the music will play when the game is inactive.
-	/// </summary>
-	/// <param name="musicID">The ID of the music to use.</param>
-	/// <param name="playInBackground">If true, the music will continue playing when the game is not active.  If false, the music will be paused when the game is not active and resumed when it becomes active again.</param>
-	public static void setPlayInBackground(int musicID, bool playInBackground)
-	{
-		Debug.Log(_logPrefix + "setPlayInBackground(" + musicID + ", " + playInBackground + ")");
-	}
+    /// <summary>
+    /// Sets whether or not the music will play when the game is inactive.
+    /// </summary>
+    /// <param name="musicID">The ID of the music to use.</param>
+    /// <param name="playInBackground">If true, the music will continue playing when the game is not active.  If false, the music will be paused when the game is not active and resumed when it becomes active again.</param>
+    public static void setPlayInBackground(int musicID, bool playInBackground)
+    {
+        Debug.Log(_logPrefix + "setPlayInBackground(" + musicID + ", " + playInBackground + ")");
+    }
 
 
-	/// <summary>
-	/// Sets the volume on this player.
-	/// </summary>
-	/// <param name="musicID">The ID of the music to use.</param>
-	/// <param name="leftVolume">left volume scalar (0.0 to 1.0) If rightVolume is omitted, this value will be used for both.</param>
-	/// <param name="rightVolume">right volume scalar (0.0 to 1.0) Defaults to leftVolume.</param>
-	public static void setVolume(int musicID, float leftVolume, float rightVolume = -1)
-	{
-		Debug.Log(_logPrefix + "setVolume(" + musicID + ", " + leftVolume + ", " + rightVolume + ")");
-	}
+    /// <summary>
+    /// Sets the volume on this player.
+    /// </summary>
+    /// <param name="musicID">The ID of the music to use.</param>
+    /// <param name="leftVolume">left volume scalar (0.0 to 1.0) If rightVolume is omitted, this value will be used for both.</param>
+    /// <param name="rightVolume">right volume scalar (0.0 to 1.0) Defaults to leftVolume.</param>
+    public static void setVolume(int musicID, float leftVolume, float rightVolume = -1)
+    {
+        Debug.Log(_logPrefix + "setVolume(" + musicID + ", " + leftVolume + ", " + rightVolume + ")");
+    }
 
 #endif
 

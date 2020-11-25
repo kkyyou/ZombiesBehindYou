@@ -1,11 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Zombie : MonoBehaviour
 {
     public string name;
-    private float speed = 8f;    
+    private float speed = 8f;
     private int moveDir;
 
     public Animator anim;
@@ -15,6 +14,7 @@ public class Zombie : MonoBehaviour
         CalcMoveDir();
     }
 
+    // 주인공 방향으로 좀비 이동.
     public void Move()
     {
         StartCoroutine(MoveCoroutine());
@@ -26,7 +26,7 @@ public class Zombie : MonoBehaviour
 
         Vector3 zombieVector = this.transform.position;
         Vector3 target = new Vector3(zombieVector.x + (moveDir * 1), zombieVector.y, zombieVector.z);
-        
+
         // 현재 좀비 위치를 Target 위치로 이동 시킴. 
         while (true)
         {
@@ -41,7 +41,19 @@ public class Zombie : MonoBehaviour
 
         //anim.SetBool("Walk", false);
     }
-    
+
+    public void MoveReverse()
+    {
+        Vector3 zombieVector = this.transform.position;
+
+        // 히어로 반대방향으로 이동.
+        Vector3 target = new Vector3(zombieVector.x + (moveDir * -1), zombieVector.y, zombieVector.z);
+
+        zombieVector = target;
+        this.transform.position = zombieVector;
+    }
+
+
     public void Flip()
     {
         Vector3 theScale = transform.localScale;

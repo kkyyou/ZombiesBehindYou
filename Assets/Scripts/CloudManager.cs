@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CloudManager : MonoBehaviour
 {
@@ -18,7 +16,7 @@ public class CloudManager : MonoBehaviour
 
     private GameObject currentCloud;
 
-    private float fiveSecCount = 0; 
+    private float fiveSecCount = 0;
 
     private void Awake()
     {
@@ -50,7 +48,7 @@ public class CloudManager : MonoBehaviour
                 moveRight = !moveRight;
             }
 
-            Vector3 cloudPosition = currentCloud.transform.position;                
+            Vector3 cloudPosition = currentCloud.transform.position;
 
             if (moveRight)
                 cloudPosition.x += (speed * Time.deltaTime);
