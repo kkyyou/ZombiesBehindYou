@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     public GameObject shopCanvas;
     public GameObject pauseCanvas;
     public GameObject settingCanvas;
+    public GameObject reviveCanvas;
 
     private Map currentMap;
 
@@ -360,17 +361,73 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        StartCoroutine(GameOverCoroutine());
+    }
+
+    IEnumerator GameOverCoroutine()
+    {
+        scoreCanvas.SetActive(false);
+        controlCanvas.SetActive(false);
+
         // 게임오버 사운드 출력.
         if (listenBgm)
             AudioManager.instance.Stop("background");
-        
+
         if (listenSfx)
             AudioManager.instance.Play("gameover");
 
+        // Die Animation.
+        Player.instance.GetAnimator().SetBool("Die", true);
+
         playing = false;
 
-        scoreCanvas.SetActive(false);
-        controlCanvas.SetActive(false);
+        // 내 점수에서 50점을 더하면 최대점수가 될때 Revive 찬스!
+        if (score + 50 >= bestScore)
+        {
+            // No 나 광고보기 버튼 둘 중 아무거나 눌릴때까지 or 시간초 다 될때까지 기다리기.
+            reviveCanvas.SetActive(true);
+            yield return new WaitUntil(() => ReviveManager.instance.GetAnyBtnClicked());
+
+            // 다시 No 나 광고보기 어떤 버튼이든 눌렸냐 false로 초기화.
+            ReviveManager.instance.SetAnyBtnClicked(false);
+
+            // 광고 보기 클릭 시.
+            if (ReviveManager.instance.GetShowRewardAds())
+            {
+                // 광고 다 보거나 중간에 닫을때까지 기다린다.
+                yield return new WaitUntil(() => AdmobManager.instance.GetSuccessOrClosedAds());
+
+                // 광고 다 보거나 중간에 닫을때까지 체크 플래그 false로 초기화.
+                AdmobManager.instance.SetSuccessOrClosedAds(false);
+
+                // 광고를 다 본 경우.
+                if (AdmobManager.instance.GetSuccessRewardAds())
+                {
+                    // 광고 다 봤는지 플래그 false 초기화.
+                    AdmobManager.instance.SetSuccessRewardAds(false);
+
+                    // 플레이 재개.
+                    playing = true;
+                    reviveCanvas.SetActive(false);
+                    scoreCanvas.SetActive(true);
+                    controlCanvas.SetActive(true);
+
+                    // 광고 다 봤는지 체크 플래그 false 초기화.
+                    AdmobManager.instance.SetSuccessRewardAds(false);
+
+                    // 다시 살리기.
+                    Player.instance.GetAnimator().SetBool("Die", false);
+
+                    // 좀비들 플레이어 반대방향으로 한 칸 씩 이동 다시 시키기.
+                    // To do.
+
+                    yield break;
+                }
+            }
+
+            reviveCanvas.SetActive(false);
+        }
+
         TitleCanvas.SetActive(true);
         newRecordText.gameObject.SetActive(false);
 
@@ -384,9 +441,6 @@ public class GameManager : MonoBehaviour
 
         // 총합 스코어 업데이트.
         totalScore += score;
-
-        // Die Animation.
-        Player.instance.GetAnimator().SetBool("Die", true);
 
         TitleCanvas.transform.Find("Panel").transform.Find("Title Panel").gameObject.SetActive(false);
         TitleCanvas.transform.Find("Panel").transform.Find("GameOver Panel").gameObject.SetActive(true);

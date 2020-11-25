@@ -12,6 +12,9 @@ public class AdmobManager : MonoBehaviour
     private bool isTestMode = true;
     //public Text LogText;
     //public Button FrontAdsBtn, RewardAdsBtn;
+
+    private bool successRewardAds = false;
+    private bool adsSuccessOrClosed = false;
     
     private void Awake()
     {
@@ -106,7 +109,15 @@ public class AdmobManager : MonoBehaviour
         rewardAd.LoadAd(GetAdRequest());
         rewardAd.OnUserEarnedReward += (sender, e) =>
         {
-            //LogText.text = "리워드 광고 성공";
+            // 사용자가 보상형 광고 다 봄.
+            adsSuccessOrClosed = true;
+            successRewardAds = true;
+        };
+
+        rewardAd.OnAdClosed += (sender, e) =>
+        {
+            // 사용자가 보상형 광고를 중간에 끔.
+            adsSuccessOrClosed = true;
         };
     }
 
@@ -116,4 +127,24 @@ public class AdmobManager : MonoBehaviour
         LoadRewardAd();
     }
     #endregion
+
+    public bool GetSuccessRewardAds()
+    {
+        return successRewardAds;
+    }
+
+    public void SetSuccessRewardAds(bool _successRewardAds)
+    {
+        successRewardAds = _successRewardAds;
+    }
+
+    public bool GetSuccessOrClosedAds()
+    {
+        return adsSuccessOrClosed;
+    }
+
+    public void SetSuccessOrClosedAds(bool _adsSuccessOrClosed)
+    {
+        adsSuccessOrClosed = _adsSuccessOrClosed;
+    }
 }
