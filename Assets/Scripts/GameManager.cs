@@ -425,6 +425,12 @@ public class GameManager : MonoBehaviour
                     // 따라서 restOneTurnCreateZomie 플래그를 보고 한 턴 좀비 생성을 막게하기 위함.
                     EnemyManager.instance.SetRestOneTurnCreateZombie(true);
 
+                    if (listenBgm)
+                        AudioManager.instance.Play("background");
+
+                    // 0.5초 대기 후 게임 오버 체크 시작.
+                    yield return new WaitForSeconds(0.5f);
+                    
                     gameOverZone.SetGameOverCheck(true);
 
                     yield break;

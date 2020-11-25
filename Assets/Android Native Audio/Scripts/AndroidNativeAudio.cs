@@ -9,7 +9,9 @@
  */
 
 
+using ChristopherCreates.AndroidNativeAudio;
 using System;
+using System.IO;
 using UnityEngine;
 
 /// <summary>
@@ -17,7 +19,7 @@ using UnityEngine;
 /// </summary>
 public static class AndroidNativeAudio
 {
-    const string _logPrefix = "AndroidNativeAudio: ";
+	const string _logPrefix = "AndroidNativeAudio: ";
 
 #if UNITY_ANDROID && !UNITY_EDITOR
 
@@ -205,159 +207,159 @@ public static class AndroidNativeAudio
 
 #else
 
-    /// <summary>
-    /// Loads an audio file into the sound pool. Call makePool() before loading.
-    /// </summary>
-    /// <param name="audioFile">The path to the audio file, relative to Assets\StreamingAssets. (Unless usePersistentDataPath is true.)</param>
-    /// <param name="usePersistentDataPath">Makes audioFile relative to Application.persistentDataPath.</param>
-    /// <param name="callback">Method to call when load is complete.  Must take one int parameter which is the loaded file ID.</param>
-    /// <returns>The file ID if successful, -1 if the load fails.</returns>
-    public static int load(string audioFile, bool usePersistentDataPath = false, Action<int> callback = null)
-    {
-        Debug.Log(_logPrefix + "load(\"" + audioFile + "\", " + usePersistentDataPath + "\", " + callback + ")");
-        return 1;
-    }
+	/// <summary>
+	/// Loads an audio file into the sound pool. Call makePool() before loading.
+	/// </summary>
+	/// <param name="audioFile">The path to the audio file, relative to Assets\StreamingAssets. (Unless usePersistentDataPath is true.)</param>
+	/// <param name="usePersistentDataPath">Makes audioFile relative to Application.persistentDataPath.</param>
+	/// <param name="callback">Method to call when load is complete.  Must take one int parameter which is the loaded file ID.</param>
+	/// <returns>The file ID if successful, -1 if the load fails.</returns>
+	public static int load(string audioFile, bool usePersistentDataPath = false, Action<int> callback = null)
+	{
+		Debug.Log(_logPrefix + "load(\"" + audioFile + "\", " + usePersistentDataPath + "\", " + callback + ")");
+		return 1;
+	}
 
 
-    /// <summary>
-    /// Makes a native Android sound pool.
-    /// </summary>
-    /// <param name="maxStreams">The maximum number of streams. (The maximum number of simultaneously playing files.)</param>
-    public static void makePool(int maxStreams = 16)
-    {
-        Debug.Log(_logPrefix + "makePool(" + maxStreams + ")");
-    }
+	/// <summary>
+	/// Makes a native Android sound pool.
+	/// </summary>
+	/// <param name="maxStreams">The maximum number of streams. (The maximum number of simultaneously playing files.)</param>
+	public static void makePool(int maxStreams = 16)
+	{
+		Debug.Log(_logPrefix + "makePool(" + maxStreams + ")");
+	}
 
 
-    /// <summary>
-    /// Pauses a stream.  Call resume() to resume.
-    /// </summary>
-    /// <param name="streamID">The ID of the stream to pause.</param>
-    public static void pause(int streamID)
-    {
-        Debug.Log(_logPrefix + "pause(" + streamID + ")");
-    }
+	/// <summary>
+	/// Pauses a stream.  Call resume() to resume.
+	/// </summary>
+	/// <param name="streamID">The ID of the stream to pause.</param>
+	public static void pause(int streamID)
+	{
+		Debug.Log(_logPrefix + "pause(" + streamID + ")");
+	}
 
 
-    /// <summary>
-    /// Pauses all playing streams.  Call resumeAll() to resume.
-    /// </summary>
-    public static void pauseAll()
-    {
-        Debug.Log(_logPrefix + "pauseAll()");
-    }
+	/// <summary>
+	/// Pauses all playing streams.  Call resumeAll() to resume.
+	/// </summary>
+	public static void pauseAll()
+	{
+		Debug.Log(_logPrefix + "pauseAll()");
+	}
 
 
-    /// <summary>
-    /// Plays a file. Call load() before playing.
-    /// </summary>
-    /// <param name="fileID">The ID of the file to play.</param>
-    /// <param name="leftVolume">The left volume to play at (0.0 - 1.0). If rightVolume is omitted, this value will be used for both.</param>
-    /// <param name="rightVolume">The right volume to play at (0.0 - 1.0). Defaults to leftVolume.</param>
-    /// <param name="priority">The priority of this stream. If the number of simultaneously playing streams exceeds maxStreams in makePool, higher priority streams will play and lower priority streams will not.</param>
-    /// <param name="loop">How many times to loop the audio. A value of 0 will play once, -1 will loop until stopped.</param>
-    /// <param name="rate">The rate to play at. A value of 0.5 will play at half speed, 2 will play at double speed.</param>
-    /// <returns>The stream ID if successful, -1 if the play fails.</returns>
-    public static int play(int fileID, float leftVolume = 1, float rightVolume = -1, int priority = 1, int loop = 0, float rate = 1)
-    {
-        Debug.Log(_logPrefix + "play(" + fileID + ", " + leftVolume + ", " + rightVolume + ", " + priority + ", " + loop + ", " + rate + ")");
-        return 1;
-    }
+	/// <summary>
+	/// Plays a file. Call load() before playing.
+	/// </summary>
+	/// <param name="fileID">The ID of the file to play.</param>
+	/// <param name="leftVolume">The left volume to play at (0.0 - 1.0). If rightVolume is omitted, this value will be used for both.</param>
+	/// <param name="rightVolume">The right volume to play at (0.0 - 1.0). Defaults to leftVolume.</param>
+	/// <param name="priority">The priority of this stream. If the number of simultaneously playing streams exceeds maxStreams in makePool, higher priority streams will play and lower priority streams will not.</param>
+	/// <param name="loop">How many times to loop the audio. A value of 0 will play once, -1 will loop until stopped.</param>
+	/// <param name="rate">The rate to play at. A value of 0.5 will play at half speed, 2 will play at double speed.</param>
+	/// <returns>The stream ID if successful, -1 if the play fails.</returns>
+	public static int play(int fileID, float leftVolume = 1, float rightVolume = -1, int priority = 1, int loop = 0, float rate = 1)
+	{
+		Debug.Log(_logPrefix + "play(" + fileID + ", " + leftVolume + ", " + rightVolume + ", " + priority + ", " + loop + ", " + rate + ")");
+		return 1;
+	}
 
 
-    /// <summary>
-    /// Releases the sound pool resources.
-    /// </summary>
-    public static void releasePool()
-    {
-        Debug.Log(_logPrefix + "releasePool()");
-    }
+	/// <summary>
+	/// Releases the sound pool resources.
+	/// </summary>
+	public static void releasePool()
+	{
+		Debug.Log(_logPrefix + "releasePool()");
+	}
 
 
-    /// <summary>
-    /// Resumes a paused stream.
-    /// </summary>
-    /// <param name="streamID">The ID of the stream to resume.</param>
-    public static void resume(int streamID)
-    {
-        Debug.Log(_logPrefix + "resume(" + streamID + ")");
-    }
+	/// <summary>
+	/// Resumes a paused stream.
+	/// </summary>
+	/// <param name="streamID">The ID of the stream to resume.</param>
+	public static void resume(int streamID)
+	{
+		Debug.Log(_logPrefix + "resume(" + streamID + ")");
+	}
 
 
-    /// <summary>
-    /// Resumes all streams paused with pauseAll().
-    /// </summary>
-    public static void resumeAll()
-    {
-        Debug.Log(_logPrefix + "resumeAll()");
-    }
+	/// <summary>
+	/// Resumes all streams paused with pauseAll().
+	/// </summary>
+	public static void resumeAll()
+	{
+		Debug.Log(_logPrefix + "resumeAll()");
+	}
 
 
-    /// <summary>
-    /// Sets the loop of a stream.
-    /// </summary>
-    /// <param name="streamID">The ID of the stream to change.</param>
-    /// <param name="loop">How many times to loop the audio. A value of 0 will play once, -1 will loop until stopped.</param>
-    public static void setLoop(int streamID, int loop)
-    {
-        Debug.Log(_logPrefix + "setLoop(" + streamID + ", " + loop + ")");
-    }
+	/// <summary>
+	/// Sets the loop of a stream.
+	/// </summary>
+	/// <param name="streamID">The ID of the stream to change.</param>
+	/// <param name="loop">How many times to loop the audio. A value of 0 will play once, -1 will loop until stopped.</param>
+	public static void setLoop(int streamID, int loop)
+	{
+		Debug.Log(_logPrefix + "setLoop(" + streamID + ", " + loop + ")");
+	}
 
 
-    /// <summary>
-    /// Sets the priority of a stream.
-    /// </summary>
-    /// <param name="streamID">The ID of the stream to change.</param>
-    /// <param name="priority">The priority of this stream. If the number of simultaneously playing streams exceeds maxStreams in makePool, higher priority streams will play and lower priority streams will not.</param>
-    public static void setPriority(int streamID, int priority)
-    {
-        Debug.Log(_logPrefix + "setPriority(" + streamID + ", " + priority + ")");
-    }
+	/// <summary>
+	/// Sets the priority of a stream.
+	/// </summary>
+	/// <param name="streamID">The ID of the stream to change.</param>
+	/// <param name="priority">The priority of this stream. If the number of simultaneously playing streams exceeds maxStreams in makePool, higher priority streams will play and lower priority streams will not.</param>
+	public static void setPriority(int streamID, int priority)
+	{
+		Debug.Log(_logPrefix + "setPriority(" + streamID + ", " + priority + ")");
+	}
 
 
-    /// <summary>
-    /// Sets the rate of a stream.
-    /// </summary>
-    /// <param name="streamID">The ID of the stream to change.</param>
-    /// <param name="rate">The rate to play at. A value of 0.5 will play at half speed, 2 will play at double speed.</param>
-    public static void setRate(int streamID, float rate)
-    {
-        Debug.Log(_logPrefix + "setRate(" + streamID + ", " + rate + ")");
-    }
+	/// <summary>
+	/// Sets the rate of a stream.
+	/// </summary>
+	/// <param name="streamID">The ID of the stream to change.</param>
+	/// <param name="rate">The rate to play at. A value of 0.5 will play at half speed, 2 will play at double speed.</param>
+	public static void setRate(int streamID, float rate)
+	{
+		Debug.Log(_logPrefix + "setRate(" + streamID + ", " + rate + ")");
+	}
 
 
-    /// <summary>
-    /// Sets the volume of a stream.
-    /// </summary>
-    /// <param name="streamID">The ID of the stream to change.</param>
-    /// <param name="leftVolume">The left volume to play at (0.0 - 1.0). If rightVolume is omitted, this value will be used for both.</param>
-    /// <param name="rightVolume">The right volume to play at (0.0 - 1.0). Defaults to leftVolume.</param>
-    public static void setVolume(int streamID, float leftVolume, float rightVolume = -1)
-    {
-        Debug.Log(_logPrefix + "setVolume(" + streamID + ", " + leftVolume + ", " + rightVolume + ")");
-    }
+	/// <summary>
+	/// Sets the volume of a stream.
+	/// </summary>
+	/// <param name="streamID">The ID of the stream to change.</param>
+	/// <param name="leftVolume">The left volume to play at (0.0 - 1.0). If rightVolume is omitted, this value will be used for both.</param>
+	/// <param name="rightVolume">The right volume to play at (0.0 - 1.0). Defaults to leftVolume.</param>
+	public static void setVolume(int streamID, float leftVolume, float rightVolume = -1)
+	{
+		Debug.Log(_logPrefix + "setVolume(" + streamID + ", " + leftVolume + ", " + rightVolume + ")");
+	}
 
 
-    /// <summary>
-    /// Stops a stream.
-    /// </summary>
-    /// <param name="streamID">The ID of the stream to stop.</param>
-    public static void stop(int streamID)
-    {
-        Debug.Log(_logPrefix + "stop(" + streamID + ")");
-    }
+	/// <summary>
+	/// Stops a stream.
+	/// </summary>
+	/// <param name="streamID">The ID of the stream to stop.</param>
+	public static void stop(int streamID)
+	{
+		Debug.Log(_logPrefix + "stop(" + streamID + ")");
+	}
 
 
-    /// <summary>
-    /// Unloads a file from the sound pool.
-    /// </summary>
-    /// <param name="fileID">The ID of the file to unload.</param>
-    /// <returns>True if unloaded, false if previously unloaded.</returns>
-    public static bool unload(int fileID)
-    {
-        Debug.Log(_logPrefix + "unload(" + fileID + ")");
-        return true;
-    }
+	/// <summary>
+	/// Unloads a file from the sound pool.
+	/// </summary>
+	/// <param name="fileID">The ID of the file to unload.</param>
+	/// <returns>True if unloaded, false if previously unloaded.</returns>
+	public static bool unload(int fileID)
+	{
+		Debug.Log(_logPrefix + "unload(" + fileID + ")");
+		return true;
+	}
 
 #endif
 

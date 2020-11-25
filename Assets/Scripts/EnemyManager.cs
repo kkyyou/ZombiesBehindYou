@@ -38,7 +38,7 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 21; i++)
         {
             // Zombie 1 미리 생성.
             GameObject zombieObject = Instantiate(prefab_zombie, Vector3.zero, Quaternion.identity);

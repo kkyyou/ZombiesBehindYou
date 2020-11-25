@@ -3,20 +3,20 @@ using UnityEngine;
 
 namespace ChristopherCreates.AndroidNativeAudio
 {
-    public class OnCompletionListener : AndroidJavaProxy
-    {
-        public Action<int> Callback;
+	public class OnCompletionListener : AndroidJavaProxy
+	{
+		public Action<int> Callback;
 
 
-        public OnCompletionListener(Action<int> callback) : base("android.media.MediaPlayer$OnCompletionListener")
-        {
-            Callback = callback;
-        }
+		public OnCompletionListener(Action<int> callback) : base("android.media.MediaPlayer$OnCompletionListener")
+		{
+			Callback = callback;
+		}
 
 
-        void onCompletion(AndroidJavaObject mediaPlayer)
-        {
-            Callback(mediaPlayer.Call<int>("getAudioSessionId"));
-        }
-    }
+		void onCompletion(AndroidJavaObject mediaPlayer)
+		{
+			Callback(mediaPlayer.Call<int>("getAudioSessionId"));
+		}
+	}
 }
