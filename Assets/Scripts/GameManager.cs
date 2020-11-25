@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
     public Button attackLRBtn;
     public Button attackBtn;
 
+    private int gameCount = 0;
 
     private void Awake()
     {
@@ -312,6 +313,14 @@ public class GameManager : MonoBehaviour
     {
         if (!AudioManager.instance.IsPlaying("background") && listenBgm)
             AudioManager.instance.Play("background");
+
+        if (gameCount < 5)
+            gameCount++;
+        else if (gameCount >= 5)
+        {
+            gameCount = 1;
+            AdmobManager.instance.ShowFrontAd();
+        }
 
         // 초기화
         score = 0;

@@ -80,7 +80,7 @@ public class CharSelectManager : MonoBehaviour
             {
                 SelectButtonEnableFalse();
 
-                RequireInfoText.text = GameManager.instance.GetTotalScore() + "/100";
+                RequireInfoText.text = GameManager.instance.GetTotalScore() + "/250";
                 RequireInfoText.color = Color.red;
             }
         }
