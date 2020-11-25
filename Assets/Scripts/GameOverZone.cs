@@ -18,7 +18,7 @@ public class GameOverZone : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         Zombie zombie = collision.gameObject.GetComponent<Zombie>();
-        if (zombie && zombie.name == "Zombie" && gameOverCheck)
+        if (zombie && (zombie.name == "Zombie1" || zombie.name == "Zombie2") && gameOverCheck)
         {
             GameManager.instance.GameOver();
             gameOverCheck = false;

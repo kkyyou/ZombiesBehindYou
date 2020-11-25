@@ -11,12 +11,6 @@ public class LeftTargetZone : MonoBehaviour
         shakeCamera = GameObject.FindWithTag("MainCamera").GetComponent<ShakeCamera>();
     }
 
-    IEnumerator DeleteZombieCoroutine(GameObject zombiePrefab)
-    {
-        yield return new WaitForSeconds(1f);
-        Destroy(zombiePrefab);
-    }
-
     public void ThrowZombie(Collider2D collision)
     {
         collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
@@ -36,8 +30,7 @@ public class LeftTargetZone : MonoBehaviour
         zombieRigid.AddForce(new Vector2(ranForceX, ranForceY));
         zombieRigid.AddTorque(ranTorque);
 
-        // 리스트에서 해당 좀비 프리팹 삭제.
+        // 씬 리스트에서 해당 좀비 프리팹 삭제.
         EnemyManager.instance.RemoveZombie(collision.gameObject);
-        StartCoroutine(DeleteZombieCoroutine(collision.gameObject));
     }
 }

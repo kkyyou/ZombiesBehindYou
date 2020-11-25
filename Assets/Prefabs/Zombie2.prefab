@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ed5d1df480e154d9d0a84c62f0d152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Zombie
+  name: Zombie2
   anim: {fileID: 8233560789531498364}
 --- !u!95 &8233560789531498364
 Animator:

@@ -30,14 +30,8 @@ public class RightTargetZone : MonoBehaviour
         zombieRigid.AddForce(new Vector2(ranForceX, ranForceY));
         zombieRigid.AddTorque(ranTorque);
 
-        // 리스트에서 해당 좀비 프리팹 삭제.
+        // 씬 리스트에서 해당 좀비 프리팹 삭제.
         EnemyManager.instance.RemoveZombie(collision.gameObject);
-        StartCoroutine(DeleteZombieCoroutine(collision.gameObject));
     }
 
-    IEnumerator DeleteZombieCoroutine(GameObject zombiePrefab)
-    {
-        yield return new WaitForSeconds(1f);
-        Destroy(zombiePrefab);
-    }
 }

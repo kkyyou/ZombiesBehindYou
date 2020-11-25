@@ -88,7 +88,5 @@ public class CloudManager : MonoBehaviour
         {
             currentCloud = pinkIceMountainCloud;
         }
-
-        Debug.Log("Loc" + "X : " + GameManager.instance.gameOverZone.transform.position.x + "Y : " + GameManager.instance.gameOverZone.transform.position.y + "Z : " + GameManager.instance.gameOverZone.transform.position.z);
     }
 }

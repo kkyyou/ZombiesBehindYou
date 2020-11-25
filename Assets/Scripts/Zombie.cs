@@ -7,18 +7,12 @@ public class Zombie : MonoBehaviour
     public string name;
     private float speed = 8f;    
     private int moveDir;
-    
+
     public Animator anim;
 
-    private void Awake()
+    private void Start()
     {
-        float playerLocX = Player.instance.transform.position.x;
-        float zombieLocX = transform.position.x;
-
-        if (zombieLocX - playerLocX < 0)
-            moveDir = 1;
-        else
-            moveDir = -1;
+        CalcMoveDir();
     }
 
     public void Move()
@@ -63,5 +57,24 @@ public class Zombie : MonoBehaviour
     public void SetMoveDir(int _moveDir)
     {
         moveDir = _moveDir;
+    }
+
+    public void CalcMoveDir()
+    {
+        Vector3 playerVector = Player.instance.transform.position;
+        Vector3 zombieVector = this.transform.position;
+
+        if (zombieVector.x - playerVector.x < 0)
+        {
+            moveDir = 1;
+        }
+        else if (zombieVector.x - playerVector.x > 0)
+        {
+            moveDir = -1;
+        }
+        else
+        {
+            moveDir = 0;
+        }
     }
 }

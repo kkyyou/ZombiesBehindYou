@@ -183,11 +183,7 @@ public class GameManager : MonoBehaviour
     public void RandomMap()
     {
         // 맵에 따른 플레이어, 박스컬라이더 위치 이동.
-
         int ran = Random.Range(0, 6);
-
-        Debug.Log("랜덤맵 : " + ran);
-
         if (ran == (int)Map.GREEN)
         {
             // 카메라 흔들기 위치 초기화.
@@ -282,9 +278,6 @@ public class GameManager : MonoBehaviour
             gop.x += 23f;
             gop.y -= 14f;
             gameOverZone.transform.position = gop;
-
-            Debug.Log("Loc" + "X : " + gop.x + "Y : " + gop.y + "Z : " + gop.z);
-            Debug.Log("아이스 마운틴 !");
         }
         else if (ran == (int)Map.PINK_ICE_MOUNTAIN)
         {
@@ -313,8 +306,6 @@ public class GameManager : MonoBehaviour
         currentMap = (Map)ran;
 
         CloudManager.instance.SetCurrentCloud(currentMap);
-
-        Debug.Log("Loc" + "X : " + GameManager.instance.gameOverZone.transform.position.x + "Y : " + GameManager.instance.gameOverZone.transform.position.y + "Z : " + GameManager.instance.gameOverZone.transform.position.z);
     }
 
     public void GameStart()

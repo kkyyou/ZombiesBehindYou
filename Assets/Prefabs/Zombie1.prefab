@@ -102,7 +102,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.15, y: 0.28}
+    oldSize: {x: 0.9375, y: 1.75}
     newSize: {x: 0.15, y: 0.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ed5d1df480e154d9d0a84c62f0d152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Zombie
+  name: Zombie1
   anim: {fileID: 4354658097947243015}
 --- !u!95 &4354658097947243015
 Animator:
