@@ -83,6 +83,4 @@ public class ReviveManager : MonoBehaviour
     {
         showRewardAds = _showRewardAds;
     }
-
-
 }
