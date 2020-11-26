@@ -6287,6 +6287,7 @@ MonoBehaviour:
   - {fileID: 4860990495631151172, guid: 7079fc6c6aef8d74bba6454c1efa755f, type: 3}
   - {fileID: 8328624329519055157, guid: dbf9b72f2762e74418cc55aeb132126e, type: 3}
   - {fileID: 3065726822495503316, guid: c33eaa6c64aa6b246923654d454b15e0, type: 3}
+  - {fileID: 3019252962088077030, guid: 1bc6bd1e34bba1946a394df3bc85c01a, type: 3}
   player: {fileID: 0}
   RequireText: {fileID: 992308847}
   RequireInfoText: {fileID: 1274179326}

@@ -14,8 +14,6 @@ public class ReviveManager : MonoBehaviour
     public Button noBtn;
     public Button showRewardAdsBtn;
 
-    private bool canRevive = true;
-
     private void OnEnable()
     {
         reviveTimeSlider.value = reviveTimeSlider.maxValue;
@@ -86,13 +84,5 @@ public class ReviveManager : MonoBehaviour
         showRewardAds = _showRewardAds;
     }
 
-    public bool GetCanRevive()
-    {
-        return canRevive;
-    }
 
-    public void SetCanRevive(bool _canRevive)
-    {
-        canRevive = _canRevive;
-    }
 }
