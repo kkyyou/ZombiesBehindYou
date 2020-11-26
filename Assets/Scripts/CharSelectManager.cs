@@ -19,7 +19,8 @@ public class CharSelectManager : MonoBehaviour
         PinkPunchGirl,
         AxeHeroGirl,
         Viking,
-        Cowboy
+        Cowboy,
+        Lancer
     }
 
     public static CharSelectManager instance;
@@ -340,6 +341,25 @@ public class CharSelectManager : MonoBehaviour
                     RequireInfoText.color = Color.red;
                 }
                 break;
+            case Characters.Lancer:
+                RequireText.text = "Total 2500";
+                RequireText.color = Color.white;
+
+                if (IsLancerConditionFulfill())
+                {
+                    SelectButtonEnableTrue();
+
+                    RequireInfoText.text = "2500/2500";
+                    RequireInfoText.color = Color.green;
+                }
+                else
+                {
+                    SelectButtonEnableFalse();
+
+                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/2500";
+                    RequireInfoText.color = Color.red;
+                }
+                break;
 
         }
     }
@@ -465,6 +485,14 @@ public class CharSelectManager : MonoBehaviour
     public bool IsCowboyConditionFulfill()
     {
         if (GameManager.instance.GetTotalScore() >= 2000)
+            return true;
+
+        return false;
+    }
+
+    public bool IsLancerConditionFulfill()
+    {
+        if (GameManager.instance.GetTotalScore() >= 2500)
             return true;
 
         return false;

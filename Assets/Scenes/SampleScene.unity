@@ -6293,6 +6293,12 @@ MonoBehaviour:
   - {fileID: 5631079692579380580, guid: 3de8ad9b88e1e4f4aa4b56e903aa4398, type: 3}
   - {fileID: 4207677956012041575, guid: a1e7eaeca01dd304caecdfd98c1c5c4d, type: 3}
   - {fileID: 7781857740355132207, guid: cb67960d7c3739f448081e2934b0e4ab, type: 3}
+  - {fileID: 4646109070924345704, guid: 5334117ad0d17ce4da6cd8bf31717e7c, type: 3}
+  - {fileID: 6498824653161529375, guid: 0867716ea35b16045b90fdfb047c5c20, type: 3}
+  - {fileID: 25877474815767879, guid: ad9ed190dcb2e064586efe5b61ade3d4, type: 3}
+  - {fileID: 8248389597847806969, guid: 36ab51de6a247e54c907cd6415915594, type: 3}
+  - {fileID: 2042007357560021070, guid: 1f8dcdb7b62ffa941ab7d36d2379c6e5, type: 3}
+  - {fileID: 7798861261290629577, guid: 30e665a16fd91da4ea16288addfd5b6a, type: 3}
   player: {fileID: 0}
   RequireText: {fileID: 992308847}
   RequireInfoText: {fileID: 1274179326}
