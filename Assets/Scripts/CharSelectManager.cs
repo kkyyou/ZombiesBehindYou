@@ -17,7 +17,8 @@ public class CharSelectManager : MonoBehaviour
         CatPunchGirl,
         SwordHero,
         PinkPunchGirl,
-        AxeHeroGirl
+        AxeHeroGirl,
+        Viking
     }
 
     public static CharSelectManager instance;
@@ -300,6 +301,25 @@ public class CharSelectManager : MonoBehaviour
                     RequireInfoText.color = Color.red;
                 }
                 break;
+            case Characters.Viking:
+                RequireText.text = "Best 500";
+                RequireText.color = Color.white;
+
+                if (IsAxeHeroGirlConditionFulfill())
+                {
+                    SelectButtonEnableTrue();
+
+                    RequireInfoText.text = "500/500";
+                    RequireInfoText.color = Color.green;
+                }
+                else
+                {
+                    SelectButtonEnableFalse();
+
+                    RequireInfoText.text = GameManager.instance.GetBestScore() + "/500";
+                    RequireInfoText.color = Color.red;
+                }
+                break;
 
         }
     }
@@ -407,6 +427,14 @@ public class CharSelectManager : MonoBehaviour
     }
 
     public bool IsAxeHeroGirlConditionFulfill()
+    {
+        if (GameManager.instance.GetBestScore() >= 500)
+            return true;
+
+        return false;
+    }
+
+    public bool IsVikingConditionFulfill()
     {
         if (GameManager.instance.GetBestScore() >= 500)
             return true;
