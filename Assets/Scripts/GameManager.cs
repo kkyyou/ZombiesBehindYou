@@ -65,6 +65,8 @@ public class GameManager : MonoBehaviour
 
     private int gameCount = 0;
 
+    private bool canRevive = true;
+
     private void Awake()
     {
         if (instance == null)
@@ -312,6 +314,8 @@ public class GameManager : MonoBehaviour
 
     public void GameStart()
     {
+        canRevive = true;
+
         if (!AudioManager.instance.IsPlaying("background") && listenBgm)
             AudioManager.instance.Play("background");
 
@@ -382,8 +386,11 @@ public class GameManager : MonoBehaviour
         playing = false;
 
         // 내 점수에서 50점을 더하면 최대점수가 될때 Revive 찬스!
-        if (score + 50 >= bestScore)
+        if (score + 50 >= bestScore && canRevive)           
         {
+            // 리바이브 한번 떳으니까 다음 게임 시작까지는 안뜨도록.
+            canRevive = false;
+
             // No 나 광고보기 버튼 둘 중 아무거나 눌릴때까지 or 시간초 다 될때까지 기다리기.
             reviveCanvas.SetActive(true);
             yield return new WaitUntil(() => ReviveManager.instance.GetAnyBtnClicked());
@@ -602,5 +609,15 @@ public class GameManager : MonoBehaviour
     public bool GetListenBgm()
     {
         return listenBgm;
+    }
+
+    public bool GetCanRevive()
+    {
+        return canRevive;
+    }
+
+    public void SetCanRevive(bool _canRevive)
+    {
+        canRevive = _canRevive;
     }
 }

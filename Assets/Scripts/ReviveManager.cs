@@ -14,6 +14,7 @@ public class ReviveManager : MonoBehaviour
     public Button noBtn;
     public Button showRewardAdsBtn;
 
+    private bool canRevive = true;
 
     private void OnEnable()
     {
@@ -83,5 +84,15 @@ public class ReviveManager : MonoBehaviour
     public void SetShowRewardAds(bool _showRewardAds)
     {
         showRewardAds = _showRewardAds;
+    }
+
+    public bool GetCanRevive()
+    {
+        return canRevive;
+    }
+
+    public void SetCanRevive(bool _canRevive)
+    {
+        canRevive = _canRevive;
     }
 }
