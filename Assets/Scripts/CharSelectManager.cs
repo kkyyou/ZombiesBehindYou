@@ -11,6 +11,7 @@ public class CharSelectManager : MonoBehaviour
         ThunderMage,
         FireFighter,
         Archer,
+        Healer
     }
 
     public static CharSelectManager instance;
@@ -164,6 +165,26 @@ public class CharSelectManager : MonoBehaviour
                 RequireInfoText.color = Color.red;
             }
         }
+        else if (number == (int)Characters.Healer)
+        {
+            RequireText.text = "Total 100";
+            RequireText.color = Color.white;
+
+            if (IsHealerConditionFulfill())
+            {
+                SelectButtonEnableTrue();
+
+                RequireInfoText.text = "100/100";
+                RequireInfoText.color = Color.green;
+            }
+            else
+            {
+                SelectButtonEnableFalse();
+
+                RequireInfoText.text = GameManager.instance.GetScore() + "/100";
+                RequireInfoText.color = Color.red;
+            }
+        }
     }
 
     public void SelectCharacter(int number)
@@ -213,6 +234,14 @@ public class CharSelectManager : MonoBehaviour
     }
 
     public bool IsArcherConditionFulfill()
+    {
+        if (GameManager.instance.GetTotalScore() >= 100)
+            return true;
+
+        return false;
+    }
+
+    public bool IsHealerConditionFulfill()
     {
         if (GameManager.instance.GetTotalScore() >= 100)
             return true;
