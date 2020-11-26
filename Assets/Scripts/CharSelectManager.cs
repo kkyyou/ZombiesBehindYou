@@ -13,7 +13,8 @@ public class CharSelectManager : MonoBehaviour
         Archer,
         Healer,
         Ice,
-        Ninja
+        Ninja,
+        CatPunchGirl
     }
 
     public static CharSelectManager instance;
@@ -227,6 +228,26 @@ public class CharSelectManager : MonoBehaviour
                 RequireInfoText.color = Color.red;
             }
         }
+        else if (number == (int)Characters.CatPunchGirl)
+        {
+            RequireText.text = "Total 100";
+            RequireText.color = Color.white;
+
+            if (IsCatPunchGirlConditionFulfill())
+            {
+                SelectButtonEnableTrue();
+
+                RequireInfoText.text = "100/100";
+                RequireInfoText.color = Color.green;
+            }
+            else
+            {
+                SelectButtonEnableFalse();
+
+                RequireInfoText.text = GameManager.instance.GetScore() + "/100";
+                RequireInfoText.color = Color.red;
+            }
+        }
     }
 
     public void SelectCharacter(int number)
@@ -300,6 +321,14 @@ public class CharSelectManager : MonoBehaviour
     }
 
     public bool IsNinjaConditionFulfill()
+    {
+        if (GameManager.instance.GetTotalScore() >= 100)
+            return true;
+
+        return false;
+    }
+
+    public bool IsCatPunchGirlConditionFulfill()
     {
         if (GameManager.instance.GetTotalScore() >= 100)
             return true;
