@@ -16,7 +16,8 @@ public class CharSelectManager : MonoBehaviour
         Ninja,
         CatPunchGirl,
         SwordHero,
-        PinkPunchGirl
+        PinkPunchGirl,
+        AxeHeroGirl
     }
 
     public static CharSelectManager instance;
@@ -280,6 +281,25 @@ public class CharSelectManager : MonoBehaviour
                     RequireInfoText.color = Color.red;
                 }
                 break;
+            case Characters.AxeHeroGirl:
+                RequireText.text = "Best 500";
+                RequireText.color = Color.white;
+
+                if (IsAxeHeroGirlConditionFulfill())
+                {
+                    SelectButtonEnableTrue();
+
+                    RequireInfoText.text = "500/500";
+                    RequireInfoText.color = Color.green;
+                }
+                else
+                {
+                    SelectButtonEnableFalse();
+
+                    RequireInfoText.text = GameManager.instance.GetBestScore() + "/500";
+                    RequireInfoText.color = Color.red;
+                }
+                break;
 
         }
     }
@@ -381,6 +401,14 @@ public class CharSelectManager : MonoBehaviour
     public bool IsPinkPunchGirlConditionFulfill()
     {
         if (GameManager.instance.GetTotalScore() >= 1500)
+            return true;
+
+        return false;
+    }
+
+    public bool IsAxeHeroGirlConditionFulfill()
+    {
+        if (GameManager.instance.GetBestScore() >= 500)
             return true;
 
         return false;
