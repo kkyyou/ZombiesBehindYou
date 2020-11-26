@@ -18,7 +18,8 @@ public class CharSelectManager : MonoBehaviour
         SwordHero,
         PinkPunchGirl,
         AxeHeroGirl,
-        Viking
+        Viking,
+        Cowboy
     }
 
     public static CharSelectManager instance;
@@ -320,6 +321,25 @@ public class CharSelectManager : MonoBehaviour
                     RequireInfoText.color = Color.red;
                 }
                 break;
+            case Characters.Cowboy:
+                RequireText.text = "Total 2000";
+                RequireText.color = Color.white;
+
+                if (IsCowboyConditionFulfill())
+                {
+                    SelectButtonEnableTrue();
+
+                    RequireInfoText.text = "2000/2000";
+                    RequireInfoText.color = Color.green;
+                }
+                else
+                {
+                    SelectButtonEnableFalse();
+
+                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/2000";
+                    RequireInfoText.color = Color.red;
+                }
+                break;
 
         }
     }
@@ -437,6 +457,14 @@ public class CharSelectManager : MonoBehaviour
     public bool IsVikingConditionFulfill()
     {
         if (GameManager.instance.GetBestScore() >= 500)
+            return true;
+
+        return false;
+    }
+
+    public bool IsCowboyConditionFulfill()
+    {
+        if (GameManager.instance.GetTotalScore() >= 2000)
             return true;
 
         return false;
