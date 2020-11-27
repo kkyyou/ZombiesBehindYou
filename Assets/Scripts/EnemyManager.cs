@@ -66,7 +66,7 @@ public class EnemyManager : MonoBehaviour
             // 화면 밖 대기 좀비 생성.
             int leftOrRight = Random.Range(0, 100);
 
-            if (leftOrRight < 45)
+            if (leftOrRight < 101)
             {
                 CreateZombie(new Vector3(playerVector.x - 10, playerVector.y + 0.3f, playerVector.z));
             }
