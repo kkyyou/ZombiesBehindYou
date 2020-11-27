@@ -97,10 +97,6 @@ public class GameManager : MonoBehaviour
         // 게임 시작 시 정보 로드.
         DBManager.instance.CallLoad();
 
-        // 테스트용 나중에 지워야 함!!!!!!!
-        totalScore = 100000;
-        bestScore = 100000;
-
         // 게임 시작 시 캐릭터 이전에 선택했었던 캐릭터로 변경.
         CharSelectManager.instance.ChangeCharacter(Player.instance.GetSelectedCharacterNumber());
 
@@ -146,8 +142,8 @@ public class GameManager : MonoBehaviour
             EnemyManager.instance.ResetEnemy();
         }
 
-        //if (playing)
-            //hpSlider.value -= Time.deltaTime * hpDecreaseSpeed;
+        if (playing)
+            hpSlider.value -= Time.deltaTime * hpDecreaseSpeed;
     }
 
     IEnumerator ResetHpFillSprite()
@@ -322,6 +318,8 @@ public class GameManager : MonoBehaviour
 
     public void GameStart()
     {
+        GameManager.instance.controlCanvas.transform.Find("Info").gameObject.SetActive(true);
+
         canRevive = true;
 
         if (!AudioManager.instance.IsPlaying("background") && listenBgm)

@@ -59,7 +59,10 @@ public class Player : MonoBehaviour
     public void TurnButton()
     {
         if (!GameManager.instance.GetPlaying())
+        {
             GameManager.instance.SetPlaying(true);
+            GameManager.instance.controlCanvas.transform.Find("Info").gameObject.SetActive(false);
+        }
 
         isRight = !isRight;
         Flip();
@@ -105,7 +108,10 @@ public class Player : MonoBehaviour
     public void AttackButton()
     {
         if (!GameManager.instance.GetPlaying())
+        {
             GameManager.instance.SetPlaying(true);
+            GameManager.instance.controlCanvas.transform.Find("Info").gameObject.SetActive(false);
+        }
 
         animator.SetBool("Attack", true);
 
@@ -149,7 +155,10 @@ public class Player : MonoBehaviour
     public void LeftRightAttackButton()
     {
         if (!GameManager.instance.GetPlaying())
+        {
             GameManager.instance.SetPlaying(true);
+            GameManager.instance.controlCanvas.transform.Find("Info").gameObject.SetActive(false);
+        }
 
         animator.SetBool("LeftRightAttack", true);
 
