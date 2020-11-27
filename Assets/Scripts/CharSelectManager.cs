@@ -23,7 +23,8 @@ public class CharSelectManager : MonoBehaviour
         Lancer,
         LightningSwordGirl,
         Samurai,
-        SpeedSwordMan
+        SpeedSwordMan,
+        KnifeGirl
     }
 
     public static CharSelectManager instance;
@@ -421,6 +422,25 @@ public class CharSelectManager : MonoBehaviour
                     RequireInfoText.color = Color.red;
                 }
                 break;
+            case Characters.KnifeGirl:
+                RequireText.text = "Total 2500";
+                RequireText.color = Color.white;
+
+                if (IsKnifeGirlConditionFulfill())
+                {
+                    SelectButtonEnableTrue();
+
+                    RequireInfoText.text = "2500/2500";
+                    RequireInfoText.color = Color.green;
+                }
+                else
+                {
+                    SelectButtonEnableFalse();
+
+                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/2500";
+                    RequireInfoText.color = Color.red;
+                }
+                break;
 
         }
     }
@@ -578,6 +598,14 @@ public class CharSelectManager : MonoBehaviour
     }
 
     public bool IsSpeedSwordManConditionFulfill()
+    {
+        if (GameManager.instance.GetTotalScore() >= 2500)
+            return true;
+
+        return false;
+    }
+
+    public bool IsKnifeGirlConditionFulfill()
     {
         if (GameManager.instance.GetTotalScore() >= 2500)
             return true;
