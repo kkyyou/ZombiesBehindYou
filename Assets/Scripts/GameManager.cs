@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
     private int bestScore;
     private int totalScore;
     public Text scoreText;
+    private int totalHour;
+    private int totalMin;
+    private int totalGameOverCount;
+
     private bool listenSfx = true;
     private bool listenBgm = true;
 
@@ -474,6 +478,7 @@ public class GameManager : MonoBehaviour
         gameOverBestScoreText.text = bestScore.ToString();
 
         // 게임 오버 시 정보 저장.
+        totalGameOverCount++;
         DBManager.instance.CallSave();
     }
 
@@ -583,6 +588,11 @@ public class GameManager : MonoBehaviour
         score = s;
     }
 
+    public string GetTotalPlayTimeText()
+    {
+        return string.Format("{0:00}:{1:00}", totalHour, totalMin);
+    }
+
     public void SetControlButtonEnabled(bool enabled)
     {
         turnBtn.enabled = enabled;
@@ -623,5 +633,35 @@ public class GameManager : MonoBehaviour
     public void SetCanRevive(bool _canRevive)
     {
         canRevive = _canRevive;
+    }
+
+    public void SetTotalHour(int hour)
+    {
+        totalHour = hour;
+    }
+
+    public int GetTotalHour()
+    {
+        return totalHour;
+    }
+
+    public void SetTotalMin(int min)
+    {
+        totalMin = min;
+    }
+
+    public int GetTotalMin()
+    {
+        return totalMin;
+    }
+
+    public int GetTotalGameOverCount()
+    {
+        return totalGameOverCount;
+    }
+
+    public void SetTotalGameOverCount(int gameOverCount)
+    {
+        totalGameOverCount = gameOverCount;
     }
 }

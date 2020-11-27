@@ -12,6 +12,9 @@ public class DBManager : MonoBehaviour
         public int selectedCharacterNumber;
         public bool listenSfx;
         public bool listenBgm;
+        public int totalPlayHour;
+        public int totalPlayMin;
+        public int gameOverCount;
     }
 
     public Data data;
@@ -31,7 +34,7 @@ public class DBManager : MonoBehaviour
         }
     }
 
-
+    // 게임 오버시 Call Save 호출 됨.
     public void CallSave()
     {
         // 최고 점수면 세이브.
@@ -44,6 +47,9 @@ public class DBManager : MonoBehaviour
         // 토탈 점수 세이브.
         data.totalScore += GameManager.instance.GetScore();
         Debug.Log("Save TotalScore : " + data.totalScore);
+
+        // 게임 오버 카운트 세이브.
+        data.gameOverCount = GameManager.instance.GetTotalGameOverCount();
 
         BinaryFormatter bf = new BinaryFormatter(); // 2진 파일로 변환.
         FileStream file = File.Create(Application.persistentDataPath + "/SaveFile.dat");
@@ -88,6 +94,17 @@ public class DBManager : MonoBehaviour
                 // 효과음, 배경음 듣기 로드.
                 GameManager.instance.SetListenSfx(data.listenSfx);
                 GameManager.instance.SetListenBgm(data.listenBgm);
+
+                // 플레이 타임 로드.
+                GameManager.instance.SetTotalHour(data.totalPlayHour);
+                Debug.Log("Load Total Hour : " + data.totalPlayHour);
+
+                GameManager.instance.SetTotalMin(data.totalPlayMin);
+                Debug.Log("Load Total Min : " + data.totalPlayMin);
+
+                // 게임 오버 카운트 로드.
+                GameManager.instance.SetTotalGameOverCount(data.gameOverCount);
+                Debug.Log("Load Total GameOver Count : " + data.gameOverCount);
 
                 file.Close();
             }

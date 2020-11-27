@@ -299,4 +299,9 @@ public class Player : MonoBehaviour
     {
         GameManager.instance.ShowSettingView();
     }
+
+    public int GetCharacterNumber()
+    {
+        return characterNo;
+    }
 }

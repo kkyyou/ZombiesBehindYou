@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class CharSelectManager : MonoBehaviour
 {
-    enum Characters
+    public enum Characters
     {
         Fire,
         PunchGirl,
@@ -99,10 +99,29 @@ public class CharSelectManager : MonoBehaviour
                 }
                 break;
             case Characters.DoubleBarrel:
-                RequireText.text = "Best 50";
+                RequireText.text = "Total 300";
                 RequireText.color = Color.white;
 
                 if (IsDoubleBarrelConditonFulfill())
+                {
+                    SelectButtonEnableTrue();
+
+                    RequireInfoText.text = "300/300";
+                    RequireInfoText.color = Color.green;
+                }
+                else
+                {
+                    SelectButtonEnableFalse();
+
+                    RequireInfoText.text = GameManager.instance.GetBestScore() + "/300";
+                    RequireInfoText.color = Color.red;
+                }
+                break;
+            case Characters.ThunderMage:
+                RequireText.text = "Best 50";
+                RequireText.color = Color.white;
+
+                if (IsThunderMageConditonFulfill())
                 {
                     SelectButtonEnableTrue();
 
@@ -114,25 +133,6 @@ public class CharSelectManager : MonoBehaviour
                     SelectButtonEnableFalse();
 
                     RequireInfoText.text = GameManager.instance.GetBestScore() + "/50";
-                    RequireInfoText.color = Color.red;
-                }
-                break;
-            case Characters.ThunderMage:
-                RequireText.text = "Best 150";
-                RequireText.color = Color.white;
-
-                if (IsThunderMageConditonFulfill())
-                {
-                    SelectButtonEnableTrue();
-
-                    RequireInfoText.text = "150/150";
-                    RequireInfoText.color = Color.green;
-                }
-                else
-                {
-                    SelectButtonEnableFalse();
-
-                    RequireInfoText.text = GameManager.instance.GetBestScore() + "/150";
                     RequireInfoText.color = Color.red;
                 }
                 break;
@@ -156,14 +156,72 @@ public class CharSelectManager : MonoBehaviour
                 }
                 break;
             case Characters.Archer:
-                RequireText.text = "Total 3000";
+                RequireText.text = "Play time 1 Hour";
                 RequireText.color = Color.white;
 
                 if (IsArcherConditionFulfill())
                 {
+                    Debug.Log("Total Hour" + GameManager.instance.GetTotalHour());
                     SelectButtonEnableTrue();
 
-                    RequireInfoText.text = "3000/10300000";
+                    RequireInfoText.text = "1:00/1:00";
+                    RequireInfoText.color = Color.green;
+                }
+                else
+                {
+                    SelectButtonEnableFalse();
+
+                    RequireInfoText.text = GameManager.instance.GetTotalPlayTimeText() + "/01:00";
+                    RequireInfoText.color = Color.red;
+                }
+                break;
+            case Characters.Healer:
+                RequireText.text = "Best 100";
+                RequireText.color = Color.white;
+
+                if (IsHealerConditionFulfill())
+                {
+                    SelectButtonEnableTrue();
+
+                    RequireInfoText.text = "100/100";
+                    RequireInfoText.color = Color.green;
+                }
+                else
+                {
+                    SelectButtonEnableFalse();
+
+                    RequireInfoText.text = GameManager.instance.GetBestScore() + "/100";
+                    RequireInfoText.color = Color.red;
+                }
+                break;
+            case Characters.Ice:
+                RequireText.text = "Total 1000";
+                RequireText.color = Color.white;
+
+                if (IsIceHeroConditionFulfill())
+                {
+                    SelectButtonEnableTrue();
+
+                    RequireInfoText.text = "1000/1000";
+                    RequireInfoText.color = Color.green;
+                }
+                else
+                {
+                    SelectButtonEnableFalse();
+
+                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/1000";
+                    RequireInfoText.color = Color.red;
+                }
+                break;
+            case Characters.Ninja:
+                RequireText.text = "Total 3000";
+                RequireText.color = Color.white;
+
+                if (IsNinjaConditionFulfill())
+                {
+                    SelectButtonEnableTrue();
+
+                    RequireInfoText.text = "3000/3000";
                     RequireInfoText.color = Color.green;
                 }
                 else
@@ -174,87 +232,49 @@ public class CharSelectManager : MonoBehaviour
                     RequireInfoText.color = Color.red;
                 }
                 break;
-            case Characters.Healer:
-                RequireText.text = "Best 170";
-                RequireText.color = Color.white;
-
-                if (IsHealerConditionFulfill())
-                {
-                    SelectButtonEnableTrue();
-
-                    RequireInfoText.text = "170/170";
-                    RequireInfoText.color = Color.green;
-                }
-                else
-                {
-                    SelectButtonEnableFalse();
-
-                    RequireInfoText.text = GameManager.instance.GetBestScore() + "/170";
-                    RequireInfoText.color = Color.red;
-                }
-                break;
-            case Characters.Ice:
-                RequireText.text = "Total 555";
-                RequireText.color = Color.white;
-
-                if (IsIceHeroConditionFulfill())
-                {
-                    SelectButtonEnableTrue();
-
-                    RequireInfoText.text = "555/555";
-                    RequireInfoText.color = Color.green;
-                }
-                else
-                {
-                    SelectButtonEnableFalse();
-
-                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/555";
-                    RequireInfoText.color = Color.red;
-                }
-                break;
-            case Characters.Ninja:
-                RequireText.text = "Total 10000";
-                RequireText.color = Color.white;
-
-                if (IsNinjaConditionFulfill())
-                {
-                    SelectButtonEnableTrue();
-
-                    RequireInfoText.text = "10000/10000";
-                    RequireInfoText.color = Color.green;
-                }
-                else
-                {
-                    SelectButtonEnableFalse();
-
-                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/10000";
-                    RequireInfoText.color = Color.red;
-                }
-                break;
             case Characters.CatPunchGirl:
-                RequireText.text = "Total 5000";
+                RequireText.text = "Best 150";
                 RequireText.color = Color.white;
 
                 if (IsCatPunchGirlConditionFulfill())
                 {
                     SelectButtonEnableTrue();
 
-                    RequireInfoText.text = "5000/5000";
+                    RequireInfoText.text = "150/150";
                     RequireInfoText.color = Color.green;
                 }
                 else
                 {
                     SelectButtonEnableFalse();
 
-                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/5000";
+                    RequireInfoText.text = GameManager.instance.GetBestScore() + "/150";
                     RequireInfoText.color = Color.red;
                 }
                 break;
             case Characters.SwordHero:
-                RequireText.text = "Best 300";
+                RequireText.text = "Game Over 300";
                 RequireText.color = Color.white;
 
                 if (IsSwordHeroConditionFulfill())
+                {
+                    SelectButtonEnableTrue();
+
+                    RequireInfoText.text = "300/300";
+                    RequireInfoText.color = Color.green;
+                }
+                else
+                {
+                    SelectButtonEnableFalse();
+
+                    RequireInfoText.text = GameManager.instance.GetTotalGameOverCount() + "/300";
+                    RequireInfoText.color = Color.red;
+                }
+                break;
+            case Characters.PinkPunchGirl:
+                RequireText.text = "Best 300";
+                RequireText.color = Color.white;
+
+                if (IsPinkPunchGirlConditionFulfill())
                 {
                     SelectButtonEnableTrue();
 
@@ -269,175 +289,156 @@ public class CharSelectManager : MonoBehaviour
                     RequireInfoText.color = Color.red;
                 }
                 break;
-            case Characters.PinkPunchGirl:
-                RequireText.text = "Total 1500";
-                RequireText.color = Color.white;
-
-                if (IsPinkPunchGirlConditionFulfill())
-                {
-                    SelectButtonEnableTrue();
-
-                    RequireInfoText.text = "1500/1500";
-                    RequireInfoText.color = Color.green;
-                }
-                else
-                {
-                    SelectButtonEnableFalse();
-
-                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/1500";
-                    RequireInfoText.color = Color.red;
-                }
-                break;
             case Characters.AxeHeroGirl:
-                RequireText.text = "Best 500";
+                RequireText.text = "Play Time 2 Hour";
                 RequireText.color = Color.white;
 
                 if (IsAxeHeroGirlConditionFulfill())
                 {
                     SelectButtonEnableTrue();
 
-                    RequireInfoText.text = "500/500";
+                    RequireInfoText.text = "02:00/02:00";
                     RequireInfoText.color = Color.green;
                 }
                 else
                 {
                     SelectButtonEnableFalse();
 
-                    RequireInfoText.text = GameManager.instance.GetBestScore() + "/500";
+                    RequireInfoText.text = GameManager.instance.GetTotalPlayTimeText() + "/02:00";
                     RequireInfoText.color = Color.red;
                 }
                 break;
             case Characters.Viking:
-                RequireText.text = "Best 500";
+                RequireText.text = "Best 200";
                 RequireText.color = Color.white;
 
                 if (IsAxeHeroGirlConditionFulfill())
                 {
                     SelectButtonEnableTrue();
 
-                    RequireInfoText.text = "500/500";
+                    RequireInfoText.text = "200/200";
                     RequireInfoText.color = Color.green;
                 }
                 else
                 {
                     SelectButtonEnableFalse();
 
-                    RequireInfoText.text = GameManager.instance.GetBestScore() + "/500";
+                    RequireInfoText.text = GameManager.instance.GetBestScore() + "/200";
                     RequireInfoText.color = Color.red;
                 }
                 break;
             case Characters.Cowboy:
-                RequireText.text = "Total 2000";
+                RequireText.text = "Total 5000";
                 RequireText.color = Color.white;
 
                 if (IsCowboyConditionFulfill())
                 {
                     SelectButtonEnableTrue();
 
-                    RequireInfoText.text = "2000/2000";
+                    RequireInfoText.text = "5000/5000";
                     RequireInfoText.color = Color.green;
                 }
                 else
                 {
                     SelectButtonEnableFalse();
 
-                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/2000";
+                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/5000";
                     RequireInfoText.color = Color.red;
                 }
                 break;
             case Characters.Lancer:
-                RequireText.text = "Total 2500";
+                RequireText.text = "Total 20000";
                 RequireText.color = Color.white;
 
                 if (IsLancerConditionFulfill())
                 {
                     SelectButtonEnableTrue();
 
-                    RequireInfoText.text = "2500/2500";
+                    RequireInfoText.text = "20000/20000";
                     RequireInfoText.color = Color.green;
                 }
                 else
                 {
                     SelectButtonEnableFalse();
 
-                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/2500";
+                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/20000";
                     RequireInfoText.color = Color.red;
                 }
                 break;
             case Characters.LightningSwordGirl:
-                RequireText.text = "Total 2500";
+                RequireText.text = "Total 15000";
                 RequireText.color = Color.white;
 
                 if (IsLightningSwordGirlConditionFulfill())
                 {
                     SelectButtonEnableTrue();
 
-                    RequireInfoText.text = "2500/2500";
+                    RequireInfoText.text = "15000/15000";
                     RequireInfoText.color = Color.green;
                 }
                 else
                 {
                     SelectButtonEnableFalse();
 
-                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/2500";
+                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/15000";
                     RequireInfoText.color = Color.red;
                 }
                 break;
             case Characters.Samurai:
-                RequireText.text = "Total 2500";
+                RequireText.text = "Best 400";
                 RequireText.color = Color.white;
 
                 if (IsSamuraiConditionFulfill())
                 {
                     SelectButtonEnableTrue();
 
-                    RequireInfoText.text = "2500/2500";
+                    RequireInfoText.text = "400/400";
                     RequireInfoText.color = Color.green;
                 }
                 else
                 {
                     SelectButtonEnableFalse();
 
-                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/2500";
+                    RequireInfoText.text = GameManager.instance.GetBestScore() + "/400";
                     RequireInfoText.color = Color.red;
                 }
                 break;
 
             case Characters.SpeedSwordMan:
-                RequireText.text = "Total 2500";
+                RequireText.text = "Total 10000";
                 RequireText.color = Color.white;
 
                 if (IsSpeedSwordManConditionFulfill())
                 {
                     SelectButtonEnableTrue();
 
-                    RequireInfoText.text = "2500/2500";
+                    RequireInfoText.text = "10000/10000";
                     RequireInfoText.color = Color.green;
                 }
                 else
                 {
                     SelectButtonEnableFalse();
 
-                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/2500";
+                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/10000";
                     RequireInfoText.color = Color.red;
                 }
                 break;
             case Characters.KnifeGirl:
-                RequireText.text = "Total 2500";
+                RequireText.text = "Total 4000";
                 RequireText.color = Color.white;
 
                 if (IsKnifeGirlConditionFulfill())
                 {
                     SelectButtonEnableTrue();
 
-                    RequireInfoText.text = "2500/2500";
+                    RequireInfoText.text = "4000/4000";
                     RequireInfoText.color = Color.green;
                 }
                 else
                 {
                     SelectButtonEnableFalse();
 
-                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/2500";
+                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/4000";
                     RequireInfoText.color = Color.red;
                 }
                 break;
@@ -469,7 +470,7 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsDoubleBarrelConditonFulfill()
     {
-        if (GameManager.instance.GetBestScore() >= 50)
+        if (GameManager.instance.GetTotalScore() >= 300)
             return true;
 
         return false;
@@ -477,7 +478,7 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsThunderMageConditonFulfill()
     {
-        if (GameManager.instance.GetBestScore() >= 150)
+        if (GameManager.instance.GetBestScore() >= 50)
             return true;
 
         return false;
@@ -493,7 +494,7 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsArcherConditionFulfill()
     {
-        if (GameManager.instance.GetTotalScore() >= 3000)
+        if (GameManager.instance.GetTotalHour() >= 1)
             return true;
 
         return false;
@@ -501,7 +502,7 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsHealerConditionFulfill()
     {
-        if (GameManager.instance.GetBestScore() >= 170)
+        if (GameManager.instance.GetBestScore() >= 100)
             return true;
 
         return false;
@@ -509,7 +510,7 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsIceHeroConditionFulfill()
     {
-        if (GameManager.instance.GetTotalScore() >= 555)
+        if (GameManager.instance.GetTotalScore() >= 1000)
             return true;
 
         return false;
@@ -517,7 +518,7 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsNinjaConditionFulfill()
     {
-        if (GameManager.instance.GetBestScore() >= 10000)
+        if (GameManager.instance.GetBestScore() >= 3000)
             return true;
 
         return false;
@@ -525,7 +526,7 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsCatPunchGirlConditionFulfill()
     {
-        if (GameManager.instance.GetTotalScore() >= 5000)
+        if (GameManager.instance.GetBestScore() >= 150)
             return true;
 
         return false;
@@ -533,7 +534,7 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsSwordHeroConditionFulfill()
     {
-        if (GameManager.instance.GetBestScore() >= 300)
+        if (GameManager.instance.GetTotalGameOverCount() >= 300)
             return true;
 
         return false;
@@ -541,7 +542,7 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsPinkPunchGirlConditionFulfill()
     {
-        if (GameManager.instance.GetTotalScore() >= 1500)
+        if (GameManager.instance.GetBestScore() >= 300)
             return true;
 
         return false;
@@ -549,7 +550,7 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsAxeHeroGirlConditionFulfill()
     {
-        if (GameManager.instance.GetBestScore() >= 500)
+        if (GameManager.instance.GetTotalHour() >= 2)
             return true;
 
         return false;
@@ -565,7 +566,7 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsCowboyConditionFulfill()
     {
-        if (GameManager.instance.GetTotalScore() >= 2000)
+        if (GameManager.instance.GetTotalScore() >= 5000)
             return true;
 
         return false;
@@ -573,7 +574,7 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsLancerConditionFulfill()
     {
-        if (GameManager.instance.GetTotalScore() >= 2500)
+        if (GameManager.instance.GetTotalScore() >= 20000)
             return true;
 
         return false;
@@ -583,7 +584,7 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsLightningSwordGirlConditionFulfill()
     {
-        if (GameManager.instance.GetTotalScore() >= 2500)
+        if (GameManager.instance.GetTotalScore() >= 15000)
             return true;
 
         return false;
@@ -591,7 +592,7 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsSamuraiConditionFulfill()
     {
-        if (GameManager.instance.GetTotalScore() >= 2500)
+        if (GameManager.instance.GetBestScore() >= 400)
             return true;
 
         return false;
@@ -599,7 +600,7 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsSpeedSwordManConditionFulfill()
     {
-        if (GameManager.instance.GetTotalScore() >= 2500)
+        if (GameManager.instance.GetTotalScore() >= 10000)
             return true;
 
         return false;
@@ -607,7 +608,7 @@ public class CharSelectManager : MonoBehaviour
 
     public bool IsKnifeGirlConditionFulfill()
     {
-        if (GameManager.instance.GetTotalScore() >= 2500)
+        if (GameManager.instance.GetTotalScore() >= 4000)
             return true;
 
         return false;
