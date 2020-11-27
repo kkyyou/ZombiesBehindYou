@@ -5698,7 +5698,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 937050879}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.656, y: -0.7340731, z: -3.5732422}
+  m_LocalPosition: {x: 0.65, y: -0.7340731, z: -3.5732422}
   m_LocalScale: {x: 1.1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6287,10 +6287,10 @@ MonoBehaviour:
   - {fileID: 4860990495631151172, guid: 7079fc6c6aef8d74bba6454c1efa755f, type: 3}
   - {fileID: 8328624329519055157, guid: dbf9b72f2762e74418cc55aeb132126e, type: 3}
   - {fileID: 3065726822495503316, guid: c33eaa6c64aa6b246923654d454b15e0, type: 3}
-  - {fileID: 3019252962088077030, guid: 1bc6bd1e34bba1946a394df3bc85c01a, type: 3}
+  - {fileID: 2361234643870077415, guid: 1bc6bd1e34bba1946a394df3bc85c01a, type: 3}
   - {fileID: 6435649173470296038, guid: a0fd275fdeac55c41ae7755c9fc941bd, type: 3}
   - {fileID: 388075735684174325, guid: aecb52cee94ab784c9a811ab4f103c33, type: 3}
-  - {fileID: 5631079692579380580, guid: 3de8ad9b88e1e4f4aa4b56e903aa4398, type: 3}
+  - {fileID: 6506338055326916392, guid: 3de8ad9b88e1e4f4aa4b56e903aa4398, type: 3}
   - {fileID: 4207677956012041575, guid: a1e7eaeca01dd304caecdfd98c1c5c4d, type: 3}
   - {fileID: 7781857740355132207, guid: cb67960d7c3739f448081e2934b0e4ab, type: 3}
   - {fileID: 4646109070924345704, guid: 5334117ad0d17ce4da6cd8bf31717e7c, type: 3}
@@ -6298,7 +6298,11 @@ MonoBehaviour:
   - {fileID: 25877474815767879, guid: ad9ed190dcb2e064586efe5b61ade3d4, type: 3}
   - {fileID: 8248389597847806969, guid: 36ab51de6a247e54c907cd6415915594, type: 3}
   - {fileID: 2042007357560021070, guid: 1f8dcdb7b62ffa941ab7d36d2379c6e5, type: 3}
-  - {fileID: 7798861261290629577, guid: 30e665a16fd91da4ea16288addfd5b6a, type: 3}
+  - {fileID: 6679098415755085630, guid: 30e665a16fd91da4ea16288addfd5b6a, type: 3}
+  - {fileID: 6187534217484408769, guid: c86418ee23c34294faa72df5412e4687, type: 3}
+  - {fileID: 1618408325009131095, guid: b7016ffdcfbde424fab2f7810ad310dc, type: 3}
+  - {fileID: 6892160685430930081, guid: de0974f4f4bb70e4a8e2f4aad0f070e2, type: 3}
+  - {fileID: 5371793103526150127, guid: d30ffc8fd84b27845b561b12aa119cb8, type: 3}
   player: {fileID: 0}
   RequireText: {fileID: 992308847}
   RequireInfoText: {fileID: 1274179326}
@@ -15760,9 +15764,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dc2cad8f8fbdd04b80e464e6206f055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab_zombie: {fileID: 4354658097947243018, guid: cea4a7430c5d2e54383b1f57efb977e0,
+  prefab_zombie: {fileID: 1430662746189686605, guid: cea4a7430c5d2e54383b1f57efb977e0,
     type: 3}
-  prefab_zombie2: {fileID: 8233560789531498353, guid: eab45e91d7bc73343935857494602628,
+  prefab_zombie2: {fileID: 3443959308114671542, guid: eab45e91d7bc73343935857494602628,
     type: 3}
   zombiePrefabs: {fileID: 827877962}
 --- !u!4 &1582048809

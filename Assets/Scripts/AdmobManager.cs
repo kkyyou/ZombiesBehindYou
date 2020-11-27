@@ -81,7 +81,6 @@ public class AdmobManager : MonoBehaviour
         frontAd.LoadAd(GetAdRequest());
         frontAd.OnAdClosed += (sender, e) =>
         {
-            Debug.Log("전면광고 성공");
         };
     }
 

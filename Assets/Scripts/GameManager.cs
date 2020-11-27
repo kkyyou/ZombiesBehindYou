@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
         Sprite origFillSprite = hpFill.GetComponent<Image>().sprite;
         hpFill.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprite/hp_white_bg.png");
 
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.01f);
 
         hpFill.GetComponent<Image>().sprite = origFillSprite;
     }
