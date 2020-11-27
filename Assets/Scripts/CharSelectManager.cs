@@ -20,7 +20,10 @@ public class CharSelectManager : MonoBehaviour
         AxeHeroGirl,
         Viking,
         Cowboy,
-        Lancer
+        Lancer,
+        LightningSwordGirl,
+        Samurai,
+        SpeedSwordMan
     }
 
     public static CharSelectManager instance;
@@ -360,6 +363,64 @@ public class CharSelectManager : MonoBehaviour
                     RequireInfoText.color = Color.red;
                 }
                 break;
+            case Characters.LightningSwordGirl:
+                RequireText.text = "Total 2500";
+                RequireText.color = Color.white;
+
+                if (IsLightningSwordGirlConditionFulfill())
+                {
+                    SelectButtonEnableTrue();
+
+                    RequireInfoText.text = "2500/2500";
+                    RequireInfoText.color = Color.green;
+                }
+                else
+                {
+                    SelectButtonEnableFalse();
+
+                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/2500";
+                    RequireInfoText.color = Color.red;
+                }
+                break;
+            case Characters.Samurai:
+                RequireText.text = "Total 2500";
+                RequireText.color = Color.white;
+
+                if (IsSamuraiConditionFulfill())
+                {
+                    SelectButtonEnableTrue();
+
+                    RequireInfoText.text = "2500/2500";
+                    RequireInfoText.color = Color.green;
+                }
+                else
+                {
+                    SelectButtonEnableFalse();
+
+                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/2500";
+                    RequireInfoText.color = Color.red;
+                }
+                break;
+
+            case Characters.SpeedSwordMan:
+                RequireText.text = "Total 2500";
+                RequireText.color = Color.white;
+
+                if (IsSpeedSwordManConditionFulfill())
+                {
+                    SelectButtonEnableTrue();
+
+                    RequireInfoText.text = "2500/2500";
+                    RequireInfoText.color = Color.green;
+                }
+                else
+                {
+                    SelectButtonEnableFalse();
+
+                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/2500";
+                    RequireInfoText.color = Color.red;
+                }
+                break;
 
         }
     }
@@ -491,6 +552,32 @@ public class CharSelectManager : MonoBehaviour
     }
 
     public bool IsLancerConditionFulfill()
+    {
+        if (GameManager.instance.GetTotalScore() >= 2500)
+            return true;
+
+        return false;
+    }
+
+
+
+    public bool IsLightningSwordGirlConditionFulfill()
+    {
+        if (GameManager.instance.GetTotalScore() >= 2500)
+            return true;
+
+        return false;
+    }
+
+    public bool IsSamuraiConditionFulfill()
+    {
+        if (GameManager.instance.GetTotalScore() >= 2500)
+            return true;
+
+        return false;
+    }
+
+    public bool IsSpeedSwordManConditionFulfill()
     {
         if (GameManager.instance.GetTotalScore() >= 2500)
             return true;
