@@ -113,7 +113,7 @@ public class CharSelectManager : MonoBehaviour
                 {
                     SelectButtonEnableFalse();
 
-                    RequireInfoText.text = GameManager.instance.GetBestScore() + "/300";
+                    RequireInfoText.text = GameManager.instance.GetTotalScore() + "/300";
                     RequireInfoText.color = Color.red;
                 }
                 break;
