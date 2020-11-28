@@ -6,25 +6,25 @@ public class CharSelectManager : MonoBehaviour
     public enum Characters
     {
         Fire,
-        PunchGirl,
         DoubleBarrel,
+        PunchGirl,
         ThunderMage,
         FireFighter,
         Archer,
         Healer,
         Ice,
         Ninja,
+        KnifeGirl,
         CatPunchGirl,
         SwordHero,
         PinkPunchGirl,
         AxeHeroGirl,
         Viking,
         Cowboy,
-        Lancer,
         LightningSwordGirl,
         Samurai,
         SpeedSwordMan,
-        KnifeGirl
+        Lancer
     }
 
     public static CharSelectManager instance;
@@ -65,7 +65,6 @@ public class CharSelectManager : MonoBehaviour
         Characters character = (Characters)number;
 
         int value;
-        string valueStr;
 
         switch(character)
         {
@@ -76,7 +75,7 @@ public class CharSelectManager : MonoBehaviour
                 RequireInfoText.text = "";
                 break;
             case Characters.PunchGirl:
-                value = 250;
+                value = 500;
                 RequireText.text = GetTotalRequirementString(value);
                 RequireText.color = Color.white;
 
@@ -96,7 +95,7 @@ public class CharSelectManager : MonoBehaviour
                 }
                 break;
             case Characters.DoubleBarrel:
-                value = 500;
+                value = 150;
 
                 RequireText.text = GetTotalRequirementString(value);
                 RequireText.color = Color.white;
@@ -152,7 +151,7 @@ public class CharSelectManager : MonoBehaviour
                 {
                     SelectButtonEnableFalse();
 
-                    RequireInfoText.text = GetValueSlashValueString(GameManager.instance.GetTotalScore(), value);
+                    RequireInfoText.text = GetValueSlashValueString(GameManager.instance.GetTotalGameOverCount(), value);
                     RequireInfoText.color = Color.red;
                 }
                 break;
@@ -439,7 +438,7 @@ public class CharSelectManager : MonoBehaviour
                 }
                 break;
             case Characters.KnifeGirl:
-                value = 300;
+                value = 500;
                 RequireText.text = GetGameOverRequirementString(value);
                 RequireText.color = Color.white;
 

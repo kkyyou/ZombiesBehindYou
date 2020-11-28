@@ -35,7 +35,8 @@ public class AdmobManager : MonoBehaviour
 
     AdRequest GetAdRequest()
     {
-        return new AdRequest.Builder().AddTestDevice("847703F67789680E").Build();
+        return new AdRequest.Builder().AddTestDevice("847703F67789680E").AddTestDevice("BCEA9DBFD7EDE507").
+            AddTestDevice("F3C046386A840A11").Build();
     }
 
     #region 배너 광고

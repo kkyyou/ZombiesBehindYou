@@ -69,6 +69,12 @@ public class Timer : MonoBehaviour
                 }
 
                 DBManager.instance.data.totalPlayMin += 1;
+
+                if (DBManager.instance.data.totalPlayMin == 60)
+                {
+                    DBManager.instance.data.totalPlayMin = 0;
+                }
+
                 DBManager.instance.SaveCurrentData();
             }
 
