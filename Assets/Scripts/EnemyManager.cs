@@ -56,13 +56,10 @@ public class EnemyManager : MonoBehaviour
         playerVector = Player.instance.transform.position;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void GoNextTurn()
     {
-        if (Player.instance.GetNextTurn() && !restOneTurnCreateZombie)
+        if (!restOneTurnCreateZombie)
         {
-            Player.instance.SetNextTurn(false);
-
             // 화면 밖 대기 좀비 생성.
             int leftOrRight = Random.Range(0, 100);
 
@@ -83,11 +80,10 @@ public class EnemyManager : MonoBehaviour
             // 모든 좀비 히어로방향으로 한 칸 이동.
             moveExistSceneZombies();
         }
-        else if (Player.instance.GetNextTurn() && restOneTurnCreateZombie)  
+        else if (restOneTurnCreateZombie)
         {
             // Revive시 생성된 좀비가 뒤로 한 칸 물러나는데 이때 좀비를 생성을 하게되면 겹치게 되는 문제 발생.
             // 따라서 restOneTurnCreateZomie 플래그를 보고 한 턴 좀비 생성을 막는다.
-            Player.instance.SetNextTurn(false);
             restOneTurnCreateZombie = false;
 
             // 모든 좀비 히어로방향으로 한 칸 이동.

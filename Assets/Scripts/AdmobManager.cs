@@ -33,24 +33,15 @@ public class AdmobManager : MonoBehaviour
         LoadRewardAd();
     }
 
-    void Update()
-    {
-        //FrontAdsBtn.interactable = frontAd.IsLoaded();
-        //RewardAdsBtn.interactable = rewardAd.IsLoaded();
-    }
-
     AdRequest GetAdRequest()
     {
         return new AdRequest.Builder().AddTestDevice("847703F67789680E").Build();
     }
 
-
-
     #region 배너 광고
     const string bannerTestID = "ca-app-pub-3940256099942544/6300978111";
     const string bannerID = "";
     BannerView bannerAd;
-
 
     void LoadBannerAd()
     {

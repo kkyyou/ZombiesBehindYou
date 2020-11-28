@@ -8,8 +8,6 @@ public class Player : MonoBehaviour
     private Animator animator;
     private bool isRight = true; // 히어로 보는 방향 오른쪽 체크.
 
-    private bool nextTurn = false; // 히어로 공격시 좀비들 한 스텝씩 이동.
-
     private RightTargetZone rightTargetZone; // 히어로 오른쪽 공격 범위.
     private LeftTargetZone leftTargetZone;   // 히어로 왼쪽 공격 범위.
 
@@ -83,7 +81,7 @@ public class Player : MonoBehaviour
             if (collision)
             {
                 rightTargetZone.ThrowZombie(collision);
-                GameManager.instance.SetAttackZombie(true);
+                GameManager.instance.attackZombieSuccess();
             }
 
         }
@@ -96,13 +94,12 @@ public class Player : MonoBehaviour
             if (collision)
             {
                 leftTargetZone.ThrowZombie(collision);
-                GameManager.instance.SetAttackZombie(true);
+                GameManager.instance.attackZombieSuccess();
             }
         }
 
+        EnemyManager.instance.GoNextTurn();
         StartCoroutine(AttackCoroutine());
-
-        nextTurn = true;
     }
 
     public void AttackButton()
@@ -140,16 +137,15 @@ public class Player : MonoBehaviour
             else
                 leftTargetZone.ThrowZombie(collision);
 
-            GameManager.instance.SetAttackZombie(true);
+            GameManager.instance.attackZombieSuccess();
         }
         else
         {
             Debug.Log("No Hit");
         }
 
+        EnemyManager.instance.GoNextTurn();
         StartCoroutine(AttackCoroutine());
-
-        nextTurn = true;
     }
 
     public void LeftRightAttackButton()
@@ -189,7 +185,7 @@ public class Player : MonoBehaviour
         // 점수 및 HP 업데이트.
         if (collision1 && collision2)
         {
-            GameManager.instance.SetAttackZombie(true);
+            GameManager.instance.attackZombieSuccess();
         }
         else
         {
@@ -197,9 +193,8 @@ public class Player : MonoBehaviour
             GameManager.instance.RecoveryHP(-15);
         }
 
+        EnemyManager.instance.GoNextTurn();
         StartCoroutine(LeftRightAttackCoroutine());
-
-        nextTurn = true;
     }
 
     IEnumerator AttackCoroutine()
@@ -219,16 +214,6 @@ public class Player : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale = new Vector3(theScale.x * -1, theScale.y, theScale.z);
         transform.localScale = theScale;
-    }
-
-    public bool GetNextTurn()
-    {
-        return nextTurn;
-    }
-
-    public void SetNextTurn(bool nextTurn)
-    {
-        this.nextTurn = nextTurn;
     }
 
     public Collider2D CheckCollision(Vector2 end)

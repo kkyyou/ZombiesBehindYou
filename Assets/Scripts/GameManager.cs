@@ -33,8 +33,6 @@ public class GameManager : MonoBehaviour
     public Slider hpSlider;
     public float hpDecreaseSpeed;
 
-    private bool attackZombie = false;
-
     public RightTargetZone rightTargetZone;
     public LeftTargetZone leftTargetZone;
     public GameOverZone gameOverZone;
@@ -70,6 +68,8 @@ public class GameManager : MonoBehaviour
     private int gameCount = 0;
 
     private bool canRevive = true;
+
+    private bool gameOverCheck = true;
 
     private void Awake()
     {
@@ -109,41 +109,21 @@ public class GameManager : MonoBehaviour
 
         // 랜덤 맵 지정.
         RandomMap();
-
-        // 처음 시작 시 좀비 생성.
-        //EnemyManager.instance.CreateStartZombies();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (attackZombie)
-        {
-            attackZombie = false;
-
-            // 점수 획득.
-            AddScore(1);
-
-            // Hp 회복.
-            RecoveryHP(5);
-        }
-
-        if (shopCanvas.activeSelf && Player.instance.GetAnimator().GetBool("Die"))
-        {
-            Player.instance.GetAnimator().SetBool("Die", false);
-
-            if (!Player.instance.GetIsRight())
-            {
-                Player.instance.Flip();
-                Player.instance.SetIsRight(true);
-            }
-
-            // 좀비 리셋.
-            EnemyManager.instance.ResetEnemy();
-        }
-
         if (playing)
+        {
             hpSlider.value -= Time.deltaTime * hpDecreaseSpeed;
+
+            if (hpSlider.value <= 0 && gameOverCheck)
+            {
+                GameOver();
+                gameOverCheck = false;
+            }
+        }
     }
 
     IEnumerator ResetHpFillSprite()
@@ -164,8 +144,8 @@ public class GameManager : MonoBehaviour
         score += addScore;
         scoreText.text = score.ToString();
 
-        if (hpDecreaseSpeed < 30)
-            hpDecreaseSpeed += 0.08f; 
+        if (hpDecreaseSpeed < 20)
+            hpDecreaseSpeed += 0.03f; 
     }
 
     public void RecoveryHP(int recoverHP)
@@ -183,9 +163,13 @@ public class GameManager : MonoBehaviour
         hpDecreaseSpeed += faster;
     }
 
-    public void SetAttackZombie(bool attack)
+    public void attackZombieSuccess()
     {
-        attackZombie = attack;
+        // 점수 획득.
+        AddScore(1);
+
+        // Hp 회복.
+        RecoveryHP(5);
     }
 
     public void RandomMap()
@@ -345,8 +329,8 @@ public class GameManager : MonoBehaviour
         controlCanvas.SetActive(true);
         TitleCanvas.SetActive(false);
         shopCanvas.SetActive(false);
-        gameOverZone.SetGameOverCheck(true);
         settingCanvas.SetActive(false);
+        gameOverCheck = true;
 
         // 랜덤 맵 지정.
         //if (!firstGame)
@@ -443,8 +427,8 @@ public class GameManager : MonoBehaviour
 
                     // 0.5초 대기 후 게임 오버 체크 시작.
                     yield return new WaitForSeconds(0.5f);
-                    
-                    gameOverZone.SetGameOverCheck(true);
+
+                    gameOverCheck = true;
 
                     yield break;
                 }
@@ -514,11 +498,25 @@ public class GameManager : MonoBehaviour
         shopBestScoreText.text = bestScore.ToString();
         shopTotalScoreText.text = totalScore.ToString();
 
-        if (!Player.instance.GetIsRight())
+        if (Player.instance.GetAnimator().GetBool("Die"))
         {
-            Player.instance.Flip();
-            Player.instance.SetIsRight(true);
-        } 
+            Player.instance.GetAnimator().SetBool("Die", false);
+
+            if (!Player.instance.GetIsRight())
+            {
+                Player.instance.Flip();
+                Player.instance.SetIsRight(true);
+            }
+
+            // 좀비 리셋.
+            EnemyManager.instance.ResetEnemy();
+        }
+
+        //if (!Player.instance.GetIsRight())
+        //{
+        //    Player.instance.Flip();
+        //    Player.instance.SetIsRight(true);
+        //} 
 
         CharSelectManager.instance.CharacterInfo(Player.instance.GetSelectedCharacterNumber());
     }
@@ -661,5 +659,15 @@ public class GameManager : MonoBehaviour
     public void SetTotalGameOverCount(int gameOverCount)
     {
         totalGameOverCount = gameOverCount;
+    }
+
+    public void SetGameOverCheck(bool check)
+    {
+        gameOverCheck = check;
+    }
+
+    public bool GetGameOverCheck()
+    {
+        return gameOverCheck;
     }
 }
