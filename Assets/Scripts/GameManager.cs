@@ -109,6 +109,11 @@ public class GameManager : MonoBehaviour
 
         // 랜덤 맵 지정.
         RandomMap();
+
+        totalGameOverCount = 100000;
+        bestScore = 100000;
+        totalScore = 10000;
+
     }
 
     // Update is called once per frame

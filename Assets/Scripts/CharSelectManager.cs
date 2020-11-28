@@ -24,7 +24,8 @@ public class CharSelectManager : MonoBehaviour
         LightningSwordGirl,
         Samurai,
         SpeedSwordMan,
-        Lancer
+        Lancer,
+        Vampire
     }
 
     public static CharSelectManager instance;
@@ -439,6 +440,26 @@ public class CharSelectManager : MonoBehaviour
                 break;
             case Characters.KnifeGirl:
                 value = 500;
+                RequireText.text = GetGameOverRequirementString(value);
+                RequireText.color = Color.white;
+
+                if (IsGameOverSatisfied(value))
+                {
+                    SelectButtonEnableTrue();
+
+                    RequireInfoText.text = GetValueSlashValueString(value, value);
+                    RequireInfoText.color = Color.green;
+                }
+                else
+                {
+                    SelectButtonEnableFalse();
+
+                    RequireInfoText.text = GetValueSlashValueString(GameManager.instance.GetTotalGameOverCount(), value);
+                    RequireInfoText.color = Color.red;
+                }
+                break;
+            case Characters.Vampire:
+                value = 2000;
                 RequireText.text = GetGameOverRequirementString(value);
                 RequireText.color = Color.white;
 
