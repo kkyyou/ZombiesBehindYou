@@ -6616,6 +6616,7 @@ MonoBehaviour:
   - {fileID: 1618408325009131095, guid: b7016ffdcfbde424fab2f7810ad310dc, type: 3}
   - {fileID: 6892160685430930081, guid: de0974f4f4bb70e4a8e2f4aad0f070e2, type: 3}
   - {fileID: 6679098415755085630, guid: 30e665a16fd91da4ea16288addfd5b6a, type: 3}
+  - {fileID: 2713238670509916686, guid: 8bb2e23c8cc800e45bd17b2a32763d26, type: 3}
   player: {fileID: 0}
   RequireText: {fileID: 992308847}
   RequireInfoText: {fileID: 1274179326}
@@ -15491,7 +15492,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

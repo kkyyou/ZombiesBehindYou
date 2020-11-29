@@ -6,7 +6,7 @@ public class AdmobManager : MonoBehaviour
     public static AdmobManager instance;
 
     // 테스트 할 때, 테스트 모드가 아닌 ID로 테스트하면 계정 정지 먹을 수 있음.
-    private bool isTestMode = true;
+    private bool isTestMode = true; // 출시 APK 만들고나서 true로 바꿨음 201129 03:03
     //public Text LogText;
     //public Button FrontAdsBtn, RewardAdsBtn;
 
@@ -41,7 +41,7 @@ public class AdmobManager : MonoBehaviour
 
     #region 배너 광고
     const string bannerTestID = "ca-app-pub-3940256099942544/6300978111";
-    const string bannerID = "";
+    const string bannerID = "ca-app-pub-1174509462280243/6730663372";
     BannerView bannerAd;
 
     void LoadBannerAd()
@@ -63,7 +63,7 @@ public class AdmobManager : MonoBehaviour
 
     #region 전면 광고
     const string frontTestID = "ca-app-pub-3940256099942544/8691691433";
-    const string frontID = "";
+    const string frontID = "ca-app-pub-1174509462280243/5417581707";
     InterstitialAd frontAd;
 
 
@@ -87,7 +87,7 @@ public class AdmobManager : MonoBehaviour
 
     #region 리워드 광고
     const string rewardTestID = "ca-app-pub-3940256099942544/5224354917";
-    const string rewardID = "";
+    const string rewardID = "ca-app-pub-1174509462280243/7976489950";
     RewardedAd rewardAd;
 
 

@@ -36,43 +36,59 @@ public class Timer : MonoBehaviour
         {
             time += Time.deltaTime;
 
-            if (hour < (int)(time / 3600))
-            {
-                hour = (int)(time / 3600);
-                GameManager.instance.SetTotalHour(GameManager.instance.GetTotalHour() + 1);
+            //if (hour < (int)(time / 3600))
+            //{
+            //    hour = (int)(time / 3600);
+            //    GameManager.instance.SetTotalHour(GameManager.instance.GetTotalHour() + 1);
 
-                if (Player.instance.GetCharacterNumber() == (int)CharSelectManager.Characters.Archer)
-                {
-                    CharSelectManager.instance.RequireInfoText.text = GameManager.instance.GetTotalPlayTimeText() + "/01:00";
-                }
-                else if (Player.instance.GetCharacterNumber() == (int)CharSelectManager.Characters.AxeHeroGirl)
-                {
-                    CharSelectManager.instance.RequireInfoText.text = GameManager.instance.GetTotalPlayTimeText() + "/02:00";
-                }
+            //    if (Player.instance.GetCharacterNumber() == (int)CharSelectManager.Characters.Archer)
+            //    {
+            //        CharSelectManager.instance.RequireInfoText.text = GameManager.instance.GetTotalPlayTimeText() + "/01:00";
+            //    }
+            //    else if (Player.instance.GetCharacterNumber() == (int)CharSelectManager.Characters.AxeHeroGirl)
+            //    {
+            //        CharSelectManager.instance.RequireInfoText.text = GameManager.instance.GetTotalPlayTimeText() + "/02:00";
+            //    }
 
-                DBManager.instance.data.totalPlayHour += 1;
-                DBManager.instance.SaveCurrentData();
-            }
+            //    DBManager.instance.data.totalPlayHour += 1;
+            //    DBManager.instance.SaveCurrentData();
+            //}
 
             if (min < (int)(time / 60 % 60))
             {
                 min = (int)(time / 60 % 60);
+
                 GameManager.instance.SetTotalMin(GameManager.instance.GetTotalMin() + 1);
+                DBManager.instance.data.totalPlayMin += 1;
+
+                if (GameManager.instance.GetTotalMin() >= 60)
+                {
+                    DBManager.instance.data.totalPlayHour += 1;
+                    DBManager.instance.data.totalPlayMin = 0;
+
+                    GameManager.instance.SetTotalHour(GameManager.instance.GetTotalHour() + 1);
+                    GameManager.instance.SetTotalMin(0);
+                }
 
                 if (Player.instance.GetCharacterNumber() == (int)CharSelectManager.Characters.Archer)
                 {
                     CharSelectManager.instance.RequireInfoText.text = GameManager.instance.GetTotalPlayTimeText() + "/01:00";
+
+                    if (GameManager.instance.GetTotalHour() >= 1)
+                    {
+                        CharSelectManager.instance.RequireInfoText.color = Color.green;
+                        CharSelectManager.instance.SelectButtonEnableTrue();
+                    }
                 }
                 else if (Player.instance.GetCharacterNumber() == (int)CharSelectManager.Characters.AxeHeroGirl)
                 {
                     CharSelectManager.instance.RequireInfoText.text = GameManager.instance.GetTotalPlayTimeText() + "/02:00";
-                }
 
-                DBManager.instance.data.totalPlayMin += 1;
-
-                if (DBManager.instance.data.totalPlayMin == 60)
-                {
-                    DBManager.instance.data.totalPlayMin = 0;
+                    if (GameManager.instance.GetTotalHour() >= 2)
+                    {
+                        CharSelectManager.instance.RequireInfoText.color = Color.green;
+                        CharSelectManager.instance.SelectButtonEnableTrue();
+                    }
                 }
 
                 DBManager.instance.SaveCurrentData();

@@ -109,11 +109,6 @@ public class GameManager : MonoBehaviour
 
         // 랜덤 맵 지정.
         RandomMap();
-
-        totalGameOverCount = 100000;
-        bestScore = 100000;
-        totalScore = 10000;
-
     }
 
     // Update is called once per frame
@@ -307,7 +302,7 @@ public class GameManager : MonoBehaviour
 
     public void GameStart()
     {
-        GameManager.instance.controlCanvas.transform.Find("Info").gameObject.SetActive(true);
+        controlCanvas.transform.Find("Info").gameObject.SetActive(true);
 
         canRevive = true;
 
@@ -381,7 +376,7 @@ public class GameManager : MonoBehaviour
         playing = false;
 
         // 내 점수에서 50점을 더하면 최대점수가 될때 Revive 찬스!
-        if (score + 50 >= bestScore && canRevive)           
+        if (score + 50 >= bestScore && canRevive && score >= 20)           
         {
             // 리바이브 한번 떳으니까 다음 게임 시작까지는 안뜨도록.
             canRevive = false;
@@ -516,12 +511,14 @@ public class GameManager : MonoBehaviour
             // 좀비 리셋.
             EnemyManager.instance.ResetEnemy();
         }
-
-        //if (!Player.instance.GetIsRight())
-        //{
-        //    Player.instance.Flip();
-        //    Player.instance.SetIsRight(true);
-        //} 
+        else
+        {
+            if (!Player.instance.GetIsRight())
+            {
+                Player.instance.Flip();
+                Player.instance.SetIsRight(true);
+            } 
+        }
 
         CharSelectManager.instance.CharacterInfo(Player.instance.GetSelectedCharacterNumber());
     }
@@ -548,7 +545,7 @@ public class GameManager : MonoBehaviour
         TitleCanvas.transform.Find("Panel").transform.Find("Title Panel").gameObject.SetActive(true);
         TitleCanvas.transform.Find("Panel").transform.Find("GameOver Panel").gameObject.SetActive(false);
 
-        GameManager.instance.SetControlButtonEnabled(true);
+        SetControlButtonEnabled(true);
 
         // 좀비 생성.
         //if (!firstGame)
