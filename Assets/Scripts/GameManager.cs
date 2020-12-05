@@ -71,6 +71,8 @@ public class GameManager : MonoBehaviour
 
     private bool gameOverCheck = true;
 
+    private bool showFrontAds = true;
+
     private void Awake()
     {
         if (instance == null)
@@ -309,12 +311,15 @@ public class GameManager : MonoBehaviour
         if (!AudioManager.instance.IsPlaying("background") && listenBgm)
             AudioManager.instance.Play("background");
 
-        if (gameCount < 5)
-            gameCount++;
-        else if (gameCount >= 5)
+        if (showFrontAds)
         {
-            gameCount = 1;
-            AdmobManager.instance.ShowFrontAd();
+            if (gameCount < 5)
+                gameCount++;
+            else if (gameCount >= 5)
+            {
+                gameCount = 1;
+                AdmobManager.instance.ShowFrontAd();
+            }
         }
 
         // 초기화
