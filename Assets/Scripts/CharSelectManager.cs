@@ -25,7 +25,8 @@ public class CharSelectManager : MonoBehaviour
         Samurai,
         SpeedSwordMan,
         Lancer,
-        Vampire
+        Vampire,
+        CuteCat
     }
 
     public static CharSelectManager instance;
@@ -475,6 +476,26 @@ public class CharSelectManager : MonoBehaviour
                     SelectButtonEnableFalse();
 
                     RequireInfoText.text = GetValueSlashValueString(GameManager.instance.GetTotalGameOverCount(), value);
+                    RequireInfoText.color = Color.red;
+                }
+                break;
+            case Characters.CuteCat:
+                value = 3;
+                RequireText.text = GetPlayTimeRequirementString(value);
+                RequireText.color = Color.white;
+
+                if (IsPlayTimeSatisfied(value))
+                {
+                    SelectButtonEnableTrue();
+
+                    RequireInfoText.text = "03:00/03:00";
+                    RequireInfoText.color = Color.green;
+                }
+                else
+                {
+                    SelectButtonEnableFalse();
+
+                    RequireInfoText.text = GameManager.instance.GetTotalPlayTimeText() + "/03:00";
                     RequireInfoText.color = Color.red;
                 }
                 break;
