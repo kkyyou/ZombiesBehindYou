@@ -22,8 +22,6 @@ public class Zombie : MonoBehaviour
 
     IEnumerator MoveCoroutine()
     {
-        //anim.SetBool("Walk", true);
-
         Vector3 zombieVector = this.transform.position;
         Vector3 target = new Vector3(zombieVector.x + (moveDir * 1), zombieVector.y, zombieVector.z);
 
@@ -38,8 +36,6 @@ public class Zombie : MonoBehaviour
 
             yield return null;
         }
-
-        //anim.SetBool("Walk", false);
     }
 
     public void MoveReverse()

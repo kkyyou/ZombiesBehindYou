@@ -16236,6 +16236,8 @@ MonoBehaviour:
     type: 3}
   prefab_zombie2: {fileID: 3443959308114671542, guid: eab45e91d7bc73343935857494602628,
     type: 3}
+  prefab_armor_zombie: {fileID: 3187010518302487448, guid: 3124fb143f62177469b1ab863e290041,
+    type: 3}
   zombiePrefabs: {fileID: 827877962}
 --- !u!4 &1582048809
 Transform:

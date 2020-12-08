@@ -11,6 +11,9 @@ public class RightTargetZone : MonoBehaviour
 
     public void ThrowZombie(Collider2D collision)
     {
+        // Todo.
+        // 강철 좀비는 다른 사운드 재생하고 좀비 자체는 날리지 않고 투구만 날린다.
+
         collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
 
         int ranForceX = Random.Range(1000, 1200);
@@ -22,7 +25,7 @@ public class RightTargetZone : MonoBehaviour
             AudioManager.instance.PlayRandomDamageSound();
 
         // 카메라 흔들기.
-        StartCoroutine(shakeCamera.Shake(0.03f, 0.1f));
+        StartCoroutine(shakeCamera.Shake(0.03f, 0.15f));
 
         Rigidbody2D zombieRigid = collision.gameObject.GetComponent<Rigidbody2D>();
         zombieRigid.AddForce(new Vector2(ranForceX, ranForceY));

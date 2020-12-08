@@ -132,6 +132,9 @@ public class Player : MonoBehaviour
 
         if (collision)
         {
+            // Hit인데 강철 좀비인 경우는 해당 방향 좀비들은 움직임을 멈춰야 함.
+            // 강철좀비 반대편 좀비들은 움직여야 함.
+
             if (isRight)
                 rightTargetZone.ThrowZombie(collision);
             else
@@ -141,9 +144,12 @@ public class Player : MonoBehaviour
         }
         else
         {
+            // No Hit인 경우는 좀비들 움직이는게 맞음.
             Debug.Log("No Hit");
         }
 
+        // GoNextTurn에 강철좀비를 넘겨줌.
+        // GoNextTurn 내부에서 강철좀비랑 같은 MoveDir의 좀비들은 움직임 제외.
         EnemyManager.instance.GoNextTurn();
         StartCoroutine(AttackCoroutine());
     }

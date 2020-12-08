@@ -11,6 +11,7 @@ public class EnemyManager : MonoBehaviour
 
     public GameObject prefab_zombie = null;
     public GameObject prefab_zombie2 = null;
+    public GameObject prefab_armor_zombie = null;
     public GameObject zombiePrefabs;  // 하이라키에 생성되는 좀비 프리팹을 얘의 자식으로 정리.
 
     // 현재 씬에 존재하는 좀비들.
@@ -19,6 +20,7 @@ public class EnemyManager : MonoBehaviour
     // 오브젝트 풀링으로 관리하는 좀비들.
     private Queue<GameObject> zombies1 = new Queue<GameObject>();
     private Queue<GameObject> zombies2 = new Queue<GameObject>();
+    private Queue<GameObject> armorZombies = new Queue<GameObject>();
 
     private bool restOneTurnCreateZombie = false;
 
@@ -51,6 +53,12 @@ public class EnemyManager : MonoBehaviour
             zombies2.Enqueue(zombieObject2);
             zombieObject2.SetActive(false);
             zombieObject2.transform.parent = zombiePrefabs.transform;
+
+            // ArmorZombie 미리 생성.
+            GameObject armorZombieObject = Instantiate(prefab_armor_zombie, Vector3.zero, Quaternion.identity);
+            armorZombies.Enqueue(armorZombieObject);
+            armorZombieObject.SetActive(false);
+            armorZombieObject.transform.parent = zombiePrefabs.transform;
         }
 
         playerVector = Player.instance.transform.position;
@@ -119,6 +127,14 @@ public class EnemyManager : MonoBehaviour
         obj.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
+    public void InsertQueueArmorZombie(GameObject obj)
+    {
+        armorZombies.Enqueue(obj);
+        obj.SetActive(false);
+        obj.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        obj.transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
+
     public GameObject GetQueueZombie1(Vector3 vector)
     {
         GameObject obj = zombies1.Dequeue();
@@ -135,6 +151,19 @@ public class EnemyManager : MonoBehaviour
     public GameObject GetQueueZombie2(Vector3 vector)
     {
         GameObject obj = zombies2.Dequeue();
+        obj.transform.position = vector;
+        obj.SetActive(true);
+        obj.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+
+        Zombie zb = obj.GetComponent<Zombie>();
+        zb.CalcMoveDir();
+
+        return obj;
+    }
+
+    public GameObject GetQueueArmorZombie(Vector3 vector)
+    {
+        GameObject obj = armorZombies.Dequeue();
         obj.transform.position = vector;
         obj.SetActive(true);
         obj.gameObject.GetComponent<BoxCollider2D>().enabled = true;
@@ -193,15 +222,19 @@ public class EnemyManager : MonoBehaviour
 
     public GameObject CreateRandomZombie(Vector3 vector)
     {
-        int ran = Random.Range(0, 2);
+        int ran = Random.Range(0, 100);
         GameObject zombieClone = null;
-        if (ran == 0)
+        if (ran <= 40)
         {
             zombieClone = GetQueueZombie1(vector);
         }
-        else if (ran == 1)
+        else if (ran > 40 && ran <= 80)
         {
             zombieClone = GetQueueZombie2(vector);
+        }
+        else if (ran > 80 && ran < 100)
+        {
+            zombieClone = GetQueueArmorZombie(vector);
         }
 
         zombieClone.transform.parent = zombiePrefabs.transform;
