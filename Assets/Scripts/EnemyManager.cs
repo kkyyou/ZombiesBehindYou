@@ -14,6 +14,8 @@ public class EnemyManager : MonoBehaviour
     public GameObject prefab_armor_zombie = null;
     public GameObject zombiePrefabs;  // 하이라키에 생성되는 좀비 프리팹을 얘의 자식으로 정리.
 
+    public GameObject armorHelmetPrefab = null;
+
     // 현재 씬에 존재하는 좀비들.
     private List<GameObject> existSceneZombies = new List<GameObject>();
 
@@ -23,6 +25,9 @@ public class EnemyManager : MonoBehaviour
     private Queue<GameObject> armorZombies = new Queue<GameObject>();
 
     private bool restOneTurnCreateZombie = false;
+
+    public Sprite spriteZombie1;
+    public Sprite spriteArmorZombie;
 
     private void Awake()
     {
@@ -64,29 +69,113 @@ public class EnemyManager : MonoBehaviour
         playerVector = Player.instance.transform.position;
     }
 
-    public void GoNextTurn()
+    public void GoNextTurn(GameObject collisionGO1 = null, GameObject collisionGO2 = null)
     {
+        // collisionGO2 가 들어온다는건 양쪽 좀비라는 뜻.
+        // 나머지는 다 collisionGO1으로 들어옴.
+
+        bool isArmorZombie1 = false;
+        bool isArmorZombie2 = false;
+        int armorZombieDir1 = 0;
+        int armorZombieDir2 = 0;
+
+        if (collisionGO1)
+        {
+            Zombie collisionZombie = collisionGO1.GetComponent<Zombie>();
+            isArmorZombie1 = collisionZombie.hp == 1 ? true : false;
+            armorZombieDir1 = collisionZombie.GetMoveDir();
+        }
+
+        if (collisionGO2)
+        {
+            Zombie collisionZombie = collisionGO2.GetComponent<Zombie>();
+            isArmorZombie2 = collisionZombie.hp == 1 ? true : false;
+            armorZombieDir2 = collisionZombie.GetMoveDir();
+        }
+
+        // 양쪽이면 리턴.
+        if (isArmorZombie1 && isArmorZombie2)
+        {
+            return;
+        }
+
+        bool createZombie = true;
+        int armorZombieDir = 0;
+        bool includeArmorZombie = false;
+        int moveIndex = -1;
+        List<Zombie> sameDirZombies = new List<Zombie>();
+        if (isArmorZombie1 || isArmorZombie2)
+        {
+            includeArmorZombie = true;
+            if (isArmorZombie1)
+                armorZombieDir = armorZombieDir1;
+            else
+                armorZombieDir = armorZombieDir2;
+
+            // 아머좀비랑 같은 방향 좀비들 모으기.
+            for (int i = 0; i < existSceneZombies.Count; i++)
+            {
+                GameObject zombie_prefab = existSceneZombies[i];
+                Zombie existZombie = zombie_prefab.GetComponent<Zombie>();
+
+                if (armorZombieDir != existZombie.GetMoveDir())
+                    continue;
+
+                sameDirZombies.Add(existZombie);
+                Debug.Log(" Pox X : " + existZombie.transform.position.x);
+            }
+
+            Debug.Log("Same Dir Zombie Count : " + sameDirZombies.Count);
+
+            // 빈공간 찾기.
+            for (int i = 0; i < sameDirZombies.Count - 1; i++)
+            {
+                Zombie zb = sameDirZombies[i];
+                Vector2 targetVec = new Vector2(zb.transform.position.x + (-1 * armorZombieDir), zb.transform.position.y);
+
+                zb.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                Collider2D collision = CheckCollision(zb.transform.position, targetVec);
+                zb.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+
+                if (collision)
+                {
+                    createZombie = false;
+                    continue;
+                }
+                else
+                {
+                    Debug.Log("No Collision ");
+                }
+
+                Debug.Log("MoveIndex : " + i);
+
+                moveIndex = i;
+                createZombie = true;
+                break;
+            }
+        }
+
         if (!restOneTurnCreateZombie)
         {
             // 화면 밖 대기 좀비 생성.
             int leftOrRight = Random.Range(0, 100);
 
-            if (leftOrRight < 45)
+            if (leftOrRight < 45 && createZombie)
             {
                 CreateZombie(new Vector3(playerVector.x - 10, playerVector.y + 0.3f, playerVector.z));
             }
-            else if (leftOrRight >= 45 && leftOrRight < 90)
+            else if (leftOrRight >= 45 && leftOrRight < 90 && createZombie)
             {
                 CreateZombie(new Vector3(playerVector.x + 10, playerVector.y + 0.3f, playerVector.z));
             }
-            else if (leftOrRight >= 90)
+            else if (leftOrRight >= 90 && createZombie)
             {
                 CreateZombie(new Vector3(playerVector.x - 10, playerVector.y + 0.3f, playerVector.z));
                 CreateZombie(new Vector3(playerVector.x + 10, playerVector.y + 0.3f, playerVector.z));
             }
 
             // 모든 좀비 히어로방향으로 한 칸 이동.
-            moveExistSceneZombies();
+            moveExistSceneZombies(collisionGO1, null, moveIndex, includeArmorZombie, armorZombieDir, sameDirZombies);
         }
         else if (restOneTurnCreateZombie)
         {
@@ -95,18 +184,44 @@ public class EnemyManager : MonoBehaviour
             restOneTurnCreateZombie = false;
 
             // 모든 좀비 히어로방향으로 한 칸 이동.
-            moveExistSceneZombies();
+            moveExistSceneZombies(collisionGO1, null, moveIndex, includeArmorZombie, armorZombieDir, sameDirZombies);
         }
     }
 
-    public void moveExistSceneZombies()
+    public void moveExistSceneZombies(GameObject collisionGO1 = null, GameObject collisionGO2 = null, int moveIndex = -1, bool isArmorZombie = false, int armorZombieDir = 0, List<Zombie> sameDirZombies = null)
     {
-        // 모든 좀비 히어로방향으로 한 칸 이동.
-        for (int i = 0; i < existSceneZombies.Count; i++)
+        if (!isArmorZombie)
         {
-            GameObject zombie_prefab = existSceneZombies[i];
-            Zombie zombie = zombie_prefab.GetComponent<Zombie>();
-            zombie.Move();
+            // 모든 좀비 히어로방향으로 한 칸 이동.
+            for (int i = 0; i < existSceneZombies.Count; i++)
+            {
+                GameObject zombie_prefab = existSceneZombies[i];
+                Zombie existZombie = zombie_prefab.GetComponent<Zombie>();
+                existZombie.Move();
+            }
+        }
+        else
+        {
+            if (moveIndex != -1 && sameDirZombies.Count != 0)
+            {
+                // 모든 좀비 히어로방향으로 한 칸 이동.
+                for (int i = 0; i < existSceneZombies.Count; i++)
+                {
+                    GameObject zombie_prefab = existSceneZombies[i];
+                    Zombie existZombie = zombie_prefab.GetComponent<Zombie>();
+
+                    if (sameDirZombies.Contains(existZombie))
+                        continue;
+
+                    existZombie.Move();
+                }
+
+                for (int i = moveIndex + 1; i < sameDirZombies.Count; i++)
+                {
+                    Zombie existZombie = sameDirZombies[i];
+                    existZombie.Move();
+                }
+            }
         }
     }
 
@@ -144,6 +259,7 @@ public class EnemyManager : MonoBehaviour
 
         Zombie zb = obj.GetComponent<Zombie>();
         zb.CalcMoveDir();
+        zb.hp = 1;
 
         return obj;
     }
@@ -157,6 +273,7 @@ public class EnemyManager : MonoBehaviour
 
         Zombie zb = obj.GetComponent<Zombie>();
         zb.CalcMoveDir();
+        zb.hp = 1;
 
         return obj;
     }
@@ -170,6 +287,7 @@ public class EnemyManager : MonoBehaviour
 
         Zombie zb = obj.GetComponent<Zombie>();
         zb.CalcMoveDir();
+        zb.hp = 2;
 
         return obj;
     }
@@ -194,6 +312,11 @@ public class EnemyManager : MonoBehaviour
         {
             InsertQueueZombie2(zombiePrefab);
         }
+        else if (zombiePrefab.GetComponent<Zombie>().name == "ArmorZombie")
+        {
+            zombiePrefab.GetComponent<SpriteRenderer>().sprite = spriteArmorZombie;
+            InsertQueueArmorZombie(zombiePrefab);
+        }
     }
 
     public void CreateZombie(Vector3 vector)
@@ -204,6 +327,14 @@ public class EnemyManager : MonoBehaviour
         // 좀비가 오른쪽에 있는데 플립이 되어있는 경우 플립.
         Zombie zb = zombieClone.GetComponent<Zombie>();
 
+        // Flip 해야되면 한다.
+        CalcFlip(vector, zb);
+
+        existSceneZombies.Add(zombieClone);
+    }
+
+    public void CalcFlip(Vector3 vector, Zombie zb)
+    {
         // 좀비의 위치가 플레이어의 왼쪽에 있나.
         bool zombieLeftLoc = true;
         if (vector.x - playerVector.x < 0)
@@ -216,30 +347,37 @@ public class EnemyManager : MonoBehaviour
         {
             zb.Flip();
         }
-
-        existSceneZombies.Add(zombieClone);
     }
 
     public GameObject CreateRandomZombie(Vector3 vector)
     {
         int ran = Random.Range(0, 100);
         GameObject zombieClone = null;
-        if (ran <= 40)
+        if (ran <= 49)
         {
             zombieClone = GetQueueZombie1(vector);
         }
-        else if (ran > 40 && ran <= 80)
+        else if (ran > 49 && ran <= 94)
         {
             zombieClone = GetQueueZombie2(vector);
         }
-        else if (ran > 80 && ran < 100)
+        else if (ran > 94 && ran < 100 /*&& GameManager.instance.GetScore() >= 150*/)
         {
             zombieClone = GetQueueArmorZombie(vector);
+        }
+        else
+        {
+            int ran1 = Random.Range(0, 2);
+            if (ran1 == 1)
+                zombieClone = GetQueueZombie1(vector);
+            else
+                zombieClone = GetQueueZombie2(vector);
         }
 
         zombieClone.transform.parent = zombiePrefabs.transform;
         return zombieClone;
     }
+
     public void CreateStartZombies()
     {
         playerVector = Player.instance.transform.position;
@@ -293,6 +431,10 @@ public class EnemyManager : MonoBehaviour
             {
                 InsertQueueZombie2(zombie);
             }
+            else if (zombie.GetComponent<Zombie>().name == "ArmorZombie")
+            {
+                InsertQueueArmorZombie(zombie);
+            }
         }
 
         existSceneZombies.Clear();
@@ -318,5 +460,17 @@ public class EnemyManager : MonoBehaviour
     public void SetRestOneTurnCreateZombie(bool _restOneTurnCreateZombie)
     {
         restOneTurnCreateZombie = _restOneTurnCreateZombie;
+    }
+
+    public Collider2D CheckCollision(Vector2 start, Vector2 end)
+    {
+        RaycastHit2D hit;
+
+        hit = Physics2D.Linecast(start, end, Player.instance.zombieLayerMask);
+
+        if (hit.transform != null)
+            return hit.collider;
+
+        return null;
     }
 }

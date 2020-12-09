@@ -286,4 +286,18 @@ public class AudioManager : MonoBehaviour
             Play("slash3");
         }
     }
+
+    public void PlayRandomArmorAttackSound()
+    {
+        int soundNum = Random.Range(0, 2);
+
+        if (soundNum == 0)
+        {
+            Play("metalHit1");
+        }
+        else if (soundNum == 1)
+        {
+            Play("metalHit2");
+        }
+    }
 }

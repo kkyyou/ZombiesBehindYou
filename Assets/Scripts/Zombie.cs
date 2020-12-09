@@ -6,6 +6,7 @@ public class Zombie : MonoBehaviour
     public string name;
     private float speed = 10f;
     private int moveDir;
+    public int hp;
 
     public Animator anim;
 

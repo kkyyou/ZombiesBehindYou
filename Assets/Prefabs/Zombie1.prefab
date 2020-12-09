@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Zombie1
+  hp: 1
   anim: {fileID: 4058699199328290917}
 --- !u!95 &4058699199328290917
 Animator:

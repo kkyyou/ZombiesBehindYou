@@ -82,8 +82,12 @@ public class Player : MonoBehaviour
             {
                 rightTargetZone.ThrowZombie(collision);
                 GameManager.instance.attackZombieSuccess();
+                EnemyManager.instance.GoNextTurn(collision.gameObject);
             }
-
+            else
+            {
+                EnemyManager.instance.GoNextTurn();
+            }
         }
         else
         {
@@ -95,10 +99,14 @@ public class Player : MonoBehaviour
             {
                 leftTargetZone.ThrowZombie(collision);
                 GameManager.instance.attackZombieSuccess();
+                EnemyManager.instance.GoNextTurn(collision.gameObject);
+            }
+            else
+            {
+                EnemyManager.instance.GoNextTurn();
             }
         }
 
-        EnemyManager.instance.GoNextTurn();
         StartCoroutine(AttackCoroutine());
     }
 
@@ -141,16 +149,16 @@ public class Player : MonoBehaviour
                 leftTargetZone.ThrowZombie(collision);
 
             GameManager.instance.attackZombieSuccess();
+
+            EnemyManager.instance.GoNextTurn(collision.gameObject);
         }
         else
         {
             // No Hit인 경우는 좀비들 움직이는게 맞음.
             Debug.Log("No Hit");
+            EnemyManager.instance.GoNextTurn();
         }
-
-        // GoNextTurn에 강철좀비를 넘겨줌.
-        // GoNextTurn 내부에서 강철좀비랑 같은 MoveDir의 좀비들은 움직임 제외.
-        EnemyManager.instance.GoNextTurn();
+        
         StartCoroutine(AttackCoroutine());
     }
 
@@ -192,14 +200,23 @@ public class Player : MonoBehaviour
         if (collision1 && collision2)
         {
             GameManager.instance.attackZombieSuccess();
+            EnemyManager.instance.GoNextTurn(collision1.gameObject, collision2.gameObject);
         }
-        else
+        else if (collision1)
         {
             // 한쪽만 존재하는데 양쪽 공격사용 시 HP 감소.
+            EnemyManager.instance.GoNextTurn(collision1.gameObject);
+
+            GameManager.instance.RecoveryHP(-15);
+        }
+        else if (collision2)
+        {
+            // 한쪽만 존재하는데 양쪽 공격사용 시 HP 감소.
+            EnemyManager.instance.GoNextTurn(collision2.gameObject);
+
             GameManager.instance.RecoveryHP(-15);
         }
 
-        EnemyManager.instance.GoNextTurn();
         StartCoroutine(LeftRightAttackCoroutine());
     }
 

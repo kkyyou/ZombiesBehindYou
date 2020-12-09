@@ -16236,9 +16236,13 @@ MonoBehaviour:
     type: 3}
   prefab_zombie2: {fileID: 3443959308114671542, guid: eab45e91d7bc73343935857494602628,
     type: 3}
-  prefab_armor_zombie: {fileID: 3187010518302487448, guid: 3124fb143f62177469b1ab863e290041,
+  prefab_armor_zombie: {fileID: 6629930549203820992, guid: 3124fb143f62177469b1ab863e290041,
     type: 3}
   zombiePrefabs: {fileID: 827877962}
+  armorHelmetPrefab: {fileID: 4814096688135993561, guid: 02a6dd7b30a2f0f43bd12baf9f651ef2,
+    type: 3}
+  spriteZombie1: {fileID: 21300000, guid: d1eac536bd8578840b0d9c47ad5b9bcf, type: 3}
+  spriteArmorZombie: {fileID: 21300000, guid: 1710792431a24b04b8704d64487682c7, type: 3}
 --- !u!4 &1582048809
 Transform:
   m_ObjectHideFlags: 0

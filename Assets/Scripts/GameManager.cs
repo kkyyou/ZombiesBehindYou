@@ -337,9 +337,6 @@ public class GameManager : MonoBehaviour
         settingCanvas.SetActive(false);
         gameOverCheck = true;
 
-        // 랜덤 맵 지정.
-        //if (!firstGame)
-        //{
         // 좀비 리셋.
         EnemyManager.instance.ResetEnemy();
 
@@ -351,13 +348,8 @@ public class GameManager : MonoBehaviour
         }
         // 좀비 생성.
         EnemyManager.instance.CreateStartZombies();
-        //}
 
         firstGame = false;
-
-        // 카메라 위치 변경.
-        //mainCamera.GetComponent<ShakeCamera>().SetInitialPosition(mainCamera.transform.position);
-
     }
 
     public void GameOver()
@@ -411,7 +403,7 @@ public class GameManager : MonoBehaviour
                     AdmobManager.instance.SetSuccessRewardAds(false);
 
                     // 플레이 재개.
-                    playing = true;
+                    //playing = true;
                     reviveCanvas.SetActive(false);
                     scoreCanvas.SetActive(true);
                     controlCanvas.SetActive(true);
