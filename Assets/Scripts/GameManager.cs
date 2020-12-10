@@ -165,13 +165,37 @@ public class GameManager : MonoBehaviour
         hpDecreaseSpeed += faster;
     }
 
-    public void attackZombieSuccess()
+    public void attackZombieSuccess(Collider2D collision1, Collider2D collision2 = null)
     {
-        // 점수 획득.
-        AddScore(1);
+        GameObject go1 = collision1.gameObject;
+        Zombie zb1 = go1.GetComponent<Zombie>();
 
-        // Hp 회복.
-        RecoveryHP(5);
+
+        if (collision1 && collision2)
+        {
+            GameObject go2 = collision2.gameObject;
+            Zombie zb2 = go2.GetComponent<Zombie>();
+
+            if (zb1.hp == 0 || zb2.hp == 0)
+            {
+                // 점수 획득.
+                AddScore(1);
+
+                // Hp 회복.
+                RecoveryHP(5);
+            }
+        }
+        else if (collision1)
+        {
+            if (zb1.hp == 0)
+            {
+                // 점수 획득.
+                AddScore(1);
+
+                // Hp 회복.
+                RecoveryHP(5);
+            }
+        }
     }
 
     public void RandomMap()

@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
             if (collision)
             {
                 rightTargetZone.ThrowZombie(collision);
-                GameManager.instance.attackZombieSuccess();
+                GameManager.instance.attackZombieSuccess(collision);
                 EnemyManager.instance.GoNextTurn(collision.gameObject);
             }
             else
@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
             if (collision)
             {
                 leftTargetZone.ThrowZombie(collision);
-                GameManager.instance.attackZombieSuccess();
+                GameManager.instance.attackZombieSuccess(collision);
                 EnemyManager.instance.GoNextTurn(collision.gameObject);
             }
             else
@@ -148,7 +148,7 @@ public class Player : MonoBehaviour
             else
                 leftTargetZone.ThrowZombie(collision);
 
-            GameManager.instance.attackZombieSuccess();
+            GameManager.instance.attackZombieSuccess(collision);
 
             EnemyManager.instance.GoNextTurn(collision.gameObject);
         }
@@ -199,7 +199,7 @@ public class Player : MonoBehaviour
         // 점수 및 HP 업데이트.
         if (collision1 && collision2)
         {
-            GameManager.instance.attackZombieSuccess();
+            GameManager.instance.attackZombieSuccess(collision1, collision2);
             EnemyManager.instance.GoNextTurn(collision1.gameObject, collision2.gameObject);
         }
         else if (collision1)
