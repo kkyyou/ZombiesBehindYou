@@ -6,7 +6,7 @@ public class AdmobManager : MonoBehaviour
     public static AdmobManager instance;
 
     // 테스트 할 때, 테스트 모드가 아닌 ID로 테스트하면 계정 정지 먹을 수 있음.
-    private bool isTestMode = true; // 무료 / 유료 출시 APK 만들고나서 true로 바꿨음 2020-12-07 17:35
+    private bool isTestMode = true; // 무료 / 유료 출시 APK 만들고나서 true로 바꿨음 2020-12-10 20:05
     //public Text LogText;
     //public Button FrontAdsBtn, RewardAdsBtn;
 

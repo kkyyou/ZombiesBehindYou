@@ -122,10 +122,7 @@ public class EnemyManager : MonoBehaviour
                     continue;
 
                 sameDirZombies.Add(existZombie);
-                Debug.Log(" Pox X : " + existZombie.transform.position.x);
             }
-
-            Debug.Log("Same Dir Zombie Count : " + sameDirZombies.Count);
 
             // 빈공간 찾기.
             for (int i = 0; i < sameDirZombies.Count - 1; i++)
@@ -142,12 +139,6 @@ public class EnemyManager : MonoBehaviour
                     createZombie = false;
                     continue;
                 }
-                else
-                {
-                    Debug.Log("No Collision ");
-                }
-
-                Debug.Log("MoveIndex : " + i);
 
                 moveIndex = i;
                 createZombie = true;
@@ -361,7 +352,7 @@ public class EnemyManager : MonoBehaviour
         {
             zombieClone = GetQueueZombie2(vector);
         }
-        else if (ran > 94 && ran < 100 /*&& GameManager.instance.GetScore() >= 150*/)
+        else if (ran > 94 && ran < 100 && GameManager.instance.GetScore() >= 150)
         {
             zombieClone = GetQueueArmorZombie(vector);
         }

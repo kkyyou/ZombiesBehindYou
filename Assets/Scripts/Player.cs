@@ -321,4 +321,9 @@ public class Player : MonoBehaviour
     {
         return characterNo;
     }
+
+    public void RemoveAds()
+    {
+        Application.OpenURL("https://play.google.com/store/apps/details?id=com.passinglane.VIPZombiesBehindYou");
+    }
 }

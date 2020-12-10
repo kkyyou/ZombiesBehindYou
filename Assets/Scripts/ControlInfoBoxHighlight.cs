@@ -6,9 +6,9 @@ public class ControlInfoBoxHighlight : MonoBehaviour
 {
     public static ControlInfoBoxHighlight instance;
 
-    public Text text1;
-    public Text text2;
-    public Text text3;
+    public Text text1 = null;
+    public Text text2 = null;
+    public Text text3 = null;
 
     private void Awake()
     {
@@ -23,9 +23,14 @@ public class ControlInfoBoxHighlight : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(FadeTextToZeroAlpha(text1));
-        StartCoroutine(FadeTextToZeroAlpha(text2));
-        StartCoroutine(FadeTextToZeroAlpha(text3));
+        if (text1)
+            StartCoroutine(FadeTextToZeroAlpha(text1));
+
+        if (text2)
+            StartCoroutine(FadeTextToZeroAlpha(text2));
+
+        if (text3)
+            StartCoroutine(FadeTextToZeroAlpha(text3));
     }
 
     public IEnumerator FadeTextToFullAlpha(Text text) // 알파값 0 -> 1
