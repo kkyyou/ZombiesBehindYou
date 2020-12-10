@@ -8,7 +8,6 @@ public class TutorialManager : MonoBehaviour
 {
     public Image outRectRight;
     public Image outRectLeft;
-    public Text touchText;
 
     public Button attackBtn;
     public Button leftRightAttackBtn;
@@ -24,12 +23,14 @@ public class TutorialManager : MonoBehaviour
 
     private bool viewTutorialFlag = true;
 
+    public bool nextTuto = false;
+
     private void Start()
     {
         tutoEnemyManager = FindObjectOfType<TutorialEnemyManager>();
         tutoDBManager = FindObjectOfType<TutorialDBManager>();
 
-        StartCoroutine(FadeTextToZeroAlpha(touchText));
+        //StartCoroutine(FadeTextToZeroAlpha(touchText));
     }
 
     // Update is called once per frame
@@ -37,18 +38,29 @@ public class TutorialManager : MonoBehaviour
     {
         if (tutoStep > 0 && tutoStep < 14)
         {
-            if (tutoStep == 1 || tutoStep == 2 || tutoStep == 3)
+            if ((tutoStep == 1 || tutoStep == 2 || tutoStep == 3) && nextTuto)
             {
-                touchText.gameObject.transform.position = new Vector3(4.3f, touchText.transform.position.y, touchText.transform.position.z); ;
-                touchText.gameObject.SetActive(true);
+                nextTuto = false;
+
+                attackBtn.image.color = new Color(attackBtn.image.color.r, attackBtn.image.color.g, attackBtn.image.color.b, 1);
+                StopAllCoroutines();
+                StartCoroutine(FadeBtnToZeroAlpha(attackBtn));
+
                 outRectRight.gameObject.SetActive(true);
 
                 leftRightAttackBtn.enabled = false;
                 turnBtn.enabled = false;
             }
-            else if (tutoStep == 4)
+            else if (tutoStep == 4 && nextTuto)
             {
-                touchText.gameObject.transform.position = new Vector3(-3.8f, touchText.transform.position.y, touchText.transform.position.z);
+                nextTuto = false;
+
+                attackBtn.image.color = new Color(attackBtn.image.color.r, attackBtn.image.color.g, attackBtn.image.color.b, 1);
+                turnBtn.image.color = new Color(turnBtn.image.color.r, turnBtn.image.color.g, turnBtn.image.color.b, 1);
+
+                StopAllCoroutines();
+                StartCoroutine(FadeBtnToZeroAlpha(turnBtn));
+
                 outRectRight.gameObject.SetActive(false);
                 outRectLeft.gameObject.SetActive(true);
 
@@ -56,17 +68,30 @@ public class TutorialManager : MonoBehaviour
                 leftRightAttackBtn.enabled = false;
                 attackBtn.enabled = false;
             }
-            else if (tutoStep == 5 || tutoStep == 6)
+            else if ((tutoStep == 5 || tutoStep == 6) && nextTuto)
             {
-                touchText.gameObject.transform.position = new Vector3(4.3f, touchText.transform.position.y, touchText.transform.position.z); ;
+                nextTuto = false;
+
+                attackBtn.image.color = new Color(attackBtn.image.color.r, attackBtn.image.color.g, attackBtn.image.color.b, 1);
+                turnBtn.image.color = new Color(turnBtn.image.color.r, turnBtn.image.color.g, turnBtn.image.color.b, 1);
+
+                StopAllCoroutines();
+                StartCoroutine(FadeBtnToZeroAlpha(attackBtn));
 
                 turnBtn.enabled = false;
                 leftRightAttackBtn.enabled = false;
                 attackBtn.enabled = true;
             }
-            else if (tutoStep == 7)
+            else if (tutoStep == 7 && nextTuto)
             {
-                touchText.gameObject.transform.position = new Vector3(-3.8f, touchText.transform.position.y, touchText.transform.position.z);
+                nextTuto = false;
+
+                attackBtn.image.color = new Color(attackBtn.image.color.r, attackBtn.image.color.g, attackBtn.image.color.b, 1);
+                turnBtn.image.color = new Color(turnBtn.image.color.r, turnBtn.image.color.g, turnBtn.image.color.b, 1);
+
+                StopAllCoroutines();
+                StartCoroutine(FadeBtnToZeroAlpha(turnBtn));
+
                 outRectRight.gameObject.SetActive(true);
                 outRectLeft.gameObject.SetActive(false);
 
@@ -74,29 +99,50 @@ public class TutorialManager : MonoBehaviour
                 leftRightAttackBtn.enabled = false;
                 attackBtn.enabled = false;
             }
-            else if (tutoStep == 8 || tutoStep == 9)
+            else if ((tutoStep == 8 || tutoStep == 9) && nextTuto)
             {
-                touchText.gameObject.transform.position = new Vector3(4.3f, touchText.transform.position.y, touchText.transform.position.z);
+                nextTuto = false;
+
+                attackBtn.image.color = new Color(attackBtn.image.color.r, attackBtn.image.color.g, attackBtn.image.color.b, 1);
+                turnBtn.image.color = new Color(turnBtn.image.color.r, turnBtn.image.color.g, turnBtn.image.color.b, 1);
+
+                StopAllCoroutines();
+                StartCoroutine(FadeBtnToZeroAlpha(attackBtn));
 
                 turnBtn.enabled = false;
                 leftRightAttackBtn.enabled = false;
                 attackBtn.enabled = true;
             }
-            else if (tutoStep > 9 && tutoStep < 13)
+            else if ((tutoStep > 9 && tutoStep < 13) && nextTuto)
             {
+                nextTuto = false;
+
+                attackBtn.image.color = new Color(attackBtn.image.color.r, attackBtn.image.color.g, attackBtn.image.color.b, 1);
+                turnBtn.image.color = new Color(turnBtn.image.color.r, turnBtn.image.color.g, turnBtn.image.color.b, 1);
+                leftRightAttackBtn.image.color = new Color(leftRightAttackBtn.image.color.r, leftRightAttackBtn.image.color.g, leftRightAttackBtn.image.color.b, 1);
+
+                StopAllCoroutines();
+                StartCoroutine(FadeBtnToZeroAlpha(leftRightAttackBtn));
+
                 outRectRight.gameObject.SetActive(true);
                 outRectLeft.gameObject.SetActive(true);
-                touchText.gameObject.transform.position = new Vector3(0.3f, touchText.transform.position.y, touchText.transform.position.z);
 
                 turnBtn.enabled = false;
                 leftRightAttackBtn.enabled = true;
                 attackBtn.enabled = false;
             }
-            else if (tutoStep == 13)
+            else if (tutoStep == 13 && nextTuto)
             {
+                nextTuto = false;
+
+                attackBtn.image.color = new Color(attackBtn.image.color.r, attackBtn.image.color.g, attackBtn.image.color.b, 1);
+                turnBtn.image.color = new Color(turnBtn.image.color.r, turnBtn.image.color.g, turnBtn.image.color.b, 1);
+                leftRightAttackBtn.image.color = new Color(leftRightAttackBtn.image.color.r, leftRightAttackBtn.image.color.g, leftRightAttackBtn.image.color.b, 1);
+
+                StopAllCoroutines();
+
                 outRectRight.gameObject.SetActive(false);
                 outRectLeft.gameObject.SetActive(false);
-                touchText.gameObject.SetActive(false);
 
                 tutoControlCanvas.SetActive(false);
 
@@ -126,13 +172,14 @@ public class TutorialManager : MonoBehaviour
         tutoControlCanvas.SetActive(true);
         tutoSuccessCanvas.SetActive(false);
         tutoStep = 0;
+        nextTuto = true;
 
         tutoEnemyManager.CreateTutorialZombies();
 
-        touchText.gameObject.SetActive(true);
+        //touchText.gameObject.SetActive(true);
 
-        touchText.color = new Color(touchText.color.r, touchText.color.g, touchText.color.b, 1);
-        StartCoroutine(FadeTextToZeroAlpha(touchText));
+        //touchText.color = new Color(touchText.color.r, touchText.color.g, touchText.color.b, 1);
+        //StartCoroutine(FadeTextToZeroAlpha(touchText));
 
     }
 
@@ -141,29 +188,29 @@ public class TutorialManager : MonoBehaviour
         SceneManager.LoadScene("SampleScene");
     }
 
-    public IEnumerator FadeTextToFullAlpha(Text text) // 알파값 0 -> 1
+    public IEnumerator FadeBtnToFullAlpha(Button btn) // 알파값 0 -> 1
     {
-        touchText.color = new Color(touchText.color.r, touchText.color.g, touchText.color.b, 0);
+        btn.image.color = new Color(btn.image.color.r, btn.image.color.g, btn.image.color.b, 0.7f);
 
-        while (touchText.color.a < 1.0f)
+        while (btn.image.color.a < 1f)
         {
-            touchText.color = new Color(touchText.color.r, touchText.color.g, touchText.color.b, touchText.color.a + Time.deltaTime);
+            btn.image.color = new Color(btn.image.color.r, btn.image.color.g, btn.image.color.b, btn.image.color.a + Time.deltaTime);
             yield return null;
         }
 
-        StartCoroutine(FadeTextToZeroAlpha(text));
+        StartCoroutine(FadeBtnToZeroAlpha(btn));
     }
 
-    public IEnumerator FadeTextToZeroAlpha(Text text) // 알파값 1 -> 0
+    public IEnumerator FadeBtnToZeroAlpha(Button btn) // 알파값 1 -> 0
     {
-        touchText.color = new Color(touchText.color.r, touchText.color.g, touchText.color.b, 1);
-        while (touchText.color.a > 0.0f)
+        btn.image.color = new Color(btn.image.color.r, btn.image.color.g, btn.image.color.b, 1);
+        while (btn.image.color.a > 0.5f)
         {
-            touchText.color = new Color(touchText.color.r, touchText.color.g, touchText.color.b, touchText.color.a - Time.deltaTime);
+            btn.image.color = new Color(btn.image.color.r, btn.image.color.g, btn.image.color.b, btn.image.color.a - Time.deltaTime);
             yield return null;
         }
 
-        StartCoroutine(FadeTextToFullAlpha(touchText));
+        StartCoroutine(FadeBtnToFullAlpha(btn));
     }
 
     public void AlwaysTutoSkip()

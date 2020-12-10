@@ -60,6 +60,7 @@ public class TutorialPlayer : MonoBehaviour
         }
 
         tutoManager.SetTutoStep(tutoManager.GetTutoStep() + 1);
+        tutoManager.nextTuto = true;
 
         StartCoroutine(AttackCoroutine());
     }
@@ -96,6 +97,7 @@ public class TutorialPlayer : MonoBehaviour
         tutoEnemyManager.GoNextTurn();
 
         tutoManager.SetTutoStep(tutoManager.GetTutoStep() + 1);
+        tutoManager.nextTuto = true;
 
         StartCoroutine(AttackCoroutine());
 
@@ -143,6 +145,7 @@ public class TutorialPlayer : MonoBehaviour
         }
 
         tutoManager.SetTutoStep(tutoManager.GetTutoStep() + 1);
+        tutoManager.nextTuto = true;
 
         StartCoroutine(LeftRightAttackCoroutine());
     }
