@@ -6,7 +6,7 @@ public class AdmobManager : MonoBehaviour
     public static AdmobManager instance;
 
     // 테스트 할 때, 테스트 모드가 아닌 ID로 테스트하면 계정 정지 먹을 수 있음.
-    private bool isTestMode = true; // 무료 / 유료 출시 APK 만들고나서 true로 바꿨음 2020-12-10 23:34
+    private bool isTestMode = true; // 무료 / 유료 출시 APK 만들고나서 true로 바꿨음 2020-12-11 19:21
     //public Text LogText;
     //public Button FrontAdsBtn, RewardAdsBtn;
 
@@ -28,6 +28,9 @@ public class AdmobManager : MonoBehaviour
 
     void Start()
     {
+        // Initialize the Google Mobile Ads SDK.
+        MobileAds.Initialize(initStatus => { });
+
         LoadBannerAd();
         LoadFrontAd();
         LoadRewardAd();
@@ -112,6 +115,11 @@ public class AdmobManager : MonoBehaviour
         };
 
         rewardAd.OnAdFailedToShow += (sender, e) =>
+        {
+            adsSuccessOrClosed = true;
+        };
+
+        rewardAd.OnAdFailedToLoad += (sender, e) =>
         {
             adsSuccessOrClosed = true;
         };
