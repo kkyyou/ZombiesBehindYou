@@ -110,6 +110,11 @@ public class AdmobManager : MonoBehaviour
             // 여기서 successRewardAds false 초기화하면 안됨.
             // 광고 다 보고나서도 Close하면 호출되는 함수라서.
         };
+
+        rewardAd.OnAdFailedToShow += (sender, e) =>
+        {
+            adsSuccessOrClosed = true;
+        };
     }
 
     public void ShowRewardAd()
