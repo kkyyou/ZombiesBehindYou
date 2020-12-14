@@ -50,6 +50,8 @@ public class Timer : MonoBehaviour
 
                     GameManager.instance.SetTotalHour(GameManager.instance.GetTotalHour() + 1);
                     GameManager.instance.SetTotalMin(0);
+                    DBManager.instance.data.reviewChecked = false;
+                    GameManager.instance.SetReviewChecked(false);
                 }
 
                 if (Player.instance.GetCharacterNumber() == (int)CharSelectManager.Characters.Archer)

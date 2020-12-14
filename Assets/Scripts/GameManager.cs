@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     private int totalHour;
     private int totalMin;
     private int totalGameOverCount;
+    private bool reviewChecked;
 
     private bool listenSfx = true;
     private bool listenBgm = true;
@@ -111,6 +112,9 @@ public class GameManager : MonoBehaviour
 
         // 랜덤 맵 지정.
         RandomMap();
+
+        // 리뷰 요청.
+        AppReview.instance.RequestReview();
     }
 
     // Update is called once per frame
@@ -694,5 +698,15 @@ public class GameManager : MonoBehaviour
     public bool GetGameOverCheck()
     {
         return gameOverCheck;
+    }
+
+    public bool GetReviewChecked()
+    {
+        return reviewChecked;
+    }
+
+    public void SetReviewChecked(bool _reviewChekced)
+    {
+        reviewChecked = _reviewChekced;
     }
 }

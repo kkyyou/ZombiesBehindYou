@@ -15,6 +15,7 @@ public class DBManager : MonoBehaviour
         public int totalPlayHour;
         public int totalPlayMin;
         public int gameOverCount;
+        public bool reviewChecked = false;
     }
 
     public Data data;
@@ -105,6 +106,9 @@ public class DBManager : MonoBehaviour
                 // 게임 오버 카운트 로드.
                 GameManager.instance.SetTotalGameOverCount(data.gameOverCount);
                 Debug.Log("Load Total GameOver Count : " + data.gameOverCount);
+
+                // 리뷰 체크 로드.
+                GameManager.instance.SetReviewChecked(data.reviewChecked);
 
                 file.Close();
             }
