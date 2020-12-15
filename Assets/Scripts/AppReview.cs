@@ -29,7 +29,7 @@ public class AppReview : MonoBehaviour
         {
             reviewManager = new ReviewManager();
 
-            if (!GameManager.instance.GetReviewChecked() && GameManager.instance.GetTotalScore() > 300)
+            if (!GameManager.instance.GetReviewChecked() && GameManager.instance.GetTotalScore() > 1000)
             {
                 StartCoroutine(ReviewOperation());
             }
