@@ -32,7 +32,7 @@ public class LeftTargetZone : MonoBehaviour
                 AudioManager.instance.PlayRandomDamageSound();
 
             // 카메라 흔들기.
-            StartCoroutine(shakeCamera.Shake(0.03f, 0.15f));
+            StartCoroutine(shakeCamera.Shake(0.035f, 0.15f));
 
             Rigidbody2D zombieRigid = go.GetComponent<Rigidbody2D>();
             zombieRigid.AddForce(new Vector2(ranForceX, ranForceY));
@@ -48,7 +48,7 @@ public class LeftTargetZone : MonoBehaviour
             int ranTorque = Random.Range(-200, -400);
 
             // 카메라 흔들기.
-            StartCoroutine(shakeCamera.Shake(0.03f, 0.15f));
+            StartCoroutine(shakeCamera.Shake(0.035f, 0.15f));
 
             GameObject armorZombieGO = collision.gameObject;
             Zombie armorZombie = armorZombieGO.GetComponent<Zombie>();
@@ -84,7 +84,7 @@ public class LeftTargetZone : MonoBehaviour
                     AudioManager.instance.PlayRandomDamageSound();
 
                 // 카메라 흔들기.
-                StartCoroutine(shakeCamera.Shake(0.03f, 0.15f));
+                StartCoroutine(shakeCamera.Shake(0.035f, 0.15f));
 
                 Rigidbody2D zombieRigid = armorZombieGO.GetComponent<Rigidbody2D>();
                 zombieRigid.AddForce(new Vector2(ranForceX, ranForceY));

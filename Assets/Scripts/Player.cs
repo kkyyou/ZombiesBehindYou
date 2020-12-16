@@ -56,6 +56,8 @@ public class Player : MonoBehaviour
 
     public void TurnButton()
     {
+        //StopCoroutine(AttackCoroutine());
+        animator.SetTrigger("AttackTrigger");
         if (!GameManager.instance.GetPlaying())
         {
             GameManager.instance.SetPlaying(true);
@@ -65,7 +67,7 @@ public class Player : MonoBehaviour
         isRight = !isRight;
         Flip();
 
-        animator.SetBool("Attack", true);
+        //animator.SetBool("Attack", true);
 
         // Attack Sound 랜덤 재생.
         if (GameManager.instance.GetListenSfx())
@@ -107,18 +109,21 @@ public class Player : MonoBehaviour
             }
         }
 
-        StartCoroutine(AttackCoroutine());
+        //StartCoroutine(AttackCoroutine());
     }
 
     public void AttackButton()
     {
+        //StopCoroutine(AttackCoroutine());
+        animator.SetTrigger("AttackTrigger");
+
         if (!GameManager.instance.GetPlaying())
         {
             GameManager.instance.SetPlaying(true);
             GameManager.instance.controlCanvas.transform.Find("Info").gameObject.SetActive(false);
         }
 
-        animator.SetBool("Attack", true);
+        //animator.SetBool("Attack", true);
 
         // Attack Sound 랜덤 재생.
         if (GameManager.instance.GetListenSfx())
@@ -159,18 +164,20 @@ public class Player : MonoBehaviour
             EnemyManager.instance.GoNextTurn();
         }
         
-        StartCoroutine(AttackCoroutine());
+       // StartCoroutine(AttackCoroutine());
     }
 
     public void LeftRightAttackButton()
     {
+        animator.SetTrigger("LRAttackTrigger");
+
         if (!GameManager.instance.GetPlaying())
         {
             GameManager.instance.SetPlaying(true);
             GameManager.instance.controlCanvas.transform.Find("Info").gameObject.SetActive(false);
         }
 
-        animator.SetBool("LeftRightAttack", true);
+        //animator.SetBool("LeftRightAttack", true);
 
         // Attack Sound 랜덤 재생.
         if (GameManager.instance.GetListenSfx())
@@ -217,12 +224,12 @@ public class Player : MonoBehaviour
             GameManager.instance.RecoveryHP(-15);
         }
 
-        StartCoroutine(LeftRightAttackCoroutine());
+        //StartCoroutine(LeftRightAttackCoroutine());
     }
 
     IEnumerator AttackCoroutine()
     {
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.01f);
         animator.SetBool("Attack", false);
     }
 

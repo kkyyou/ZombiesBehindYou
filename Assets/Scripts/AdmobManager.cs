@@ -1,12 +1,15 @@
-﻿using GoogleMobileAds.Api;
+﻿using System.Collections;
+using System.Collections.Generic;
+using GoogleMobileAds.Api;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AdmobManager : MonoBehaviour
 {
     public static AdmobManager instance;
 
     // 테스트 할 때, 테스트 모드가 아닌 ID로 테스트하면 계정 정지 먹을 수 있음.
-    private bool isTestMode = true; // 무료 / 유료 출시 APK 만들고나서 true로 바꿨음 2020-12-15 16:47
+    private bool isTestMode = true; // 무료 / 유료 출시 APK 만들고나서 true로 바꿨음 2020-12-16 19:17
     //public Text LogText;
     //public Button FrontAdsBtn, RewardAdsBtn;
 
@@ -31,8 +34,14 @@ public class AdmobManager : MonoBehaviour
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(initStatus => { });
 
-        LoadBannerAd();
-        LoadFrontAd();
+        if (GameManager.instance.GetShowFrontAds())
+        {
+            GameManager.instance.loadingCanvas.SetActive(true);
+            LoadBannerAd();
+            LoadFrontAd();
+            StartCoroutine(LoadingCanvas());
+        }
+
         LoadRewardAd();
     }
 
@@ -52,7 +61,21 @@ public class AdmobManager : MonoBehaviour
         bannerAd = new BannerView(isTestMode ? bannerTestID : bannerID,
             AdSize.Banner, AdPosition.Top);
         bannerAd.LoadAd(GetAdRequest());
-        //ToggleBannerAd(false);
+
+        bannerAd.OnAdOpening += (sender, e) =>
+        {
+            GameManager.instance.loadingCanvas.SetActive(false);
+        };
+
+         bannerAd.OnAdLoaded += (sender, e) =>
+        {
+            GameManager.instance.loadingCanvas.SetActive(false);
+        };
+
+        bannerAd.OnAdFailedToLoad += (sender, e) =>
+        {
+            GameManager.instance.loadingCanvas.SetActive(false);
+        };
     }
 
     public void ToggleBannerAd(bool b)
@@ -150,5 +173,12 @@ public class AdmobManager : MonoBehaviour
     public void SetSuccessOrClosedAds(bool _adsSuccessOrClosed)
     {
         adsSuccessOrClosed = _adsSuccessOrClosed;
+    }
+
+    IEnumerator LoadingCanvas()
+    {
+        yield return new WaitForSeconds(10f);
+
+        GameManager.instance.loadingCanvas.SetActive(false);
     }
 }

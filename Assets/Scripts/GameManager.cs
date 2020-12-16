@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
     public GameObject pauseCanvas;
     public GameObject settingCanvas;
     public GameObject reviveCanvas;
+    public GameObject loadingCanvas;
 
     private Map currentMap;
 
@@ -90,6 +91,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (showFrontAds)
+            loadingCanvas.SetActive(true);
+        
         TitleCanvas.SetActive(true);
         controlCanvas.SetActive(false);
         scoreCanvas.SetActive(false);
@@ -708,5 +712,10 @@ public class GameManager : MonoBehaviour
     public void SetReviewChecked(bool _reviewChekced)
     {
         reviewChecked = _reviewChekced;
+    }
+
+    public bool GetShowFrontAds()
+    {
+        return showFrontAds;
     }
 }

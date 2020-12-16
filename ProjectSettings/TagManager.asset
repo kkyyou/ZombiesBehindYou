@@ -19,7 +19,7 @@ TagManager:
   - Characters
   - Zombie
   - Ads
-  - 
+  - Loading
   - 
   - 
   - 
@@ -59,4 +59,7 @@ TagManager:
     locked: 0
   - name: Ads
     uniqueID: 2511614973
+    locked: 0
+  - name: Loading
+    uniqueID: 3989995823
     locked: 0
