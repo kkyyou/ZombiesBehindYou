@@ -26,7 +26,7 @@ public class TutorialPlayer : MonoBehaviour
         isRight = !isRight;
         Flip();
 
-        animator.SetBool("Attack", true);
+        animator.SetTrigger("AttackTrigger");
 
         AudioManager.instance.PlayRandomAttackSound();
 
@@ -67,7 +67,7 @@ public class TutorialPlayer : MonoBehaviour
 
     public void AttackButton()
     {
-        animator.SetBool("Attack", true);
+        animator.SetTrigger("AttackTrigger");
 
         // Attack Sound 랜덤 재생.
         AudioManager.instance.PlayRandomAttackSound();
@@ -106,7 +106,7 @@ public class TutorialPlayer : MonoBehaviour
 
     public void LeftRightAttackButton()
     {
-        animator.SetBool("LeftRightAttack", true);
+        animator.SetTrigger("LRAttackTrigger");
 
         AudioManager.instance.PlayRandomAttackSound();
 
