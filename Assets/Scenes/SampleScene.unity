@@ -6384,7 +6384,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.3
+  m_FillAmount: 0.2
   m_FillClockwise: 1
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
@@ -6986,6 +6986,7 @@ MonoBehaviour:
   - {fileID: 6679098415755085630, guid: 30e665a16fd91da4ea16288addfd5b6a, type: 3}
   - {fileID: 2713238670509916686, guid: 8bb2e23c8cc800e45bd17b2a32763d26, type: 3}
   - {fileID: 2456660853497250569, guid: dd7aa671351e4c04d9d5402b30657cb6, type: 3}
+  - {fileID: 7288950484194597018, guid: f0728250aee0e5f48ac9dac53d4f189a, type: 3}
   player: {fileID: 0}
   RequireText: {fileID: 992308847}
   RequireInfoText: {fileID: 1274179326}
@@ -7435,7 +7436,7 @@ RectTransform:
   m_GameObject: {fileID: 1134249417}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 7.576261}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children:
   - {fileID: 968721518}
   - {fileID: 15817443}

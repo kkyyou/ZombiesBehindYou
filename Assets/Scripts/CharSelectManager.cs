@@ -26,7 +26,8 @@ public class CharSelectManager : MonoBehaviour
         SpeedSwordMan,
         Lancer,
         Vampire,
-        CuteCat
+        CuteCat,
+        Santa
     }
 
     public static CharSelectManager instance;
@@ -498,6 +499,12 @@ public class CharSelectManager : MonoBehaviour
                     RequireInfoText.text = GameManager.instance.GetTotalPlayTimeText() + "/03:00";
                     RequireInfoText.color = Color.red;
                 }
+                break;
+            case Characters.Santa:
+                SelectButtonEnableTrue();
+                RequireText.text = "Default";
+                RequireText.color = Color.green;
+                RequireInfoText.text = "";
                 break;
         }
     }

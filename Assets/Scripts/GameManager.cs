@@ -407,7 +407,7 @@ public class GameManager : MonoBehaviour
         playing = false;
 
         // 내 점수에서 100점을 더하면 최대점수가 될때 Revive 찬스!
-        if (score + 100 >= bestScore && canRevive && score >= 20 && !AdmobManager.instance.GetSuccessOrClosedAds())           
+        if (canRevive && score >= 50 && !AdmobManager.instance.GetSuccessOrClosedAds())           
         {
             // 리바이브 한번 떳으니까 다음 게임 시작까지는 안뜨도록.
             canRevive = false;
