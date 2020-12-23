@@ -178,7 +178,6 @@ public class GameManager : MonoBehaviour
         GameObject go1 = collision1.gameObject;
         Zombie zb1 = go1.GetComponent<Zombie>();
 
-
         if (collision1 && collision2)
         {
             GameObject go2 = collision2.gameObject;
